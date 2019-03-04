@@ -5,6 +5,12 @@ VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TronGame.Display", "TronGame.Display\TronGame.Display.csproj", "{0BF7A708-F8D0-4D4D-9E77-8A688176076D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TronGame.BusinessLogic", "TronGame.BusinessLogic\TronGame.BusinessLogic.csproj", "{3F5259AF-1D70-4FF8-A226-8D62336B142E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TronGame.Repository", "TronGame.Repository\TronGame.Repository.csproj", "{09CC7B4C-9CAA-449A-99F4-9BFAD4F19E0C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TronGame.BusinessLogicTests", "TronGame.BusinessLogicTests\TronGame.BusinessLogicTests.csproj", "{3496D850-D0FC-4536-AB62-EDBF859C3B8A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +21,18 @@ Global
 		{0BF7A708-F8D0-4D4D-9E77-8A688176076D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BF7A708-F8D0-4D4D-9E77-8A688176076D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BF7A708-F8D0-4D4D-9E77-8A688176076D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F5259AF-1D70-4FF8-A226-8D62336B142E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F5259AF-1D70-4FF8-A226-8D62336B142E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F5259AF-1D70-4FF8-A226-8D62336B142E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F5259AF-1D70-4FF8-A226-8D62336B142E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09CC7B4C-9CAA-449A-99F4-9BFAD4F19E0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09CC7B4C-9CAA-449A-99F4-9BFAD4F19E0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09CC7B4C-9CAA-449A-99F4-9BFAD4F19E0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09CC7B4C-9CAA-449A-99F4-9BFAD4F19E0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3496D850-D0FC-4536-AB62-EDBF859C3B8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3496D850-D0FC-4536-AB62-EDBF859C3B8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3496D850-D0FC-4536-AB62-EDBF859C3B8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3496D850-D0FC-4536-AB62-EDBF859C3B8A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
