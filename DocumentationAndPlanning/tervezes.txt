@@ -1,0 +1,15 @@
+repo:
+XML fájl
+- beállítások: hangerő, nehézég, játékos nevek, highscore
+- save-re: játéktér, + beállítások győzelem száma + turbo száma, meglepetések pozicioja
+
+logic:
+játék indítás:
+- default értéket beállítása
+- körgyőzelem utána visszaálltás
+- meccsgyőzelem után ablak megjelenítés
+- timer indítása
+- karakter mozgatása
+- turbo pickup
+- halál (ütközés, halálos pickup)
+- 
