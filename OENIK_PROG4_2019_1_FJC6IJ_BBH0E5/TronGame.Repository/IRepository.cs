@@ -64,5 +64,8 @@
         void SetPlayerName(int numOfPlayer, string name);
 
         void SetNewObjectOnField(ObjectType objectType, GameObject item);
+
+        void ResetGameField();
+        void ResetPlayers();
     }
 }

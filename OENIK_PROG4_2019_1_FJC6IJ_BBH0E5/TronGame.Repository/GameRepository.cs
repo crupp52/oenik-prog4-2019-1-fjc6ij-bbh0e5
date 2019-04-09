@@ -152,5 +152,16 @@
                     break;
             }
         }
+
+        public void ResetGameField()
+        {
+            this.gameField = new GameObject[100, 100];
+        }
+
+        public void ResetPlayers()
+        {
+            this.player1 = new Player();
+            this.player1 = new Player();
+        }
     }
 }

@@ -8,6 +8,11 @@
     using System.Threading.Tasks;
     using TronGame.Repository;
 
+    public enum MovingDirection
+    {
+        Up, Down, Left, Rigth
+    }
+
     public class GameLogic : IBusinessLogic
     {
         private static Random rnd;
@@ -83,9 +88,21 @@
             throw new NotImplementedException();
         }
 
-        public void MovePlayer()
+        public void MovePlayer(MovingDirection direction, int numOfPlayer)
         {
-            throw new NotImplementedException();
+            switch (direction)
+            {
+                case MovingDirection.Up:
+                    break;
+                case MovingDirection.Down:
+                    break;
+                case MovingDirection.Left:
+                    break;
+                case MovingDirection.Rigth:
+                    break;
+                default:
+                    break;
+            }
         }
 
         public void PauseTimer()
@@ -95,7 +112,9 @@
 
         public void ResetAfterRoundWin()
         {
-            throw new NotImplementedException();
+            this.gameRepo.ResetGameField();
+            this.gameRepo.SetNewObjectOnField(ObjectType.Player, this.gameRepo.GetPlayer(1));
+            this.gameRepo.SetNewObjectOnField(ObjectType.Player, this.gameRepo.GetPlayer(2));
         }
 
         public void ResetTimer()
@@ -105,7 +124,8 @@
 
         public void ResetToDefaultValues()
         {
-            throw new NotImplementedException();
+            this.gameRepo.ResetGameField();
+            this.gameRepo.ResetPlayers();
         }
 
         public void StartTimer()

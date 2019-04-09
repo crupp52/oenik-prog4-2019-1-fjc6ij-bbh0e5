@@ -42,7 +42,7 @@
         /// <summary>
         /// Moves the player into a direction.
         /// </summary>
-        void MovePlayer(); // TODO: parameters??
+        void MovePlayer(MovingDirection direction, int numOfPlayer); // TODO: parameters??
 
         /// <summary>
         /// A player picks up an item.
