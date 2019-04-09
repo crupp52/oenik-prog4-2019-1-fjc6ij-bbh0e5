@@ -43,9 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="GameObject.cs" />
+    <Compile Include="GameRepository.cs" />
     <Compile Include="IRepository.cs" />
+    <Compile Include="ObstacleObject.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TurboObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="oenik.ruleset" />
