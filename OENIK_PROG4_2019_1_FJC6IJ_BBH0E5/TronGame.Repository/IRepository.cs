@@ -8,13 +8,30 @@
 
     public interface IRepository
     {
+        /// <summary>
+        /// Returns with a GameObject array what contains the game field.
+        /// </summary>
+        /// <returns>GameField GameObject array</returns>
         GameObject[,] GetGameField();
 
+        /// <summary>
+        /// Retruns with a selected player.
+        /// </summary>
+        /// <param name="numOfPlayer">Number of the player (1 or 2)</param>
+        /// <returns>Player object</returns>
         Player GetPlayer(int numOfPlayer);
 
+        /// <summary>
+        /// Return with the selected difficulty of current match.
+        /// </summary>
+        /// <returns>Difficulty of the game.</returns>
         Difficulty GetDifficulty();
 
-        int GetHighScore(int score);
+        /// <summary>
+        /// Returns with the Highest Score ever.
+        /// </summary>
+        /// <returns>Highest Score ever.</returns>
+        int GetHighScore();
 
         /// <summary>
         /// Set volume value for ingame music.
@@ -30,14 +47,6 @@
         void SetDifficulty(int difficulty);
 
         /// <summary>
-        /// Sets the name of the players.
-        /// </summary>
-        /// <param name="playerOneName"></param>
-        /// <param name="playerTwoName"></param>
-        /// <returns></returns>
-        void SetPlayersName(string playerOneName, string playerTwoName);
-
-        /// <summary>
         /// Set a new highscore.
         /// </summary>
         /// <param name="playerOneName"></param>
@@ -46,5 +55,12 @@
         /// <param name="secondPlayersScore"></param>
         /// <param name="time"></param>
         void SetHighScore(string playerOneName, string playerTwoName, int firstPlayerScore, int secondPlayersScore, double time);
+
+        /// <summary>
+        /// Set name a selected Player object.
+        /// </summary>
+        /// <param name="numOfPlayer">Player ID</param>
+        /// <param name="name">Name of Player</param>
+        void SetPlayerName(int numOfPlayer, string name);
     }
 }

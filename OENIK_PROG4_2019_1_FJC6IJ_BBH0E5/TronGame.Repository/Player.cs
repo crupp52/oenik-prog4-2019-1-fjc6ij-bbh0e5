@@ -14,10 +14,8 @@
         /// <param name="name">Name of the player</param>
         /// <param name="posX">Positions on X dimention.</param>
         /// <param name="posY">Positions on Y dimention.</param>
-        public Player(string name, int posX, int posY)
-            : base(posX, posY)
+        public Player()
         {
-            this.Name = name;
             this.NumberOfWins = 0;
             this.NumberOfTurbos = 0;
         }

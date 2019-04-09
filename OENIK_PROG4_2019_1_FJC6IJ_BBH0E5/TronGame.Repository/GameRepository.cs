@@ -13,47 +13,81 @@
 
     public class GameRepository : IRepository
     {
+        private static Random rnd;
+        private Player player1;
+        private Player player2;
+        private Difficulty gameDifficulty;
+        private GameObject[,] gameField;
+        private int highScore;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GameRepository"/> class.
         /// </summary>
         public GameRepository()
         {
+            this.player1 = new Player();
+            this.player2 = new Player();
+            this.SetPlayerPositon(1);
+            this.SetPlayerPositon(2);
+
+            this.gameDifficulty = Difficulty.Medium;
+            this.gameField = new GameObject[100, 100];
+            this.highScore = 0;
+
+            rnd = new Random();
         }
 
-        public Player Player1 { get; private set; }
+        private void SetPlayerPositon(int numOfPlayer)
+        {
+            int posX = rnd.Next(0, 100);
+            int posY = rnd.Next(0, 100);
+            while (this.gameField[posY, posX] != null)
+            {
+                posX = rnd.Next(0, 100);
+                posY = rnd.Next(0, 100);
+            }
 
-        public Player Player2 { get; private set; }
-
-        public Difficulty GameDifficulty { get; set; }
-
-        public GameObject[,] GameField { get; private set; }
-
-        public int HighScore { get; private set; }
+            if (numOfPlayer == 1)
+            {
+                this.player1.PosX = posX;
+                this.player1.PosY = posY;
+            }
+            else
+            {
+                this.player2.PosX = posX;
+                this.player2.PosY = posY;
+            }
+        }
 
         public Difficulty GetDifficulty()
         {
-            return this.GameDifficulty;
+            return this.gameDifficulty;
         }
 
         public GameObject[,] GetGameField()
         {
-            return this.GameField;
+            return this.gameField;
         }
 
         public int GetHighScore(int score)
         {
-            return this.HighScore;
+            return this.highScore;
+        }
+
+        public int GetHighScore()
+        {
+            throw new NotImplementedException();
         }
 
         public Player GetPlayer(int numOfPlayer)
         {
             if (numOfPlayer == 1)
             {
-                return this.Player1;
+                return this.player1;
             }
             else
             {
-                return this.Player2;
+                return this.player2;
             }
         }
 
@@ -62,16 +96,16 @@
             switch (difficulty)
             {
                 case 0:
-                    this.GameDifficulty = Difficulty.Easy;
+                    this.gameDifficulty = Difficulty.Easy;
                     break;
                 case 1:
-                    this.GameDifficulty = Difficulty.Medium;
+                    this.gameDifficulty = Difficulty.Medium;
                     break;
                 case 2:
-                    this.GameDifficulty = Difficulty.Hard;
+                    this.gameDifficulty = Difficulty.Hard;
                     break;
                 default:
-                    this.GameDifficulty = Difficulty.Medium;
+                    this.gameDifficulty = Difficulty.Medium;
                     break;
             }
         }
@@ -81,15 +115,21 @@
             throw new NotImplementedException();
         }
 
-        public void SetPlayersName(string playerOneName, string playerTwoName)
-        {
-            this.Player1.Name = playerOneName;
-            this.Player2.Name = playerTwoName;
-        }
-
         public void SetVolume(double value)
         {
             throw new NotImplementedException();
+        }
+
+        public void SetPlayerName(int numOfPlayer, string name)
+        {
+            if (numOfPlayer == 1)
+            {
+                this.player1.Name = name;
+            }
+            else
+            {
+                this.player2.Name = name;
+            }
         }
     }
 }

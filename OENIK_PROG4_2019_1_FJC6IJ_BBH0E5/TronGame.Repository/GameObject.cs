@@ -14,14 +14,12 @@
         /// </summary>
         /// <param name="posX">Positions on X dimention.</param>
         /// <param name="posY">Positions on Y dimention.</param>
-        public GameObject(int posX, int posY)
+        public GameObject()
         {
-            this.PosX = posX;
-            this.PosY = posY;
         }
 
-        public int PosX { get; private set; }
+        public int PosX { get; set; }
 
-        public int PosY { get; private set; }
+        public int PosY { get; set; }
     }
 }
