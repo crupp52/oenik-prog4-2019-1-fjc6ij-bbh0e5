@@ -62,5 +62,7 @@
         /// <param name="numOfPlayer">Player ID</param>
         /// <param name="name">Name of Player</param>
         void SetPlayerName(int numOfPlayer, string name);
+
+        void SetNewObjectOnField(ObjectType objectType, GameObject item);
     }
 }

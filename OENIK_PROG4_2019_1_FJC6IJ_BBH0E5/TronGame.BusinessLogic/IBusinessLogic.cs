@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using TronGame.Repository;
 
     public interface IBusinessLogic
     {
@@ -47,11 +48,14 @@
         /// A player picks up an item.
         /// </summary>
         /// <param name="itemType"></param>
-        void PickUp(int itemType);
+        void PickUp(ObjectType objectType, int numOfPlayer);
 
         /// <summary>
         /// A player dies.
         /// </summary>
-        void Die();
+        /// <param name="numOfPlayer"></param>
+        void Die(int numOfPlayer);
+
+        void UseTurbo(int numOfPlayer);
     }
 }

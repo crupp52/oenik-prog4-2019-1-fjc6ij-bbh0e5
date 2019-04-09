@@ -6,6 +6,11 @@
     using System.Text;
     using System.Threading.Tasks;
 
+    public enum ObjectType
+    {
+        Player, Turbo, Obstacle
+    }
+
     public enum Difficulty
     {
         Easy, Medium, Hard
@@ -129,6 +134,22 @@
             else
             {
                 this.player2.Name = name;
+            }
+        }
+
+        public void SetNewObjectOnField(ObjectType objectType, GameObject item)
+        {
+            switch (objectType)
+            {
+                case ObjectType.Player:
+                    this.gameField[item.PosY, item.PosX] = (Player)item;
+                    break;
+                case ObjectType.Turbo:
+                    this.gameField[item.PosY, item.PosX] = (TurboObject)item;
+                    break;
+                case ObjectType.Obstacle:
+                    this.gameField[item.PosY, item.PosX] = (ObstacleObject)item;
+                    break;
             }
         }
     }

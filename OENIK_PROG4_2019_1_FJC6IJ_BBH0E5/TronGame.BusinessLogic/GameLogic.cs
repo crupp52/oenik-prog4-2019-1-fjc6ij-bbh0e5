@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
@@ -9,23 +10,26 @@
 
     public class GameLogic : IBusinessLogic
     {
+        private static Random rnd;
+        private IRepository gameRepo;
+        private Stopwatch sw;
+
         public GameLogic()
         {
-            this.GameRepo = new GameRepository();
+            this.sw = new Stopwatch();
+            rnd = new Random();
+            this.gameRepo = new GameRepository();
         }
-
-        public IRepository GameRepo { get; private set; }
 
         public void SetNewGame()
         {
-            this.GameRepo.GameField = new GameObject[100, 100];
             this.SetObstacles();
             this.GenerateTurbos(4);
         }
 
         private void SetObstacles()
         {
-            switch (this.GameDifficulty)
+            switch (this.gameRepo.GetDifficulty())
             {
                 case Difficulty.Easy:
                     this.GenerateObstacles(3);
@@ -44,11 +48,11 @@
             int i = 0;
             while (i != num)
             {
-                int posX = this.Rnd.Next(0, 100);
-                int posY = this.Rnd.Next(0, 100);
-                if (this.GameField[posY, posX] == null)
+                int posX = rnd.Next(0, 100);
+                int posY = rnd.Next(0, 100);
+                if (this.gameRepo.GetGameField()[posY, posX] == null)
                 {
-                    ObstacleObject obstacle = new ObstacleObject(posX, posY);
+                    this.gameRepo.SetNewObjectOnField(ObjectType.Obstacle, new ObstacleObject(posX, posY));
                     i++;
                 }
             }
@@ -59,11 +63,11 @@
             int i = 0;
             while (i != num)
             {
-                int posX = this.Rnd.Next(0, 100);
-                int posY = this.Rnd.Next(0, 100);
-                if (this.GameField[posY, posX] == null)
+                int posX = rnd.Next(0, 100);
+                int posY = rnd.Next(0, 100);
+                if (this.gameRepo.GetGameField()[posY, posX] == null)
                 {
-                    TurboObject obstacle = new TurboObject(posX, posY);
+                    this.gameRepo.SetNewObjectOnField(ObjectType.Turbo, new ObstacleObject(posX, posY));
                     i++;
                 }
             }
@@ -74,7 +78,7 @@
             throw new NotImplementedException();
         }
 
-        public void Die()
+        public void Die(int numOfPlayer)
         {
             throw new NotImplementedException();
         }
@@ -86,12 +90,7 @@
 
         public void PauseTimer()
         {
-            throw new NotImplementedException();
-        }
-
-        public void PickUp(int itemType)
-        {
-            throw new NotImplementedException();
+            this.sw.Stop();
         }
 
         public void ResetAfterRoundWin()
@@ -101,7 +100,7 @@
 
         public void ResetTimer()
         {
-            throw new NotImplementedException();
+            this.sw.Reset();
         }
 
         public void ResetToDefaultValues()
@@ -111,7 +110,44 @@
 
         public void StartTimer()
         {
-            throw new NotImplementedException();
+            this.sw.Start();
+        }
+
+        public void PickUp(ObjectType objectType, int numOfPlayer)
+        {
+            switch (objectType)
+            {
+                case ObjectType.Player:
+                    this.Die(numOfPlayer);
+                    break;
+                case ObjectType.Turbo:
+                    this.IncrementTurbo(numOfPlayer);
+                    break;
+                case ObjectType.Obstacle:
+                    this.Die(numOfPlayer);
+                    break;
+            }
+        }
+
+        public void UseTurbo(int numOfPlayer)
+        {
+            if (this.gameRepo.GetPlayer(numOfPlayer).NumberOfTurbos > 0)
+            {
+                this.DecrementTurbo(numOfPlayer);
+            }
+        }
+
+        private void IncrementTurbo(int numOfPlayer)
+        {
+            if (this.gameRepo.GetPlayer(numOfPlayer).NumberOfTurbos > 0)
+            {
+                this.gameRepo.GetPlayer(numOfPlayer).NumberOfTurbos++;
+            }
+        }
+
+        private void DecrementTurbo(int numOfPlayer)
+        {
+            this.gameRepo.GetPlayer(numOfPlayer).NumberOfTurbos--;
         }
     }
 }

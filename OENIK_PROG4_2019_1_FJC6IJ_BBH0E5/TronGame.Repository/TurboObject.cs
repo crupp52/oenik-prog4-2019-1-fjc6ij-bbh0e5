@@ -14,7 +14,6 @@
         /// <param name="posX">Positions on X dimention.</param>
         /// <param name="posY">Positions on Y dimention.</param>
         public TurboObject(int posX, int posY)
-            : base(posX, posY)
         {
         }
     }

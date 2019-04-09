@@ -9,7 +9,6 @@
     public class ObstacleObject : GameObject
     {
         public ObstacleObject(int posX, int posY)
-            : base(posX, posY)
         {
         }
     }
