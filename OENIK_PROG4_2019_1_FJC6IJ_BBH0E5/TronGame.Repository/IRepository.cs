@@ -1,13 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TronGame.Repository
+﻿namespace TronGame.Repository
 {
-    interface IRepository
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+
+    public interface IRepository
     {
+        GameObject[,] GetGameField();
+
+        Player GetPlayer(int numOfPlayer);
+
+        Difficulty GetDifficulty();
+
+        int GetHighScore(int score);
+
         /// <summary>
         /// Set volume value for ingame music.
         /// </summary>

@@ -22,10 +22,10 @@
             this.NumberOfTurbos = 0;
         }
 
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
-        public int NumberOfWins { get; private set; }
+        public int NumberOfWins { get; set; }
 
-        public int NumberOfTurbos { get; private set; }
+        public int NumberOfTurbos { get; set; }
     }
 }

@@ -11,17 +11,14 @@
         Easy, Medium, Hard
     }
 
-    public class GameRepository
+    public class GameRepository : IRepository
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GameRepository"/> class.
         /// </summary>
         public GameRepository()
         {
-            this.Rnd = new Random();
         }
-
-        public Random Rnd { get; private set; }
 
         public Player Player1 { get; private set; }
 
@@ -31,55 +28,68 @@
 
         public GameObject[,] GameField { get; private set; }
 
-        public void SetNewGame()
+        public int HighScore { get; private set; }
+
+        public Difficulty GetDifficulty()
         {
-            this.GameField = new GameObject[100, 100];
+            return this.GameDifficulty;
         }
 
-        private void SetObstacles()
+        public GameObject[,] GetGameField()
         {
-            switch (this.GameDifficulty)
+            return this.GameField;
+        }
+
+        public int GetHighScore(int score)
+        {
+            return this.HighScore;
+        }
+
+        public Player GetPlayer(int numOfPlayer)
+        {
+            if (numOfPlayer == 1)
             {
-                case Difficulty.Easy:
-                    this.GenerateObstacles(3);
+                return this.Player1;
+            }
+            else
+            {
+                return this.Player2;
+            }
+        }
+
+        public void SetDifficulty(int difficulty)
+        {
+            switch (difficulty)
+            {
+                case 0:
+                    this.GameDifficulty = Difficulty.Easy;
                     break;
-                case Difficulty.Medium:
-                    this.GenerateObstacles(5);
+                case 1:
+                    this.GameDifficulty = Difficulty.Medium;
                     break;
-                case Difficulty.Hard:
-                    this.GenerateObstacles(7);
+                case 2:
+                    this.GameDifficulty = Difficulty.Hard;
+                    break;
+                default:
+                    this.GameDifficulty = Difficulty.Medium;
                     break;
             }
         }
 
-        private void GenerateObstacles(int num)
+        public void SetHighScore(string playerOneName, string playerTwoName, int firstPlayerScore, int secondPlayersScore, double time)
         {
-            int i = 0;
-            while (i != num)
-            {
-                int posX = this.Rnd.Next(0, 100);
-                int posY = this.Rnd.Next(0, 100);
-                if (this.GameField[posY, posX] == null)
-                {
-                    ObstacleObject obstacle = new ObstacleObject(posX, posY);
-                    i++;
-                }
-            }
+            throw new NotImplementedException();
         }
 
-        private void GenerateTurbos(int num)
+        public void SetPlayersName(string playerOneName, string playerTwoName)
         {
-            int i = 0;
-            while (i != num)
-            {
-                int posX = this.Rnd.Next(0, 100);
-                int posY = this.Rnd.Next(0, 100);
-                if (this.GameField[posY, posX] == null)
-                {
-                    TurboObject obstacle = new TurboObject(posX, posY);
-                    i++;
-                }
-            }
+            this.Player1.Name = playerOneName;
+            this.Player2.Name = playerTwoName;
+        }
+
+        public void SetVolume(double value)
+        {
+            throw new NotImplementedException();
         }
     }
 }

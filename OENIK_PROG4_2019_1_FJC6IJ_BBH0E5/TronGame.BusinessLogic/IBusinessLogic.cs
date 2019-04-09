@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TronGame.BusinessLogic
+﻿namespace TronGame.BusinessLogic
 {
-    interface IBusinessLogic
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+
+    public interface IBusinessLogic
     {
         /// <summary>
         /// Resets all variables to thier defaul values.
