@@ -9,6 +9,8 @@
 
     public interface IBusinessLogic
     {
+        IRepository GameRepository { get; }
+
         /// <summary>
         /// Resets all variables to thier defaul values.
         /// </summary>

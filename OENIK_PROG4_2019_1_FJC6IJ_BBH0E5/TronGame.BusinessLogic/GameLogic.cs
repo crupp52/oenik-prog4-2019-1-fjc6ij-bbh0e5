@@ -1,12 +1,9 @@
 ﻿namespace TronGame.BusinessLogic
 {
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics;
     using System.IO;
-    using System.Linq;
     using System.Text;
-    using System.Threading.Tasks;
     using System.Xml.Serialization;
     using TronGame.Repository;
 
@@ -18,66 +15,27 @@
     public class GameLogic : IBusinessLogic
     {
         private static Random rnd;
-        private IRepository gameRepo;
         private Stopwatch sw;
 
         public GameLogic()
         {
             this.sw = new Stopwatch();
             rnd = new Random();
-            this.gameRepo = new GameRepository();
+
+            this.GameRepository = new GameRepository();
+
+            this.ResetToDefaultValues();
+
+            this.GenerateObstacles(5);
+            this.GenerateTurbos(3);
         }
+
+        public IRepository GameRepository { get; set; }
 
         public void SetNewGame()
         {
             this.SetObstacles();
             this.GenerateTurbos(4);
-        }
-
-        private void SetObstacles()
-        {
-            switch (this.gameRepo.Difficulty)
-            {
-                case Difficulty.Easy:
-                    this.GenerateObstacles(3);
-                    break;
-                case Difficulty.Medium:
-                    this.GenerateObstacles(5);
-                    break;
-                case Difficulty.Hard:
-                    this.GenerateObstacles(7);
-                    break;
-            }
-        }
-
-        private void GenerateObstacles(int num)
-        {
-            int i = 0;
-            while (i != num)
-            {
-                int posX = rnd.Next(0, 100);
-                int posY = rnd.Next(0, 100);
-                if (this.gameRepo.GameField[posY, posX] == null)
-                {
-                    this.gameRepo.SetNewObjectOnField(ObjectType.Obstacle, new ObstacleObject());
-                    i++;
-                }
-            }
-        }
-
-        private void GenerateTurbos(int num)
-        {
-            int i = 0;
-            while (i != num)
-            {
-                int posX = rnd.Next(0, 100);
-                int posY = rnd.Next(0, 100);
-                if (this.gameRepo.GameField[posY, posX] == null)
-                {
-                    this.gameRepo.SetNewObjectOnField(ObjectType.Turbo, new ObstacleObject());
-                    i++;
-                }
-            }
         }
 
         public void CreateNotification(int type, string message)
@@ -114,9 +72,9 @@
 
         public void ResetAfterRoundWin()
         {
-            this.gameRepo.ResetGameField();
-            this.gameRepo.SetNewObjectOnField(ObjectType.Player, this.gameRepo.Player1);
-            this.gameRepo.SetNewObjectOnField(ObjectType.Player, this.gameRepo.Player2);
+            this.GameRepository.GameField = new GameObject[100, 100];
+            this.GameRepository.GameField[this.GameRepository.Player1.PosY, this.GameRepository.Player1.PosX] = this.GameRepository.Player1;
+            this.GameRepository.GameField[this.GameRepository.Player2.PosY, this.GameRepository.Player2.PosX] = this.GameRepository.Player2;
         }
 
         public void ResetTimer()
@@ -126,8 +84,9 @@
 
         public void ResetToDefaultValues()
         {
-            this.gameRepo.ResetGameField();
-            this.gameRepo.ResetPlayers();
+            this.GameRepository.GameField = new GameObject[100, 100];
+            this.GameRepository.Player1 = new Player();
+            this.GameRepository.Player2 = new Player();
         }
 
         public void StartTimer()
@@ -158,11 +117,11 @@
 
         public void SaveGamestate()
         {
-            XmlSerializer x = new XmlSerializer(this.gameRepo.GetType());
+            XmlSerializer x = new XmlSerializer(this.GameRepository.GetType());
             string filename = string.Format($"save{DateTime.Now:yyyyMMddHHmmss}.xml");
             using (StreamWriter sw = new StreamWriter(filename, false, Encoding.UTF8))
             {
-                x.Serialize(sw, this.gameRepo);
+                x.Serialize(sw, this.GameRepository);
             }
         }
 
@@ -170,10 +129,10 @@
         {
             if (File.Exists(filename))
             {
-                XmlSerializer x = new XmlSerializer(this.gameRepo.GetType());
+                XmlSerializer x = new XmlSerializer(this.GameRepository.GetType());
                 using (StreamReader sr = new StreamReader(filename, Encoding.UTF8))
                 {
-                    this.gameRepo = (GameRepository)x.Deserialize(sr);
+                    this.GameRepository = (GameRepository)x.Deserialize(sr);
                 }
             }
         }
@@ -186,6 +145,91 @@
         private void DecrementTurbo(Player player)
         {
             throw new NotImplementedException();
+        }
+
+        private void SetObstacles()
+        {
+            switch (this.GameRepository.Difficulty)
+            {
+                case Difficulty.Easy:
+                    this.GenerateObstacles(3);
+                    break;
+                case Difficulty.Medium:
+                    this.GenerateObstacles(5);
+                    break;
+                case Difficulty.Hard:
+                    this.GenerateObstacles(7);
+                    break;
+            }
+        }
+
+        private void GenerateObstacles(int num)
+        {
+            int i = 0;
+            while (i != num)
+            {
+                int posX = rnd.Next(0, 100);
+                int posY = rnd.Next(0, 100);
+                if (this.GameRepository.GameField[posY, posX] == null)
+                {
+                    ObstacleObject o = new ObstacleObject() { PosX = posX, PosY = posY };
+                    this.GameRepository.Obstacles.Add(o);
+                    this.GameRepository.GameField[posY, posX] = o;
+                    i++;
+                }
+            }
+        }
+
+        private void GenerateTurbos(int num)
+        {
+            int i = 0;
+            while (i != num)
+            {
+                int posX = rnd.Next(0, 100);
+                int posY = rnd.Next(0, 100);
+                if (this.GameRepository.GameField[posY, posX] == null)
+                {
+                    TurboObject o = new TurboObject() { PosX = posX, PosY = posY };
+                    this.GameRepository.Turbos.Add(o);
+                    this.GameRepository.GameField[posY, posX] = o;
+                    i++;
+                }
+            }
+        }
+
+        private void SetPlayerPositon(int numOfPlayer)
+        {
+            int posX = rnd.Next(0, 100);
+            int posY = rnd.Next(0, 100);
+            while (this.GameRepository.GameField[posY, posX] != null)
+            {
+                posX = rnd.Next(0, 100);
+                posY = rnd.Next(0, 100);
+            }
+
+            if (numOfPlayer == 1)
+            {
+                this.GameRepository.Player1.PosX = posX;
+                this.GameRepository.Player1.PosY = posY;
+            }
+            else
+            {
+                this.GameRepository.Player2.PosX = posX;
+                this.GameRepository.Player2.PosY = posY;
+            }
+        }
+
+        private void GenerateObjects()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                this.GameRepository.Obstacles.Add(new ObstacleObject());
+            }
+
+            for (int i = 0; i < 3; i++)
+            {
+                this.GameRepository.Turbos.Add(new TurboObject());
+            }
         }
     }
 }
