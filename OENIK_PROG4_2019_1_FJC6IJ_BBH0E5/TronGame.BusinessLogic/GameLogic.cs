@@ -17,18 +17,20 @@
         private static Random rnd;
         private Stopwatch sw;
 
-        public GameLogic()
+        public GameLogic(IRepository repository)
         {
             this.sw = new Stopwatch();
             rnd = new Random();
 
-            this.GameRepository = new GameRepository();
+            this.GameRepository = repository;
 
             this.ResetToDefaultValues();
 
             this.GenerateObstacles(5);
             this.GenerateTurbos(3);
         }
+
+        public event EventHandler ScreenRefresh;
 
         public IRepository GameRepository { get; set; }
 
@@ -73,6 +75,8 @@
         public void ResetAfterRoundWin()
         {
             this.GameRepository.GameField = new GameObject[100, 100];
+            this.SetPlayersPositon(this.GameRepository.Player1);
+            this.SetPlayersPositon(this.GameRepository.Player2);
             this.GameRepository.GameField[this.GameRepository.Player1.PosY, this.GameRepository.Player1.PosX] = this.GameRepository.Player1;
             this.GameRepository.GameField[this.GameRepository.Player2.PosY, this.GameRepository.Player2.PosX] = this.GameRepository.Player2;
         }
@@ -87,6 +91,7 @@
             this.GameRepository.GameField = new GameObject[100, 100];
             this.GameRepository.Player1 = new Player();
             this.GameRepository.Player2 = new Player();
+            this.ResetAfterRoundWin();
         }
 
         public void StartTimer()
@@ -197,7 +202,7 @@
             }
         }
 
-        private void SetPlayerPositon(int numOfPlayer)
+        private void SetPlayersPositon(Player player)
         {
             int posX = rnd.Next(0, 100);
             int posY = rnd.Next(0, 100);
@@ -207,29 +212,8 @@
                 posY = rnd.Next(0, 100);
             }
 
-            if (numOfPlayer == 1)
-            {
-                this.GameRepository.Player1.PosX = posX;
-                this.GameRepository.Player1.PosY = posY;
-            }
-            else
-            {
-                this.GameRepository.Player2.PosX = posX;
-                this.GameRepository.Player2.PosY = posY;
-            }
-        }
-
-        private void GenerateObjects()
-        {
-            for (int i = 0; i < 5; i++)
-            {
-                this.GameRepository.Obstacles.Add(new ObstacleObject());
-            }
-
-            for (int i = 0; i < 3; i++)
-            {
-                this.GameRepository.Turbos.Add(new TurboObject());
-            }
+            player.PosX = posX;
+            player.PosY = posY;
         }
     }
 }

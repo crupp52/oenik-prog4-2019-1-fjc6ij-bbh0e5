@@ -9,6 +9,8 @@
 
     public interface IBusinessLogic
     {
+        event EventHandler ScreenRefresh;
+
         IRepository GameRepository { get; }
 
         /// <summary>
