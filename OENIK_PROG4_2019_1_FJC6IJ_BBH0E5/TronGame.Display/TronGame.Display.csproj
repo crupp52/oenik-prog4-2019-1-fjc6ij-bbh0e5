@@ -111,6 +111,10 @@
       <Project>{3F5259AF-1D70-4FF8-A226-8D62336B142E}</Project>
       <Name>TronGame.BusinessLogic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TronGame.Repository\TronGame.Repository.csproj">
+      <Project>{09CC7B4C-9CAA-449A-99F4-9BFAD4F19E0C}</Project>
+      <Name>TronGame.Repository</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
