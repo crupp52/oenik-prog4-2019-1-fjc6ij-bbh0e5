@@ -8,44 +8,18 @@
 
     public interface IRepository
     {
-        Player Player1 { get; }
+        Player Player1 { get; set; }
 
-        Player Player2 { get; }
+        Player Player2 { get; set; }
 
-        List<ObstacleObject> Obstacles { get; }
+        List<ObstacleObject> Obstacles { get; set; }
 
-        List<TurboObject> Turbos { get; }
+        List<TurboObject> Turbos { get; set; }
 
-        Difficulty Difficulty { get; }
+        Difficulty Difficulty { get; set; }
 
-        GameObject[,] GameField { get; }
+        GameObject[,] GameField { get; set; }
 
-        HighScore HighScore { get; }
-
-        /// <summary>
-        /// Set volume value for ingame music.
-        /// </summary>
-        /// <param name="value"></param>
-        void SetVolume(double value);
-
-        /// <summary>
-        /// Set difficulty for the game.
-        /// </summary>
-        /// <param name="difficulty"></param>
-        /// <returns></returns>
-        void SetDifficulty(int difficulty);
-
-        /// <summary>
-        /// Set name a selected Player object.
-        /// </summary>
-        /// <param name="numOfPlayer">Player ID</param>
-        /// <param name="name">Name of Player</param>
-        void SetPlayerName(int numOfPlayer, string name);
-
-        void SetNewObjectOnField(ObjectType objectType, GameObject item);
-
-        void ResetGameField();
-
-        void ResetPlayers();
+        HighScore HighScore { get; set; }
     }
 }
