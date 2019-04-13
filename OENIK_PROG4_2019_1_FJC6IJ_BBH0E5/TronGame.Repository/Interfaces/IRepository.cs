@@ -66,6 +66,19 @@
         void SetNewObjectOnField(ObjectType objectType, GameObject item);
 
         void ResetGameField();
+
         void ResetPlayers();
+
+
+        /// <summary>
+        /// Creates an game state to XML file.
+        /// </summary>
+        void SaveGamestate();
+
+        /// <summary>
+        /// Loads the selected game state from XML file.
+        /// </summary>
+        /// <param name="filename">Selected file name.</param>
+        void LoadGamestate(string filename);
     }
 }

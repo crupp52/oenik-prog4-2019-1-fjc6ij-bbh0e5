@@ -2,9 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using System.Xml.Linq;
+    using System.Xml.Serialization;
 
     public enum ObjectType
     {
@@ -162,6 +165,24 @@
         {
             this.player1 = new Player();
             this.player1 = new Player();
+        }
+
+        public void SaveGamestate()
+        {
+            XmlSerializer x = new XmlSerializer(this.GetType());
+            string filename = string.Format($"save{DateTime.Now:yyyyMMddHHmmss}.xml");
+            using (StreamWriter sw = new StreamWriter(filename, false, Encoding.UTF8))
+            {
+                x.Serialize(sw, this);
+            }
+        }
+
+        public void LoadGamestate(string filename)
+        {
+            if (File.Exists(filename))
+            {
+                XDocument xdoc = XDocument.Load(filename);
+            }
         }
     }
 }
