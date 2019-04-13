@@ -3,9 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.IO;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using System.Xml.Serialization;
     using TronGame.Repository;
 
     public enum MovingDirection
@@ -34,7 +36,7 @@
 
         private void SetObstacles()
         {
-            switch (this.gameRepo.GetDifficulty())
+            switch (this.gameRepo.Difficulty)
             {
                 case Difficulty.Easy:
                     this.GenerateObstacles(3);
@@ -55,9 +57,9 @@
             {
                 int posX = rnd.Next(0, 100);
                 int posY = rnd.Next(0, 100);
-                if (this.gameRepo.GetGameField()[posY, posX] == null)
+                if (this.gameRepo.GameField[posY, posX] == null)
                 {
-                    this.gameRepo.SetNewObjectOnField(ObjectType.Obstacle, new ObstacleObject(posX, posY));
+                    this.gameRepo.SetNewObjectOnField(ObjectType.Obstacle, new ObstacleObject());
                     i++;
                 }
             }
@@ -70,9 +72,9 @@
             {
                 int posX = rnd.Next(0, 100);
                 int posY = rnd.Next(0, 100);
-                if (this.gameRepo.GetGameField()[posY, posX] == null)
+                if (this.gameRepo.GameField[posY, posX] == null)
                 {
-                    this.gameRepo.SetNewObjectOnField(ObjectType.Turbo, new ObstacleObject(posX, posY));
+                    this.gameRepo.SetNewObjectOnField(ObjectType.Turbo, new ObstacleObject());
                     i++;
                 }
             }
@@ -113,8 +115,8 @@
         public void ResetAfterRoundWin()
         {
             this.gameRepo.ResetGameField();
-            this.gameRepo.SetNewObjectOnField(ObjectType.Player, this.gameRepo.GetPlayer(1));
-            this.gameRepo.SetNewObjectOnField(ObjectType.Player, this.gameRepo.GetPlayer(2));
+            this.gameRepo.SetNewObjectOnField(ObjectType.Player, this.gameRepo.Player1);
+            this.gameRepo.SetNewObjectOnField(ObjectType.Player, this.gameRepo.Player2);
         }
 
         public void ResetTimer()
@@ -151,23 +153,39 @@
 
         public void UseTurbo(int numOfPlayer)
         {
-            if (this.gameRepo.GetPlayer(numOfPlayer).NumberOfTurbos > 0)
+            throw new NotImplementedException();
+        }
+
+        public void SaveGamestate()
+        {
+            XmlSerializer x = new XmlSerializer(this.gameRepo.GetType());
+            string filename = string.Format($"save{DateTime.Now:yyyyMMddHHmmss}.xml");
+            using (StreamWriter sw = new StreamWriter(filename, false, Encoding.UTF8))
             {
-                this.DecrementTurbo(numOfPlayer);
+                x.Serialize(sw, this.gameRepo);
+            }
+        }
+
+        public void LoadGamestate(string filename)
+        {
+            if (File.Exists(filename))
+            {
+                XmlSerializer x = new XmlSerializer(this.gameRepo.GetType());
+                using (StreamReader sr = new StreamReader(filename, Encoding.UTF8))
+                {
+                    this.gameRepo = (GameRepository)x.Deserialize(sr);
+                }
             }
         }
 
         private void IncrementTurbo(int numOfPlayer)
         {
-            if (this.gameRepo.GetPlayer(numOfPlayer).NumberOfTurbos > 0)
-            {
-                this.gameRepo.GetPlayer(numOfPlayer).NumberOfTurbos++;
-            }
+            throw new NotImplementedException();
         }
 
-        private void DecrementTurbo(int numOfPlayer)
+        private void DecrementTurbo(Player player)
         {
-            this.gameRepo.GetPlayer(numOfPlayer).NumberOfTurbos--;
+            throw new NotImplementedException();
         }
     }
 }
