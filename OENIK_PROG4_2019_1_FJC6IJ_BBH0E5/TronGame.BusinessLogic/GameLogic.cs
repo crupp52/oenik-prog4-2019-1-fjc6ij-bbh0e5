@@ -14,15 +14,14 @@
 
         public GameLogic()
         {
-            this.sw = new Stopwatch();
-            rnd = new Random();
-
             this.GameRepository = new GameRepository();
+            this.InitialLogic();
+        }
 
-            this.ResetToDefaultValues();
-
-            this.GenerateObstacles(5);
-            this.GenerateTurbos(3);
+        public GameLogic(IRepository repository)
+        {
+            this.GameRepository = repository;
+            this.InitialLogic();
         }
 
         public event EventHandler ScreenRefresh;
@@ -137,6 +136,16 @@
             }
         }
 
+        private void InitialLogic()
+        {
+            this.sw = new Stopwatch();
+            rnd = new Random();
+
+            this.ResetToDefaultValues();
+            this.SetObstacles();
+            this.SetTurbos();
+        }
+
         private void IncrementTurbo(int numOfPlayer)
         {
             throw new NotImplementedException();
@@ -159,6 +168,22 @@
                     break;
                 case Difficulty.Hard:
                     this.GenerateObstacles(7);
+                    break;
+            }
+        }
+
+        private void SetTurbos()
+        {
+            switch (this.GameRepository.Difficulty)
+            {
+                case Difficulty.Easy:
+                    this.GenerateTurbos(7);
+                    break;
+                case Difficulty.Medium:
+                    this.GenerateTurbos(5);
+                    break;
+                case Difficulty.Hard:
+                    this.GenerateTurbos(3);
                     break;
             }
         }
