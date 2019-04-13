@@ -25,10 +25,6 @@
         public MainWindow()
         {
             this.InitializeComponent();
-            IRepository repository = new GameRepository();
-            repository.Player1.Name = "Teszt Béla";
-            repository.Player2.Name = "Teszt Elek";
-
             IBusinessLogic logic = new GameLogic();
             logic.SaveGamestate();
             logic.LoadGamestate("save20190413222910.xml");

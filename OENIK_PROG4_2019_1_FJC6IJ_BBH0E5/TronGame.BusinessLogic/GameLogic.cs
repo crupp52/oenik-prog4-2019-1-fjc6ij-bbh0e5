@@ -7,22 +7,17 @@
     using System.Xml.Serialization;
     using TronGame.Repository;
 
-    public enum MovingDirection
-    {
-        Up, Down, Left, Rigth
-    }
-
     public class GameLogic : IBusinessLogic
     {
         private static Random rnd;
         private Stopwatch sw;
 
-        public GameLogic(IRepository repository)
+        public GameLogic()
         {
             this.sw = new Stopwatch();
             rnd = new Random();
 
-            this.GameRepository = repository;
+            this.GameRepository = new GameRepository();
 
             this.ResetToDefaultValues();
 
