@@ -16,7 +16,7 @@
         public GameScreen()
         {
             this.model = new GameModel();
-            Loaded += GameScreen_Loaded;
+            this.Loaded += this.GameScreen_Loaded;
         }
 
         private void GameScreen_Loaded(object sender, RoutedEventArgs e)
