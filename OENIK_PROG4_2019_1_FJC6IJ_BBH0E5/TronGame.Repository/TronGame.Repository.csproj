@@ -61,6 +61,7 @@
     <Compile Include="Objects\GameObject.cs" />
     <Compile Include="GameRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Objects\HighScore.cs" />
     <Compile Include="Objects\ObstacleObject.cs" />
     <Compile Include="Objects\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

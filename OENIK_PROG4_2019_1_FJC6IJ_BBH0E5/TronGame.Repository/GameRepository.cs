@@ -19,101 +19,62 @@
         Easy, Medium, Hard
     }
 
+    [XmlRoot]
     public class GameRepository : IRepository
     {
         private static Random rnd;
-        private Player player1;
-        private Player player2;
-        private Difficulty gameDifficulty;
-        private GameObject[,] gameField;
-        private int highScore;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GameRepository"/> class.
         /// </summary>
         public GameRepository()
         {
-            this.player1 = new Player();
-            this.player2 = new Player();
+            rnd = new Random();
+
+            this.Obstacles = new List<ObstacleObject>();
+            this.Turbos = new List<TurboObject>();
+            this.Player1 = new Player();
+            this.Player2 = new Player();
+            this.ResetGameField();
             this.SetPlayerPositon(1);
             this.SetPlayerPositon(2);
+            this.GenerateObjects();
 
-            this.gameDifficulty = Difficulty.Medium;
-            this.gameField = new GameObject[100, 100];
-            this.highScore = 0;
-
-            rnd = new Random();
+            this.Difficulty = Difficulty.Medium;
+            this.HighScore = new HighScore();
         }
 
-        private void SetPlayerPositon(int numOfPlayer)
-        {
-            int posX = rnd.Next(0, 100);
-            int posY = rnd.Next(0, 100);
-            while (this.gameField[posY, posX] != null)
-            {
-                posX = rnd.Next(0, 100);
-                posY = rnd.Next(0, 100);
-            }
+        [XmlElement]
+        public Difficulty Difficulty { get; set; }
 
-            if (numOfPlayer == 1)
-            {
-                this.player1.PosX = posX;
-                this.player1.PosY = posY;
-            }
-            else
-            {
-                this.player2.PosX = posX;
-                this.player2.PosY = posY;
-            }
-        }
+        public HighScore HighScore { get; set; }
 
-        public Difficulty GetDifficulty()
-        {
-            return this.gameDifficulty;
-        }
+        public Player Player1 { get; set; }
 
-        public GameObject[,] GetGameField()
-        {
-            return this.gameField;
-        }
+        public Player Player2 { get; set; }
 
-        public int GetHighScore(int score)
-        {
-            return this.highScore;
-        }
+        [XmlIgnore]
+        public GameObject[,] GameField { get; set; }
 
-        public int GetHighScore()
-        {
-            throw new NotImplementedException();
-        }
+        public List<ObstacleObject> Obstacles { get; set; }
 
-        public Player GetPlayer(int numOfPlayer)
-        {
-            if (numOfPlayer == 1)
-            {
-                return this.player1;
-            }
-            else
-            {
-                return this.player2;
-            }
-        }
+        public List<TurboObject> Turbos { get; set; }
 
         public void SetDifficulty(int difficulty)
         {
             switch (difficulty)
             {
                 case 0:
-                    this.gameDifficulty = Difficulty.Easy;
+                    this.Difficulty = Difficulty.Easy;
                     break;
                 case 1:
-                    this.gameDifficulty = Difficulty.Medium;
+                    this.Difficulty = Difficulty.Medium;
                     break;
                 case 2:
-                    this.gameDifficulty = Difficulty.Hard;
+                    this.Difficulty = Difficulty.Hard;
                     break;
                 default:
-                    this.gameDifficulty = Difficulty.Medium;
+                    this.Difficulty = Difficulty.Medium;
                     break;
             }
         }
@@ -132,11 +93,11 @@
         {
             if (numOfPlayer == 1)
             {
-                this.player1.Name = name;
+                this.Player1.Name = name;
             }
             else
             {
-                this.player2.Name = name;
+                this.Player2.Name = name;
             }
         }
 
@@ -145,43 +106,60 @@
             switch (objectType)
             {
                 case ObjectType.Player:
-                    this.gameField[item.PosY, item.PosX] = (Player)item;
+                    this.GameField[item.PosY, item.PosX] = (Player)item;
                     break;
                 case ObjectType.Turbo:
-                    this.gameField[item.PosY, item.PosX] = (TurboObject)item;
+                    this.GameField[item.PosY, item.PosX] = (TurboObject)item;
                     break;
                 case ObjectType.Obstacle:
-                    this.gameField[item.PosY, item.PosX] = (ObstacleObject)item;
+                    this.GameField[item.PosY, item.PosX] = (ObstacleObject)item;
                     break;
             }
         }
 
         public void ResetGameField()
         {
-            this.gameField = new GameObject[100, 100];
+            this.GameField = new GameObject[100, 100];
         }
 
         public void ResetPlayers()
         {
-            this.player1 = new Player();
-            this.player1 = new Player();
+            this.Player1 = new Player();
+            this.Player2 = new Player();
         }
 
-        public void SaveGamestate()
+        private void SetPlayerPositon(int numOfPlayer)
         {
-            XmlSerializer x = new XmlSerializer(this.GetType());
-            string filename = string.Format($"save{DateTime.Now:yyyyMMddHHmmss}.xml");
-            using (StreamWriter sw = new StreamWriter(filename, false, Encoding.UTF8))
+            int posX = rnd.Next(0, 100);
+            int posY = rnd.Next(0, 100);
+            while (this.GameField[posY, posX] != null)
             {
-                x.Serialize(sw, this);
+                posX = rnd.Next(0, 100);
+                posY = rnd.Next(0, 100);
+            }
+
+            if (numOfPlayer == 1)
+            {
+                this.Player1.PosX = posX;
+                this.Player1.PosY = posY;
+            }
+            else
+            {
+                this.Player2.PosX = posX;
+                this.Player2.PosY = posY;
             }
         }
 
-        public void LoadGamestate(string filename)
+        private void GenerateObjects()
         {
-            if (File.Exists(filename))
+            for (int i = 0; i < 5; i++)
             {
-                XDocument xdoc = XDocument.Load(filename);
+                this.Obstacles.Add(new ObstacleObject());
+            }
+
+            for (int i = 0; i < 3; i++)
+            {
+                this.Turbos.Add(new TurboObject());
             }
         }
     }
