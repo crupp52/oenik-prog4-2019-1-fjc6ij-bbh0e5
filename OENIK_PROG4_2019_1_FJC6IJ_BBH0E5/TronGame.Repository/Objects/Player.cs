@@ -12,8 +12,6 @@
         /// Initializes a new instance of the <see cref="Player"/> class.
         /// </summary>
         /// <param name="name">Name of the player</param>
-        /// <param name="posX">Positions on X dimention.</param>
-        /// <param name="posY">Positions on Y dimention.</param>
         public Player()
         {
             this.NumberOfWins = 0;

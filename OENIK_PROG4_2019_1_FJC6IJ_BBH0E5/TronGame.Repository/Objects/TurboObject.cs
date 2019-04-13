@@ -11,9 +11,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="TurboObject"/> class.
         /// </summary>
-        /// <param name="posX">Positions on X dimention.</param>
-        /// <param name="posY">Positions on Y dimention.</param>
-        public TurboObject(int posX, int posY)
+        public TurboObject()
         {
         }
     }
