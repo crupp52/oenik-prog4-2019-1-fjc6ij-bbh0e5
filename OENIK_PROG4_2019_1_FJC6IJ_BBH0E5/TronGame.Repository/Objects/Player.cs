@@ -2,8 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Text;
+    using System.Threading;
     using System.Threading.Tasks;
 
     public enum MovingDirection
@@ -13,7 +15,8 @@
 
     public class Player : GameObject
     {
-        private int step = 5;
+        private Stopwatch stopwatch;
+        private int speed = 5;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Player"/> class.
@@ -21,6 +24,8 @@
         /// <param name="name">Name of the player</param>
         public Player()
         {
+            this.stopwatch = new Stopwatch();
+
             this.NumberOfWins = 0;
             this.NumberOfTurbos = 0;
         }
@@ -36,18 +41,29 @@
             switch (direction)
             {
                 case MovingDirection.Up:
-                    this.PosY -= this.step;
+                    this.PosY -= this.speed;
                     break;
                 case MovingDirection.Down:
-                    this.PosY += this.step;
+                    this.PosY += this.speed;
                     break;
                 case MovingDirection.Left:
-                    this.PosX -= this.step;
+                    this.PosX -= this.speed;
                     break;
                 case MovingDirection.Rigth:
-                    this.PosX += this.step;
+                    this.PosX += this.speed;
                     break;
             }
+        }
+
+        public void SpeedUp()
+        {
+            this.NumberOfTurbos--;
+            new Thread(() =>
+            {
+                this.speed = 10;
+                Thread.Sleep(7);
+                this.speed = 5;
+            });
         }
     }
 }

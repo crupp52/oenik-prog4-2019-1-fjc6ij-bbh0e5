@@ -44,7 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameLogic.cs" />
-    <Compile Include="IBusinessLogic.cs" />
+    <Compile Include="Interfaces\IBusinessLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

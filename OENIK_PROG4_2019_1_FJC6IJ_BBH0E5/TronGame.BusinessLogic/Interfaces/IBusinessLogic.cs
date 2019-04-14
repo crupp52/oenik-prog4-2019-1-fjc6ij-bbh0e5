@@ -46,21 +46,21 @@
         /// <summary>
         /// Moves the player into a direction.
         /// </summary>
-        void MovePlayer(MovingDirection direction, int numOfPlayer); // TODO: parameters??
+        void MovePlayer(MovingDirection direction, Player player); // TODO: parameters??
 
         /// <summary>
         /// A player picks up an item.
         /// </summary>
         /// <param name="itemType"></param>
-        void PickUp(ObjectType objectType, int numOfPlayer);
+        void PickUp(ObjectType objectType, Player player);
 
         /// <summary>
         /// A player dies.
         /// </summary>
         /// <param name="numOfPlayer"></param>
-        void Die(int numOfPlayer);
+        void Die(Player player);
 
-        void UseTurbo(int numOfPlayer);
+        void UseTurbo(Player player);
 
         /// <summary>
         /// Creates an game state to XML file.

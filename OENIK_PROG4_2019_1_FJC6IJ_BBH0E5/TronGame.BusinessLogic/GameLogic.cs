@@ -39,26 +39,21 @@
             throw new NotImplementedException();
         }
 
-        public void Die(int numOfPlayer)
+        public void Die(Player player)
         {
-            throw new NotImplementedException();
+            if (player == this.GameRepository.Player1)
+            {
+                this.GameRepository.Player2.NumberOfWins++;
+            }
+            else
+            {
+                this.GameRepository.Player1.NumberOfWins++;
+            }
         }
 
-        public void MovePlayer(MovingDirection direction, int numOfPlayer)
+        public void MovePlayer(MovingDirection direction, Player player)
         {
-            switch (direction)
-            {
-                case MovingDirection.Up:
-                    break;
-                case MovingDirection.Down:
-                    break;
-                case MovingDirection.Left:
-                    break;
-                case MovingDirection.Rigth:
-                    break;
-                default:
-                    break;
-            }
+            player.Move(direction);
         }
 
         public void PauseTimer()
@@ -93,25 +88,28 @@
             this.sw.Start();
         }
 
-        public void PickUp(ObjectType objectType, int numOfPlayer)
+        public void PickUp(ObjectType objectType, Player player)
         {
             switch (objectType)
             {
                 case ObjectType.Player:
-                    this.Die(numOfPlayer);
+                    this.Die(player);
                     break;
                 case ObjectType.Turbo:
-                    this.IncrementTurbo(numOfPlayer);
+                    this.UseTurbo(player);
                     break;
                 case ObjectType.Obstacle:
-                    this.Die(numOfPlayer);
+                    this.Die(player);
                     break;
             }
         }
 
-        public void UseTurbo(int numOfPlayer)
+        public void UseTurbo(Player player)
         {
-            throw new NotImplementedException();
+            if (player.NumberOfTurbos > 0)
+            {
+                player.SpeedUp();
+            }
         }
 
         public void SaveGamestate()
@@ -144,16 +142,6 @@
             this.ResetToDefaultValues();
             this.SetObstacles();
             this.SetTurbos();
-        }
-
-        private void IncrementTurbo(int numOfPlayer)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void DecrementTurbo(Player player)
-        {
-            throw new NotImplementedException();
         }
 
         private void SetObstacles()
