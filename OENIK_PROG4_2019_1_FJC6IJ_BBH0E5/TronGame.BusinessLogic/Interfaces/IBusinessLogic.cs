@@ -5,13 +5,12 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using TronGame.Model;
     using TronGame.Repository;
 
     public interface IBusinessLogic
     {
         event EventHandler ScreenRefresh;
-
-        IRepository GameRepository { get; }
 
         /// <summary>
         /// Sets the names of the Player1 and Player2.

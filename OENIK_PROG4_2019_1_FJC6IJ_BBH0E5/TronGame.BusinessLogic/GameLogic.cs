@@ -5,24 +5,18 @@
     using System.IO;
     using System.Text;
     using System.Xml.Serialization;
+    using TronGame.Model;
     using TronGame.Repository;
 
     public class GameLogic : IBusinessLogic
     {
         private static Random rnd;
         private Stopwatch sw;
+        private IGameModel gameModel;
 
-        public GameLogic()
+        public GameLogic(IGameModel model)
         {
-            this.GameRepository = new GameRepository();
-
-            this.sw = new Stopwatch();
-            rnd = new Random();
-        }
-
-        public GameLogic(IRepository repository)
-        {
-            this.GameRepository = repository;
+            this.gameModel = model;
 
             this.sw = new Stopwatch();
             rnd = new Random();
@@ -30,26 +24,24 @@
 
         public event EventHandler ScreenRefresh;
 
-        public IRepository GameRepository { get; set; }
-
         public void AddNameToPlayers(string player1Name, string player2Name)
         {
-            this.GameRepository.Player1.Name = player1Name;
-            this.GameRepository.Player2.Name = player2Name;
+            this.gameModel.Player1.Name = player1Name;
+            this.gameModel.Player2.Name = player2Name;
         }
 
         public void NewGame()
         {
-            this.GameRepository.Player1 = new Player();
-            this.GameRepository.Player2 = new Player();
+            this.gameModel.Player1 = new Player();
+            this.gameModel.Player2 = new Player();
         }
 
         public void NewRound()
         {
-            this.SetPlayerStartPositon(this.GameRepository.Player1);
-            this.SetPlayerStartPositon(this.GameRepository.Player2);
-            this.GameRepository.Obstacles.Clear();
-            this.GameRepository.Turbos.Clear();
+            this.SetPlayerStartPositon(this.gameModel.Player1);
+            this.SetPlayerStartPositon(this.gameModel.Player2);
+            this.gameModel.Obstacles.Clear();
+            this.gameModel.Turbos.Clear();
             this.SetObstacles();
             this.SetTurbos();
 
@@ -84,11 +76,11 @@
 
         public void SaveGameState()
         {
-            XmlSerializer x = new XmlSerializer(this.GameRepository.GetType());
+            XmlSerializer x = new XmlSerializer(this.gameModel.GetType());
             string filename = string.Format($"save{DateTime.Now:yyyyMMddHHmmss}.xml");
             using (StreamWriter sw = new StreamWriter(filename, false, Encoding.UTF8))
             {
-                x.Serialize(sw, this.GameRepository);
+                x.Serialize(sw, this.gameModel);
             }
         }
 
@@ -96,23 +88,23 @@
         {
             if (File.Exists(filename))
             {
-                XmlSerializer x = new XmlSerializer(this.GameRepository.GetType());
+                XmlSerializer x = new XmlSerializer(this.gameModel.GetType());
                 using (StreamReader sr = new StreamReader(filename, Encoding.UTF8))
                 {
-                    this.GameRepository = (GameRepository)x.Deserialize(sr);
+                    this.gameModel = (GameModel)x.Deserialize(sr);
                 }
             }
         }
 
         private void DiePlayer(Player player)
         {
-            if (player == this.GameRepository.Player1)
+            if (player == this.gameModel.Player1)
             {
-                this.WinRound(this.GameRepository.Player2);
+                this.WinRound(this.gameModel.Player2);
             }
             else
             {
-                this.WinRound(this.GameRepository.Player1);
+                this.WinRound(this.gameModel.Player1);
             }
         }
 
@@ -134,7 +126,7 @@
 
         private void SetObstacles()
         {
-            switch (this.GameRepository.Difficulty)
+            switch (this.gameModel.Difficulty)
             {
                 case Difficulty.Easy:
                     this.GenerateObstacles(3);
@@ -150,7 +142,7 @@
 
         private void SetTurbos()
         {
-            switch (this.GameRepository.Difficulty)
+            switch (this.gameModel.Difficulty)
             {
                 case Difficulty.Easy:
                     this.GenerateTurbos(7);
@@ -171,11 +163,11 @@
             {
                 int posX = rnd.Next(0, 100);
                 int posY = rnd.Next(0, 100);
-                if (this.GameRepository.GameField[posY, posX] == null)
+                if (this.gameModel.GameField[posY, posX] == null)
                 {
                     ObstacleObject o = new ObstacleObject() { PosX = posX, PosY = posY };
-                    this.GameRepository.Obstacles.Add(o);
-                    this.GameRepository.GameField[posY, posX] = o;
+                    this.gameModel.Obstacles.Add(o);
+                    this.gameModel.GameField[posY, posX] = o;
                     i++;
                 }
             }
@@ -188,11 +180,11 @@
             {
                 int posX = rnd.Next(0, 100);
                 int posY = rnd.Next(0, 100);
-                if (this.GameRepository.GameField[posY, posX] == null)
+                if (this.gameModel.GameField[posY, posX] == null)
                 {
                     TurboObject o = new TurboObject() { PosX = posX, PosY = posY };
-                    this.GameRepository.Turbos.Add(o);
-                    this.GameRepository.GameField[posY, posX] = o;
+                    this.gameModel.Turbos.Add(o);
+                    this.gameModel.GameField[posY, posX] = o;
                     i++;
                 }
             }
@@ -202,7 +194,7 @@
         {
             int posX = rnd.Next(0, 100);
             int posY = rnd.Next(0, 100);
-            while (this.GameRepository.GameField[posY, posX] != null)
+            while (this.gameModel.GameField[posY, posX] != null)
             {
                 posX = rnd.Next(0, 100);
                 posY = rnd.Next(0, 100);
@@ -210,7 +202,7 @@
 
             player.PosX = posX;
             player.PosY = posY;
-            this.GameRepository.GameField[posY, posX] = player;
+            this.gameModel.GameField[posY, posX] = player;
         }
     }
 }

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TronGame.Repository", "Tron
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TronGame.BusinessLogicTests", "TronGame.BusinessLogicTests\TronGame.BusinessLogicTests.csproj", "{3496D850-D0FC-4536-AB62-EDBF859C3B8A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TronGame.Model", "TronGame.Model\TronGame.Model.csproj", "{710725EF-ACAD-4C7F-8CA6-1585C9928759}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{3496D850-D0FC-4536-AB62-EDBF859C3B8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3496D850-D0FC-4536-AB62-EDBF859C3B8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3496D850-D0FC-4536-AB62-EDBF859C3B8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{710725EF-ACAD-4C7F-8CA6-1585C9928759}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{710725EF-ACAD-4C7F-8CA6-1585C9928759}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{710725EF-ACAD-4C7F-8CA6-1585C9928759}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{710725EF-ACAD-4C7F-8CA6-1585C9928759}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
