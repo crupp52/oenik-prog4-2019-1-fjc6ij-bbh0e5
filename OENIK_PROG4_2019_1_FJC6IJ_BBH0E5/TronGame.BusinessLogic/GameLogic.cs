@@ -4,6 +4,7 @@
     using System.Diagnostics;
     using System.IO;
     using System.Text;
+    using System.Windows;
     using System.Xml.Serialization;
     using TronGame.Model;
     using TronGame.Repository;
@@ -46,6 +47,7 @@
             this.SetTurbos();
 
             this.sw.Restart();
+            this.ScreenRefresh?.Invoke(this, EventArgs.Empty);
         }
 
         public void EndGame()
@@ -56,6 +58,7 @@
         public void MovePlayer(Player player, MovingDirection direction)
         {
             player.Move(direction);
+            this.ScreenRefresh?.Invoke(this, EventArgs.Empty);
         }
 
         public void PickUp(Player player, ObjectType objectType)
@@ -72,6 +75,8 @@
                     this.DiePlayer(player);
                     break;
             }
+
+            this.ScreenRefresh?.Invoke(this, EventArgs.Empty);
         }
 
         public void SaveGameState()
@@ -165,7 +170,7 @@
                 int posY = rnd.Next(0, 100);
                 if (this.gameModel.GameField[posY, posX] == null)
                 {
-                    ObstacleObject o = new ObstacleObject() { PosX = posX, PosY = posY };
+                    ObstacleObject o = new ObstacleObject() { PosX = posX, PosY = posY, Area = new Rect(posX, posY, 40, 40) };
                     this.gameModel.Obstacles.Add(o);
                     this.gameModel.GameField[posY, posX] = o;
                     i++;
@@ -182,7 +187,7 @@
                 int posY = rnd.Next(0, 100);
                 if (this.gameModel.GameField[posY, posX] == null)
                 {
-                    TurboObject o = new TurboObject() { PosX = posX, PosY = posY };
+                    TurboObject o = new TurboObject() { PosX = posX, PosY = posY, Area = new Rect(posX, posY, 40, 40) };
                     this.gameModel.Turbos.Add(o);
                     this.gameModel.GameField[posY, posX] = o;
                     i++;
@@ -202,6 +207,7 @@
 
             player.PosX = posX;
             player.PosY = posY;
+            player.Area = new Rect(posX, posY, 40, 40);
             this.gameModel.GameField[posY, posX] = player;
         }
     }
