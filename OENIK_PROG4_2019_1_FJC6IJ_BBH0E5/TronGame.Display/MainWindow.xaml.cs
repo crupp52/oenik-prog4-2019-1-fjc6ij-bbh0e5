@@ -26,8 +26,7 @@
         {
             this.InitializeComponent();
             IBusinessLogic logic = new GameLogic();
-            logic.SaveGamestate();
-            logic.LoadGamestate("save20190413222910.xml");
+            logic.SaveGameState();
         }
     }
 }

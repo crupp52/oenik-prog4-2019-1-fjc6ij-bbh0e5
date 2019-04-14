@@ -1,16 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TronGame.Display
+﻿namespace TronGame.Display
 {
-    interface IModel
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using TronGame.Repository;
+
+    public interface IModel
     {
-        /// <summary>
-        /// Render the whole window.
-        /// </summary>
-        void RenderWindow();
+        Player Player1 { get; set; }
+
+        Player Player2 { get; set; }
+
+        List<ObstacleObject> Obstacles { get; set; }
+
+        List<TurboObject> Turbos { get; set; }
+
+        Difficulty Difficulty { get; set; }
+
+        GameObject[,] GameField { get; set; }
+
+        HighScore HighScore { get; set; }
     }
 }

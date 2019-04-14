@@ -15,106 +15,74 @@
         public GameLogic()
         {
             this.GameRepository = new GameRepository();
-            this.InitialLogic();
+
+            this.sw = new Stopwatch();
+            rnd = new Random();
         }
 
         public GameLogic(IRepository repository)
         {
             this.GameRepository = repository;
-            this.InitialLogic();
+
+            this.sw = new Stopwatch();
+            rnd = new Random();
         }
 
         public event EventHandler ScreenRefresh;
 
         public IRepository GameRepository { get; set; }
 
-        public void SetNewGame()
+        public void AddNameToPlayers(string player1Name, string player2Name)
         {
-            this.ResetToDefaultValues();
+            this.GameRepository.Player1.Name = player1Name;
+            this.GameRepository.Player2.Name = player2Name;
+        }
+
+        public void NewGame()
+        {
+            this.GameRepository.Player1 = new Player();
+            this.GameRepository.Player2 = new Player();
+        }
+
+        public void NewRound()
+        {
+            this.SetPlayerStartPositon(this.GameRepository.Player1);
+            this.SetPlayerStartPositon(this.GameRepository.Player2);
+            this.GameRepository.Obstacles.Clear();
+            this.GameRepository.Turbos.Clear();
             this.SetObstacles();
-            this.GenerateTurbos(4);
+            this.SetTurbos();
+
+            this.sw.Restart();
         }
 
-        public void CreateNotification(int type, string message)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Die(Player player)
-        {
-            if (player == this.GameRepository.Player1)
-            {
-                this.GameRepository.Player2.NumberOfWins++;
-            }
-            else
-            {
-                this.GameRepository.Player1.NumberOfWins++;
-            }
-        }
-
-        public void MovePlayer(MovingDirection direction, Player player)
-        {
-            player.Move(direction);
-        }
-
-        public void PauseTimer()
+        public void EndGame()
         {
             this.sw.Stop();
         }
 
-        public void ResetAfterRoundWin()
+        public void MovePlayer(Player player, MovingDirection direction)
         {
-            this.GameRepository.GameField = new GameObject[100, 100];
-            this.SetPlayersPositon(this.GameRepository.Player1);
-            this.SetPlayersPositon(this.GameRepository.Player2);
-            this.GameRepository.GameField[this.GameRepository.Player1.PosY, this.GameRepository.Player1.PosX] = this.GameRepository.Player1;
-            this.GameRepository.GameField[this.GameRepository.Player2.PosY, this.GameRepository.Player2.PosX] = this.GameRepository.Player2;
+            player.Move(direction);
         }
 
-        public void ResetTimer()
-        {
-            this.sw.Reset();
-        }
-
-        public void ResetToDefaultValues()
-        {
-            this.GameRepository.Obstacles.Clear();
-            this.GameRepository.Turbos.Clear();
-            this.GameRepository.Player1 = new Player();
-            this.GameRepository.Player2 = new Player();
-            this.ResetAfterRoundWin();
-        }
-
-        public void StartTimer()
-        {
-            this.sw.Start();
-        }
-
-        public void PickUp(ObjectType objectType, Player player)
+        public void PickUp(Player player, ObjectType objectType)
         {
             switch (objectType)
             {
                 case ObjectType.Player:
-                    this.Die(player);
+                    this.DiePlayer(player);
                     break;
                 case ObjectType.Turbo:
                     this.UseTurbo(player);
                     break;
                 case ObjectType.Obstacle:
-                    this.Die(player);
+                    this.DiePlayer(player);
                     break;
             }
         }
 
-        public void UseTurbo(Player player)
-        {
-            if (player.NumberOfTurbos > 0)
-            {
-                player.SpeedUp();
-            }
-        }
-
-        public void SaveGamestate()
+        public void SaveGameState()
         {
             XmlSerializer x = new XmlSerializer(this.GameRepository.GetType());
             string filename = string.Format($"save{DateTime.Now:yyyyMMddHHmmss}.xml");
@@ -124,7 +92,7 @@
             }
         }
 
-        public void LoadGamestate(string filename)
+        public void LoadGameState(string filename)
         {
             if (File.Exists(filename))
             {
@@ -136,14 +104,32 @@
             }
         }
 
-        private void InitialLogic()
+        private void DiePlayer(Player player)
         {
-            this.sw = new Stopwatch();
-            rnd = new Random();
+            if (player == this.GameRepository.Player1)
+            {
+                this.WinRound(this.GameRepository.Player2);
+            }
+            else
+            {
+                this.WinRound(this.GameRepository.Player1);
+            }
+        }
 
-            this.ResetToDefaultValues();
-            this.SetObstacles();
-            this.SetTurbos();
+        private void WinRound(Player player)
+        {
+            if (++player.NumberOfWins == 5)
+            {
+                this.EndGame();
+            }
+        }
+
+        private void UseTurbo(Player player)
+        {
+            if (player.NumberOfTurbos > 0)
+            {
+                player.SpeedUp();
+            }
         }
 
         private void SetObstacles()
@@ -212,7 +198,7 @@
             }
         }
 
-        private void SetPlayersPositon(Player player)
+        private void SetPlayerStartPositon(Player player)
         {
             int posX = rnd.Next(0, 100);
             int posY = rnd.Next(0, 100);
@@ -224,6 +210,7 @@
 
             player.PosX = posX;
             player.PosY = posY;
+            this.GameRepository.GameField[posY, posX] = player;
         }
     }
 }

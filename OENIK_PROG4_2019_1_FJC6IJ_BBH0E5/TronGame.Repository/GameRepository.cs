@@ -19,23 +19,17 @@
         Easy, Medium, Hard
     }
 
-    [XmlRoot]
     public class GameRepository : IRepository
     {
-        private static Random rnd;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="GameRepository"/> class.
         /// </summary>
         public GameRepository()
         {
-            rnd = new Random();
-
             this.Obstacles = new List<ObstacleObject>();
             this.Turbos = new List<TurboObject>();
             this.Player1 = new Player();
             this.Player2 = new Player();
-
             this.Difficulty = Difficulty.Medium;
             this.HighScore = new HighScore();
         }
@@ -52,7 +46,6 @@
 
         public List<TurboObject> Turbos { get; set; }
 
-        [XmlIgnore]
         public GameObject[,] GameField { get; set; }
     }
 }
