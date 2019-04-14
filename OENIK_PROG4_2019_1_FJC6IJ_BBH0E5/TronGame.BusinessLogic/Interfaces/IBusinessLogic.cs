@@ -12,6 +12,8 @@
     {
         event EventHandler ScreenRefresh;
 
+        IGameModel GameModel { get; }
+
         /// <summary>
         /// Sets the names of the Player1 and Player2.
         /// </summary>
@@ -47,6 +49,12 @@
         /// <param name="player">Selected Player object.</param>
         /// <param name="objectType">Selected object type.</param>
         void PickUp(Player player, ObjectType objectType);
+
+        /// <summary>
+        /// Player speed is double until 10 sec.
+        /// </summary>
+        /// <param name="player">Selected player.</param>
+        void UseTurbo(Player player);
 
         /// <summary>
         /// Creates an game state to XML file.
