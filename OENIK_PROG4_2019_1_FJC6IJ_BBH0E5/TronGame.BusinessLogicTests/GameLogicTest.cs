@@ -2,9 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     using Moq;
     using NUnit.Framework;
     using TronGame.BusinessLogic;
@@ -15,6 +12,21 @@
     {
         private Mock<IRepository> mock;
         private GameLogic logic;
+
+        public static IEnumerable<TestCaseData> PlayerList
+        {
+            get
+            {
+                yield return new TestCaseData(new[]
+                {
+                    new Player() { Name = "Teszt Béla", PosX = 30, PosY = 50, NumberOfTurbos = 2, NumberOfWins = 4 }
+                });
+                yield return new TestCaseData(new[]
+                {
+                    new Player() { Name = "Teszt Elek", PosX = 73, PosY = 10, NumberOfTurbos = 3, NumberOfWins = 1 }
+            });
+            }
+        }
 
         [SetUp]
         public void Setup()
@@ -61,6 +73,18 @@
         public void NotEmptyLogic()
         {
             Assert.That(this.logic, Is.Not.Null);
+        }
+
+        [Test]
+        [TestCaseSource(nameof(PlayerList))]
+        [Sequential]
+        public void UseTurboTest(Player player)
+        {
+            int numOfTurbos = player.NumberOfTurbos;
+
+            this.logic.UseTurbo(player);
+
+            Assert.That(player.NumberOfTurbos, Is.LessThan(numOfTurbos));
         }
     }
 }
