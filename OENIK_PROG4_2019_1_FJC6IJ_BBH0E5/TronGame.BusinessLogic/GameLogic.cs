@@ -30,6 +30,7 @@
 
         public void SetNewGame()
         {
+            this.ResetToDefaultValues();
             this.SetObstacles();
             this.GenerateTurbos(4);
         }
@@ -77,7 +78,8 @@
 
         public void ResetToDefaultValues()
         {
-            this.GameRepository.GameField = new GameObject[100, 100];
+            this.GameRepository.Obstacles.Clear();
+            this.GameRepository.Turbos.Clear();
             this.GameRepository.Player1 = new Player();
             this.GameRepository.Player2 = new Player();
             this.ResetAfterRoundWin();

@@ -60,6 +60,8 @@
         /// <param name="numOfPlayer"></param>
         void Die(Player player);
 
+        void SetNewGame();
+
         void UseTurbo(Player player);
 
         /// <summary>

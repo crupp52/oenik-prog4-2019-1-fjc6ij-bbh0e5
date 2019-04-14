@@ -11,7 +11,7 @@
     public class GameLogicTest
     {
         private Mock<IRepository> mock;
-        private GameLogic logic;
+        private IBusinessLogic logic;
 
         public static IEnumerable<TestCaseData> PlayerList
         {
@@ -73,6 +73,34 @@
         public void NotEmptyLogic()
         {
             Assert.That(this.logic, Is.Not.Null);
+        }
+
+        [Test]
+        [TestCase(Difficulty.Easy)]
+        [TestCase(Difficulty.Medium)]
+        [TestCase(Difficulty.Hard)]
+        public void StartNewGameTest(Difficulty difficulty)
+        {
+            this.logic.GameRepository.Difficulty = difficulty;
+
+            this.logic.SetNewGame();
+
+            Assert.That(this.logic.GameRepository.Obstacles.Count, Is.Not.EqualTo(0));
+            Assert.That(this.logic.GameRepository.Turbos.Count, Is.Not.EqualTo(0));
+        }
+
+        [Test]
+        [TestCase(Difficulty.Easy)]
+        [TestCase(Difficulty.Medium)]
+        [TestCase(Difficulty.Hard)]
+        public void StartNewGameWithDifficultyChange(Difficulty difficulty)
+        {
+            this.logic.GameRepository.Difficulty = Difficulty.Hard;
+
+            this.logic.SetNewGame();
+
+            Assert.That(this.logic.GameRepository.Obstacles.Count, Is.EqualTo(3));
+            Assert.That(this.logic.GameRepository.Turbos.Count, Is.EqualTo(4));
         }
 
         [Test]
