@@ -21,9 +21,18 @@
 
             this.sw = new Stopwatch();
             rnd = new Random();
+
+            this.TestGame();
         }
 
         public event EventHandler ScreenRefresh;
+
+        private void TestGame()
+        {
+            this.AddNameToPlayers("Karcsi", "Kata");
+            this.NewGame();
+            this.NewRound();
+        }
 
         public void AddNameToPlayers(string player1Name, string player2Name)
         {
@@ -166,8 +175,8 @@
             int i = 0;
             while (i != num)
             {
-                int posX = rnd.Next(0, 100);
-                int posY = rnd.Next(0, 100);
+                int posX = rnd.Next(0, 1000);
+                int posY = rnd.Next(0, 500);
                 if (this.gameModel.GameField[posY, posX] == null)
                 {
                     ObstacleObject o = new ObstacleObject() { PosX = posX, PosY = posY, Area = new Rect(posX, posY, 40, 40) };
@@ -183,8 +192,8 @@
             int i = 0;
             while (i != num)
             {
-                int posX = rnd.Next(0, 100);
-                int posY = rnd.Next(0, 100);
+                int posX = rnd.Next(0, 1000);
+                int posY = rnd.Next(0, 500);
                 if (this.gameModel.GameField[posY, posX] == null)
                 {
                     TurboObject o = new TurboObject() { PosX = posX, PosY = posY, Area = new Rect(posX, posY, 40, 40) };
@@ -197,12 +206,12 @@
 
         private void SetPlayerStartPositon(Player player)
         {
-            int posX = rnd.Next(0, 100);
-            int posY = rnd.Next(0, 100);
+            int posX = rnd.Next(0, 1000);
+            int posY = rnd.Next(0, 500);
             while (this.gameModel.GameField[posY, posX] != null)
             {
-                posX = rnd.Next(0, 100);
-                posY = rnd.Next(0, 100);
+                posX = rnd.Next(0, 1000);
+                posY = rnd.Next(0, 500);
             }
 
             player.PosX = posX;

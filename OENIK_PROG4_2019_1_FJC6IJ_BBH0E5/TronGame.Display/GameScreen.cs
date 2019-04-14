@@ -21,7 +21,7 @@
         protected override void OnRender(DrawingContext drawingContext)
         {
             drawingContext.DrawRectangle(Brushes.Red, new Pen(Brushes.Black, 2), this.model.Player1.Area);
-            drawingContext.DrawRectangle(Brushes.Blue, new Pen(Brushes.Black, 2), this.model.Player1.Area);
+            drawingContext.DrawRectangle(Brushes.Blue, new Pen(Brushes.Black, 2), this.model.Player2.Area);
 
             foreach (var item in this.model.Obstacles)
             {
@@ -49,6 +49,7 @@
 
         private void Timer_Tick(object sender, EventArgs e)
         {
+            this.Logic_ScreenRefresh(sender, e);
         }
 
         private void Logic_ScreenRefresh(object sender, EventArgs e)
