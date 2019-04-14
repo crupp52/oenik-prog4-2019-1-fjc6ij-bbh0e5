@@ -24,9 +24,6 @@
     {
         public MainWindow()
         {
-            this.InitializeComponent();
-            IBusinessLogic logic = new GameLogic();
-            logic.SaveGameState();
         }
     }
 }

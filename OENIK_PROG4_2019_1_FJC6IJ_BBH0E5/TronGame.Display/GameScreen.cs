@@ -20,7 +20,18 @@
 
         protected override void OnRender(DrawingContext drawingContext)
         {
-            base.OnRender(drawingContext);
+            drawingContext.DrawRectangle(Brushes.Red, new Pen(Brushes.Black, 2), this.model.Player1.Area);
+            drawingContext.DrawRectangle(Brushes.Blue, new Pen(Brushes.Black, 2), this.model.Player1.Area);
+
+            foreach (var item in this.model.Obstacles)
+            {
+                drawingContext.DrawRectangle(Brushes.Black, null, item.Area);
+            }
+
+            foreach (var item in this.model.Turbos)
+            {
+                drawingContext.DrawRectangle(Brushes.Green, null, item.Area);
+            }
         }
 
         private void GameScreen_Loaded(object sender, RoutedEventArgs e)
@@ -38,7 +49,6 @@
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
         }
 
         private void Logic_ScreenRefresh(object sender, EventArgs e)
