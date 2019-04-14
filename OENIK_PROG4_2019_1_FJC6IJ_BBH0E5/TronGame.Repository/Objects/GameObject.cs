@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using System.Windows;
 
     public abstract class GameObject
     {
@@ -18,8 +19,15 @@
         {
         }
 
+        public GameObject(double x, double y)
+        {
+            this.Area = new Rect(x, y, 40, 40);
+        }
+
         public int PosX { get; set; }
 
         public int PosY { get; set; }
+
+        public Rect Area { get; set; }
     }
 }
