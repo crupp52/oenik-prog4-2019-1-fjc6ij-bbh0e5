@@ -1,4 +1,4 @@
-﻿namespace TronGame.BusinessLogicTests
+﻿namespace TronGame.Repository
 {
     using System;
     using System.Collections.Generic;
@@ -6,7 +6,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class Class1
+    public interface IRepository
     {
     }
 }
