@@ -10,14 +10,20 @@
     {
         public HighScore()
         {
-            this.Score = 3000;
-            this.PlayerName = "Béla";
+            this.Player1Score = 0;
+            this.Player2Score = 0;
+            this.Player1Name = "Béla";
+            this.Player2Name = "Józsi";
             this.DateTime = DateTime.Now;
         }
 
-        public int Score { get; set; }
+        public int Player1Score { get; set; }
 
-        public string PlayerName { get; set; }
+        public int Player2Score { get; set; }
+
+        public string Player1Name { get; set; }
+
+        public string Player2Name { get; set; }
 
         public DateTime DateTime { get; set; }
     }

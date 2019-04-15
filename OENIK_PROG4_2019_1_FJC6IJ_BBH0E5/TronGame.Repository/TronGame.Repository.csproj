@@ -77,7 +77,11 @@
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Sounds\background.mp3" />
+    <Content Include="Sounds\turbo.mp3" />
+    <Content Include="Sounds\victory.wav" />
     <Content Include="XMLs\settings.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

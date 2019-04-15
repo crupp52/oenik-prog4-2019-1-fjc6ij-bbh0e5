@@ -54,7 +54,7 @@
                 new TurboObject() { PosX = 71, PosY = 21 },
             };
 
-            HighScore highScore = new HighScore() { Score = 3214, PlayerName = "Teszt József", DateTime = DateTime.Now };
+            HighScore highScore = new HighScore() { Player1Score = 3, Player2Score = 2, Player1Name = "Teszt Elek", Player2Name = "Bem József", DateTime = DateTime.Now };
 
             GameObject[,] gameField = new GameObject[500, 1000];
 
