@@ -5,6 +5,7 @@
     using System.IO;
     using System.Text;
     using System.Windows;
+    using System.Windows.Media;
     using System.Xml.Serialization;
     using TronGame.Model;
     using TronGame.Repository;
@@ -13,6 +14,7 @@
     {
         private static Random rnd;
         private Stopwatch sw;
+        private MediaPlayer backgroundMediaPlayer;
 
         public GameLogic(IGameModel model)
         {
@@ -20,6 +22,9 @@
 
             this.sw = new Stopwatch();
             rnd = new Random();
+            this.backgroundMediaPlayer = new MediaPlayer();
+            this.backgroundMediaPlayer.Open(new Uri(@"../../../TronGame.Repository/Sounds/background.wav", UriKind.Relative));
+
 
             this.TestGame();
         }
@@ -33,6 +38,7 @@
             this.AddNameToPlayers("Karcsi", "Kata");
             this.NewGame();
             this.NewRound();
+            this.StartBackgroundSong();
         }
 
         public void AddNameToPlayers(string player1Name, string player2Name)
@@ -219,6 +225,11 @@
             player.PosY = posY;
             player.Area = new Rect(posX, posY, 40, 40);
             this.GameModel.GameField[posY, posX] = player;
+        }
+
+        private void StartBackgroundSong()
+        {
+            backgroundMediaPlayer.Play();
         }
     }
 }

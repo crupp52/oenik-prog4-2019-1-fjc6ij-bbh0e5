@@ -79,8 +79,8 @@
   <ItemGroup>
     <Content Include="Images\obstacle.png" />
     <Content Include="Images\speedup.png" />
-    <Content Include="Sounds\background.mp3" />
-    <Content Include="Sounds\turbo.mp3" />
+    <Content Include="Sounds\background.wav" />
+    <Content Include="Sounds\turbo.wav" />
     <Content Include="Sounds\victory.wav" />
     <Content Include="XMLs\settings.xml" />
   </ItemGroup>
