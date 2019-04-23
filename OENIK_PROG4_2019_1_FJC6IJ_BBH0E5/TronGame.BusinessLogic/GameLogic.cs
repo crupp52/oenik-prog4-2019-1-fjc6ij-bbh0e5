@@ -182,8 +182,8 @@
             int i = 0;
             while (i != num)
             {
-                int posX = rnd.Next(0, 1000);
-                int posY = rnd.Next(0, 500);
+                int posX = rnd.Next(0, 944);
+                int posY = rnd.Next(0, 603);
                 if (this.GameModel.GameField[posY, posX] == null)
                 {
                     ObstacleObject o = new ObstacleObject() { PosX = posX, PosY = posY, Area = new Rect(posX, posY, 40, 40) };
@@ -199,8 +199,8 @@
             int i = 0;
             while (i != num)
             {
-                int posX = rnd.Next(0, 1000);
-                int posY = rnd.Next(0, 500);
+                int posX = rnd.Next(0, 944);
+                int posY = rnd.Next(0, 603);
                 if (this.GameModel.GameField[posY, posX] == null)
                 {
                     TurboObject o = new TurboObject() { PosX = posX, PosY = posY, Area = new Rect(posX, posY, 40, 40) };
@@ -213,12 +213,12 @@
 
         private void SetPlayerStartPositon(Player player)
         {
-            int posX = rnd.Next(0, 1000);
-            int posY = rnd.Next(0, 500);
+            int posX = rnd.Next(0, 944);
+            int posY = rnd.Next(0, 603);
             while (this.GameModel.GameField[posY, posX] != null)
             {
-                posX = rnd.Next(0, 1000);
-                posY = rnd.Next(0, 500);
+                posX = rnd.Next(0, 944);
+                posY = rnd.Next(0, 603);
             }
 
             player.PosX = posX;

@@ -117,5 +117,9 @@
       <Name>TronGame.Repository</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\obstacle.png" />
+    <Resource Include="Images\turbo.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

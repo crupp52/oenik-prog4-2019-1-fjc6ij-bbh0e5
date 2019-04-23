@@ -1,6 +1,8 @@
 ﻿namespace TronGame.Model
 {
+    using System;
     using System.Collections.Generic;
+    using System.Xml.Serialization;
     using TronGame.Repository;
 
     public class GameModel : IGameModel
@@ -16,7 +18,7 @@
             this.Player2 = new Player();
             this.Difficulty = Difficulty.Medium;
             this.HighScore = new HighScore();
-            this.GameField = new GameObject[500, 1000];
+            this.GameField = new GameObject[643, 984];
         }
 
         public Difficulty Difficulty { get; set; }
@@ -31,6 +33,7 @@
 
         public List<TurboObject> Turbos { get; set; }
 
+        [XmlIgnore]
         public GameObject[,] GameField { get; set; }
     }
 }

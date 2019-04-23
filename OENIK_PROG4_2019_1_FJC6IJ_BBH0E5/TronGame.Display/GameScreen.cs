@@ -3,6 +3,7 @@
     using System;
     using System.Windows;
     using System.Windows.Media;
+    using System.Windows.Media.Imaging;
     using System.Windows.Threading;
     using TronGame.BusinessLogic;
     using TronGame.Model;
@@ -20,17 +21,19 @@
 
         protected override void OnRender(DrawingContext drawingContext)
         {
+            ImageBrush obstacleTexture = new ImageBrush(new BitmapImage(new Uri(@"D:\Repos\prog4_ff\OENIK_PROG4_2019_1_FJC6IJ_BBH0E5\TronGame.Display\Images\obstacle.png")));
+            ImageBrush turboTexture = new ImageBrush(new BitmapImage(new Uri(@"D:\Repos\prog4_ff\OENIK_PROG4_2019_1_FJC6IJ_BBH0E5\TronGame.Display\Images\turbo.png")));
             drawingContext.DrawRectangle(Brushes.Red, new Pen(Brushes.Black, 2), this.model.Player1.Area);
             drawingContext.DrawRectangle(Brushes.Blue, new Pen(Brushes.Black, 2), this.model.Player2.Area);
 
             foreach (var item in this.model.Obstacles)
             {
-                drawingContext.DrawRectangle(Brushes.Black, null, item.Area);
+                drawingContext.DrawRectangle(obstacleTexture, null, item.Area);
             }
 
             foreach (var item in this.model.Turbos)
             {
-                drawingContext.DrawRectangle(Brushes.Green, null, item.Area);
+                drawingContext.DrawRectangle(turboTexture, null, item.Area);
             }
         }
 
@@ -40,6 +43,8 @@
             this.logic.ScreenRefresh += this.Logic_ScreenRefresh;
             Window window = Window.GetWindow(this);
             window.KeyDown += this.Window_KeyDown;
+
+            this.logic.SaveGameState();
 
             DispatcherTimer timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(33.3333333);
