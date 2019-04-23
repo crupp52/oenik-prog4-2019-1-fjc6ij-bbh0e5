@@ -6,7 +6,39 @@
         xmlns:local="clr-namespace:TronGame.Display"
         mc:Ignorable="d"
         Title="MainWindow" Height="683" Width="1024" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
-    <local:GameScreen>
+    <DockPanel>
+        <Grid Background="Blue" DockPanel.Dock="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Content="JÁTÉKOS_1"/>
+            <Label Grid.Row="0" Grid.Column="1" Content="JÁTÉKOS_1 POWERUPS_NUM"/>
+            <Label Grid.Row="0" Grid.Column="2" Content="JÁTÉKOS_1 WON GAMES"/>
 
-    </local:GameScreen>
+            <Label Grid.Row="1" Grid.Column="0" Content="JÁTÉKOS_2"/>
+            <Label Grid.Row="1" Grid.Column="1" Content="JÁTÉKOS_2 POWERUPS_NUM"/>
+            <Label Grid.Row="1" Grid.Column="2" Content="JÁTÉKOS_2 WON GAMES"/>
+
+            <Label Grid.Row="2" Grid.Column="0" Content="TIME"/>
+            <Label Grid.Row="2" Grid.Column="1" Content="HIGHSCORE"/>
+            <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Horizontal">
+                <Button Content="Pause"/>
+                <Button Content="Menu"/>
+                <Button Content="Help"/>
+            </StackPanel>
+        </Grid>
+
+        <local:GameScreen>
+
+        </local:GameScreen>
+    </DockPanel>
+    
+
 </Window>
