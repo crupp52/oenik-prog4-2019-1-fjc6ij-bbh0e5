@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TronGame.Display"
         mc:Ignorable="d"
-        Title="MainWindow" Height="683" Width="1024" ResizeMode="CanMinimize">
+        Title="MainWindow" Height="683" Width="1024" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <local:GameScreen>
-        
+
     </local:GameScreen>
 </Window>
