@@ -3,6 +3,7 @@
     using System;
     using System.Windows;
     using System.Windows.Media;
+    using System.Windows.Media.Imaging;
     using System.Windows.Threading;
     using TronGame.BusinessLogic;
     using TronGame.Model;
@@ -25,12 +26,12 @@
 
             foreach (var item in this.model.Obstacles)
             {
-                drawingContext.DrawRectangle(Brushes.Black, null, item.Area);
+                drawingContext.DrawRectangle(new ImageBrush(new BitmapImage(new Uri(@"../../../TronGame.Repository/Images/obstacle.png", UriKind.Relative))), null, item.Area);
             }
 
             foreach (var item in this.model.Turbos)
             {
-                drawingContext.DrawRectangle(Brushes.Green, null, item.Area);
+                drawingContext.DrawRectangle(new ImageBrush(new BitmapImage(new Uri(@"../../../TronGame.Repository/Images/speedup.png", UriKind.Relative))), null, item.Area);
             }
         }
 
@@ -59,7 +60,7 @@
 
         private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            throw new NotImplementedException();
+            // throw new NotImplementedException();
         }
     }
 }

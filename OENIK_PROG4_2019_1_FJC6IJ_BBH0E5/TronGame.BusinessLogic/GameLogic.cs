@@ -25,7 +25,6 @@
             this.backgroundMediaPlayer = new MediaPlayer();
             this.backgroundMediaPlayer.Open(new Uri(@"../../../TronGame.Repository/Sounds/background.wav", UriKind.Relative));
 
-
             this.TestGame();
         }
 
@@ -229,7 +228,7 @@
 
         private void StartBackgroundSong()
         {
-            backgroundMediaPlayer.Play();
+            this.backgroundMediaPlayer.Play();
         }
     }
 }
