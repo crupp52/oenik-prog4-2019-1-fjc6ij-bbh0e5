@@ -2,6 +2,7 @@
 {
     using System;
     using System.Windows;
+    using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
     using System.Windows.Threading;
@@ -39,17 +40,20 @@
 
         private void GameScreen_Loaded(object sender, RoutedEventArgs e)
         {
-            this.logic = new GameLogic(this.model);
-            this.logic.ScreenRefresh += this.Logic_ScreenRefresh;
             Window window = Window.GetWindow(this);
-            window.KeyDown += this.Window_KeyDown;
+            if (window != null)
+            {
+                this.logic = new GameLogic(this.model);
+                this.logic.ScreenRefresh += this.Logic_ScreenRefresh;
+                window.KeyDown += this.Window_KeyDown;
 
-            this.logic.SaveGameState();
+                this.logic.SaveGameState();
 
-            DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(33.3333333);
-            timer.Tick += this.Timer_Tick;
-            timer.Start();
+                DispatcherTimer timer = new DispatcherTimer();
+                timer.Interval = TimeSpan.FromMilliseconds(33.3333333);
+                timer.Tick += this.Timer_Tick;
+                timer.Start();
+            }
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -65,6 +69,21 @@
         private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             // throw new NotImplementedException();
+            switch (e.Key)
+            {
+                case Key.W: this.logic.MovePlayer(this.model.Player1, Repository.MovingDirection.Up); break;
+                case Key.A: this.logic.MovePlayer(this.model.Player1, Repository.MovingDirection.Left); break;
+                case Key.S: this.logic.MovePlayer(this.model.Player1, Repository.MovingDirection.Down); break;
+                case Key.D: this.logic.MovePlayer(this.model.Player1, Repository.MovingDirection.Rigth); break;
+
+                case Key.Up: this.logic.MovePlayer(this.model.Player2, Repository.MovingDirection.Up); break;
+                case Key.Left: this.logic.MovePlayer(this.model.Player2, Repository.MovingDirection.Left); break;
+                case Key.Down: this.logic.MovePlayer(this.model.Player2, Repository.MovingDirection.Down); break;
+                case Key.Right: this.logic.MovePlayer(this.model.Player2, Repository.MovingDirection.Rigth); break;
+
+                default: break;
+            }
+
         }
     }
 }
