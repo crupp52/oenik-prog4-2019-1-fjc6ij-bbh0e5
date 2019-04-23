@@ -21,8 +21,8 @@
 
         protected override void OnRender(DrawingContext drawingContext)
         {
-            ImageBrush obstacleTexture = new ImageBrush(new BitmapImage(new Uri(@"D:\Repos\prog4_ff\OENIK_PROG4_2019_1_FJC6IJ_BBH0E5\TronGame.Display\Images\obstacle.png")));
-            ImageBrush turboTexture = new ImageBrush(new BitmapImage(new Uri(@"D:\Repos\prog4_ff\OENIK_PROG4_2019_1_FJC6IJ_BBH0E5\TronGame.Display\Images\turbo.png")));
+            ImageBrush obstacleTexture = new ImageBrush(new BitmapImage(new Uri(@"../../../TronGame.Repository/Images/obstacle.png", UriKind.Relative)));
+            ImageBrush turboTexture = new ImageBrush(new BitmapImage(new Uri(@"../../../TronGame.Repository/Images/speedup.png", UriKind.Relative)));
             drawingContext.DrawRectangle(Brushes.Red, new Pen(Brushes.Black, 2), this.model.Player1.Area);
             drawingContext.DrawRectangle(Brushes.Blue, new Pen(Brushes.Black, 2), this.model.Player2.Area);
 
@@ -64,7 +64,7 @@
 
         private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            throw new NotImplementedException();
+            // throw new NotImplementedException();
         }
     }
 }
