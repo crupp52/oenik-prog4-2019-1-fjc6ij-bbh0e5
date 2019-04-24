@@ -14,6 +14,9 @@
         private IGameModel model;
         private IBusinessLogic logic;
 
+        private ImageBrush obstacleTexture = new ImageBrush(new BitmapImage(new Uri(@"../../../TronGame.Repository/Images/obstacle.png", UriKind.Relative)));
+        private ImageBrush turboTexture = new ImageBrush(new BitmapImage(new Uri(@"../../../TronGame.Repository/Images/speedup.png", UriKind.Relative)));
+
         public GameScreen()
         {
             this.model = new GameModel();
@@ -22,19 +25,17 @@
 
         protected override void OnRender(DrawingContext drawingContext)
         {
-            ImageBrush obstacleTexture = new ImageBrush(new BitmapImage(new Uri(@"../../../TronGame.Repository/Images/obstacle.png", UriKind.Relative)));
-            ImageBrush turboTexture = new ImageBrush(new BitmapImage(new Uri(@"../../../TronGame.Repository/Images/speedup.png", UriKind.Relative)));
             drawingContext.DrawRectangle(Brushes.Red, new Pen(Brushes.Black, 2), this.model.Player1.Area);
             drawingContext.DrawRectangle(Brushes.Blue, new Pen(Brushes.Black, 2), this.model.Player2.Area);
 
             foreach (var item in this.model.Obstacles)
             {
-                drawingContext.DrawRectangle(obstacleTexture, null, item.Area);
+                drawingContext.DrawRectangle(this.obstacleTexture, null, item.Area);
             }
 
             foreach (var item in this.model.Turbos)
             {
-                drawingContext.DrawRectangle(turboTexture, null, item.Area);
+                drawingContext.DrawRectangle(this.turboTexture, null, item.Area);
             }
         }
 
@@ -66,7 +67,7 @@
             this.InvalidateVisual();
         }
 
-        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             // throw new NotImplementedException();
             switch (e.Key)
@@ -80,6 +81,15 @@
                 case Key.Left: this.logic.MovePlayer(this.model.Player2, Repository.MovingDirection.Left); break;
                 case Key.Down: this.logic.MovePlayer(this.model.Player2, Repository.MovingDirection.Down); break;
                 case Key.Right: this.logic.MovePlayer(this.model.Player2, Repository.MovingDirection.Rigth); break;
+
+                // TEST
+                case Key.R:
+                    MessageBox.Show("R");
+                    MessageBox.Show($"Player1 Pos: (X:{model.Player1.PosX},Y:{model.Player1.PosY})");
+                    this.model.Player1.Move(Repository.MovingDirection.Down);
+                    MessageBox.Show($"Player1 Pos: (X:{model.Player1.PosX},Y:{model.Player1.PosY})");
+                    this.InvalidateVisual();
+                    break;
 
                 default: break;
             }
