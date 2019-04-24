@@ -6,6 +6,9 @@
     using System.Text;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// Interface for GameRepository class.
+    /// </summary>
     public interface IRepository
     {
     }
