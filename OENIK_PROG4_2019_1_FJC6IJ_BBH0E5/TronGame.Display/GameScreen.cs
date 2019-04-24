@@ -1,6 +1,7 @@
 ﻿namespace TronGame.Display
 {
     using System;
+    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Input;
     using System.Windows.Media;
@@ -69,7 +70,6 @@
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            // throw new NotImplementedException();
             switch (e.Key)
             {
                 case Key.W: this.logic.MovePlayer(this.model.Player1, Repository.MovingDirection.Up); break;
@@ -81,23 +81,7 @@
                 case Key.Left: this.logic.MovePlayer(this.model.Player2, Repository.MovingDirection.Left); break;
                 case Key.Down: this.logic.MovePlayer(this.model.Player2, Repository.MovingDirection.Down); break;
                 case Key.Right: this.logic.MovePlayer(this.model.Player2, Repository.MovingDirection.Rigth); break;
-
-                /*
-                // TEST
-                case Key.R:
-                    MessageBox.Show("R");
-                    //MessageBox.Show($"Player1 Pos: (X:{model.Player1.PosX},Y:{model.Player1.PosY})");
-                    MessageBox.Show($"Player1 Pos: (Right:{model.Player1.Area.Right},Top:{model.Player1.Area.Top})");
-                    this.model.Player1.Move(Repository.MovingDirection.Down);
-                    //MessageBox.Show($"Player1 Pos: (X:{model.Player1.PosX},Y:{model.Player1.PosY})");
-                    MessageBox.Show($"Player1 Pos: (Right:{model.Player1.Area.Right},Top:{model.Player1.Area.Top})");
-                    this.InvalidateVisual();
-                    break;
-               */
-
-                default: break;
             }
-
         }
     }
 }
