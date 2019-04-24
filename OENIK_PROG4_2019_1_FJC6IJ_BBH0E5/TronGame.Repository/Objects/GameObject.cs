@@ -28,6 +28,8 @@
 
         public int PosY { get; set; }
 
-        public Rect Area { get; set; }
+        private Rect _area;
+
+        public Rect Area { get => _area; set => _area = value; }
     }
 }
