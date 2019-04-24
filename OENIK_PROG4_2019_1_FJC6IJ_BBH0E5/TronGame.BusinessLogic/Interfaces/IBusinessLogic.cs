@@ -1,17 +1,22 @@
 ﻿namespace TronGame.BusinessLogic
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     using TronGame.Model;
     using TronGame.Repository;
 
+    /// <summary>
+    /// Interface of the GameLogic
+    /// </summary>
     public interface IBusinessLogic
     {
+        /// <summary>
+        /// ScreenRefresh eventhandler
+        /// </summary>
         event EventHandler ScreenRefresh;
 
+        /// <summary>
+        /// Gets GameModel
+        /// </summary>
         IGameModel GameModel { get; }
 
         /// <summary>

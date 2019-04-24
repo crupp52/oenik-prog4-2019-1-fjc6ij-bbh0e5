@@ -1,24 +1,38 @@
 ﻿namespace TronGame.Display
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Media;
     using TronGame.BusinessLogic;
     using TronGame.Model;
 
+    /// <summary>
+    /// Game controlling methods
+    /// </summary>
     public class GameControl : FrameworkElement
     {
         private IGameModel model;
         private IBusinessLogic logic;
         private GameScreen display;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GameControl"/> class.
+        /// </summary>
         public GameControl()
         {
             this.Loaded += this.GameControl_Loaded;
+        }
+
+        /// <summary>
+        /// Render the generated Drawings.
+        /// </summary>
+        /// <param name="drawingContext">DrawingContext parameter</param>
+        protected override void OnRender(DrawingContext drawingContext)
+        {
+            if (this.logic != null && this.ActualWidth != 0)
+            {
+                drawingContext.DrawDrawing(null);
+            }
         }
 
         private void GameControl_Loaded(object sender, RoutedEventArgs e)
@@ -37,14 +51,6 @@
         private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             throw new NotImplementedException();
-        }
-
-        protected override void OnRender(DrawingContext drawingContext)
-        {
-            if (this.logic != null && this.ActualWidth != 0)
-            {
-                drawingContext.DrawDrawing(null);
-            }
         }
     }
 }

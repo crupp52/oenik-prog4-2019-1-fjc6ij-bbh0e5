@@ -16,7 +16,7 @@
         /// Initializes a new instance of the <see cref="GameObject"/> class.
         /// Set start values of properties.
         /// </summary>
-        public GameObject()
+        protected GameObject()
         {
         }
 
@@ -25,23 +25,23 @@
         /// </summary>
         /// <param name="x">Position in X axis</param>
         /// <param name="y">Position in Y axis</param>
-        public GameObject(double x, double y)
+        protected GameObject(double x, double y)
         {
             this.Area = new Rect(x, y, 40, 40);
         }
 
         /// <summary>
-        /// Position in X axis
+        /// Gets or sets position in X axis
         /// </summary>
         public int PosX { get; set; }
 
         /// <summary>
-        /// Position in Y axis
+        /// Gets or sets position in Y axis
         /// </summary>
         public int PosY { get; set; }
 
         /// <summary>
-        /// Area of the object
+        /// Gets or sets area of the object
         /// </summary>
         public Rect Area { get; set; }
     }

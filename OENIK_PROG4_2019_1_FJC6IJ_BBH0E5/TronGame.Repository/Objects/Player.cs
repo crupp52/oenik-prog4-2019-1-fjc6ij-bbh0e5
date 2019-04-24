@@ -39,7 +39,7 @@
     /// </summary>
     public class Player : GameObject
     {
-        private Stopwatch stopwatch;
+        private readonly Stopwatch stopwatch;
         private int speed = 5;
 
         /// <summary>

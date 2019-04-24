@@ -8,12 +8,18 @@
     using TronGame.Model;
     using TronGame.Repository;
 
+    /// <summary>
+    /// GameLogic test class
+    /// </summary>
     [TestFixture]
     public class GameLogicTest
     {
         private Mock<IGameModel> mock;
         private IBusinessLogic logic;
 
+        /// <summary>
+        /// Gets yield return Players
+        /// </summary>
         public static IEnumerable<TestCaseData> PlayerList
         {
             get
@@ -25,10 +31,13 @@
                 yield return new TestCaseData(new[]
                 {
                     new Player() { Name = "Teszt Elek", PosX = 73, PosY = 10, NumberOfTurbos = 3, NumberOfWins = 1 }
-            });
+                });
             }
         }
 
+        /// <summary>
+        /// Setup the mocked GameModel object
+        /// </summary>
         [SetUp]
         public void Setup()
         {
@@ -68,12 +77,19 @@
             this.logic = new GameLogic(this.mock.Object);
         }
 
+        /// <summary>
+        /// After setup, the GameLogic instance is not null
+        /// </summary>
         [Test]
         public void NotEmptyLogic()
         {
             Assert.That(this.logic, Is.Not.Null);
         }
 
+        /// <summary>
+        /// Test of generate new obstacle and turbos objects
+        /// </summary>
+        /// <param name="difficulty">Difficulty of game</param>
         [Test]
         [TestCase(Difficulty.Easy)]
         [TestCase(Difficulty.Medium)]
@@ -86,6 +102,10 @@
             Assert.That(this.logic.GameModel.Turbos.Count, Is.Not.Zero);
         }
 
+        /// <summary>
+        /// Change game difficulty
+        /// </summary>
+        /// <param name="difficulty">Difficulty of game</param>
         [Test]
         [TestCase(Difficulty.Easy)]
         [TestCase(Difficulty.Medium)]
@@ -111,6 +131,10 @@
             }
         }
 
+        /// <summary>
+        /// Test of UseTurbo method
+        /// </summary>
+        /// <param name="player">Player instance</param>
         [Test]
         [TestCaseSource(nameof(PlayerList))]
         [Sequential]
@@ -123,6 +147,11 @@
             Assert.That(player.NumberOfTurbos, Is.LessThan(numOfTurbos));
         }
 
+        /// <summary>
+        /// Test of AddNameToPlayers
+        /// </summary>
+        /// <param name="name1">Name of the Player1</param>
+        /// <param name="name2">Name of the Player2</param>
         [TestCase("Karcsi", "Béla")]
         [TestCase("Kata", "Ágnes")]
         public void SetPlayersNameTest(string name1, string name2)
@@ -133,6 +162,10 @@
             Assert.That(name2, Is.EqualTo(this.logic.GameModel.Player2.Name));
         }
 
+        /// <summary>
+        /// Test of the MovePlayer method
+        /// </summary>
+        /// <param name="direction">Direction of the move</param>
         [TestCase(MovingDirection.Up)]
         [TestCase(MovingDirection.Down)]
         [TestCase(MovingDirection.Left)]

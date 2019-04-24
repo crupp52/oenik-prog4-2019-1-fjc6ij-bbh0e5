@@ -10,6 +10,9 @@
     using TronGame.BusinessLogic;
     using TronGame.Model;
 
+    /// <summary>
+    /// Generate Bruses to display
+    /// </summary>
     public class GameScreen : FrameworkElement
     {
         private IGameModel model;
@@ -18,12 +21,19 @@
         private ImageBrush obstacleTexture = new ImageBrush(new BitmapImage(new Uri(@"../../../TronGame.Repository/Images/obstacle.png", UriKind.Relative)));
         private ImageBrush turboTexture = new ImageBrush(new BitmapImage(new Uri(@"../../../TronGame.Repository/Images/speedup.png", UriKind.Relative)));
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GameScreen"/> class.
+        /// </summary>
         public GameScreen()
         {
             this.model = new GameModel();
             this.Loaded += this.GameScreen_Loaded;
         }
 
+        /// <summary>
+        /// Render the generated Drawings.
+        /// </summary>
+        /// <param name="drawingContext">DrawingContext parameter</param>
         protected override void OnRender(DrawingContext drawingContext)
         {
             drawingContext.DrawRectangle(Brushes.Red, new Pen(Brushes.Black, 2), this.model.Player1.Area);
