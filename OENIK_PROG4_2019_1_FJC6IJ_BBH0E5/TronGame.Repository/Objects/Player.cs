@@ -41,15 +41,19 @@
             switch (direction)
             {
                 case MovingDirection.Up:
+                    this.Area = new System.Windows.Rect(this.Area.X, this.Area.Y - this.speed, 40, 40);
                     this.PosY -= this.speed;
                     break;
                 case MovingDirection.Down:
+                    this.Area = new System.Windows.Rect(this.Area.X, this.Area.Y + this.speed, 40, 40);
                     this.PosY += this.speed;
                     break;
                 case MovingDirection.Left:
+                    this.Area = new System.Windows.Rect(this.Area.X - this.speed, this.Area.Y, 40, 40);
                     this.PosX -= this.speed;
                     break;
                 case MovingDirection.Rigth:
+                    this.Area = new System.Windows.Rect(this.Area.X + this.speed, this.Area.Y, 40, 40);
                     this.PosX += this.speed;
                     break;
             }
