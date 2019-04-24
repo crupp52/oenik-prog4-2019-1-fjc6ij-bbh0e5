@@ -8,11 +8,35 @@
     using System.Threading;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// Moving directions
+    /// </summary>
     public enum MovingDirection
     {
-        Up, Down, Left, Rigth
+        /// <summary>
+        /// Move to up
+        /// </summary>
+        Up,
+
+        /// <summary>
+        /// Move to down
+        /// </summary>
+        Down,
+
+        /// <summary>
+        /// Move to left
+        /// </summary>
+        Left,
+
+        /// <summary>
+        /// Move to right
+        /// </summary>
+        Rigth
     }
 
+    /// <summary>
+    /// Player Object
+    /// </summary>
     public class Player : GameObject
     {
         private Stopwatch stopwatch;
@@ -21,7 +45,6 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="Player"/> class.
         /// </summary>
-        /// <param name="name">Name of the player</param>
         public Player()
         {
             this.stopwatch = new Stopwatch();
@@ -30,12 +53,25 @@
             this.NumberOfTurbos = 0;
         }
 
+        /// <summary>
+        /// Gets or sets name of player
+        /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        /// Gets or sets number of wins
+        /// </summary>
         public int NumberOfWins { get; set; }
 
+        /// <summary>
+        /// Gets or sets number of speed ups
+        /// </summary>
         public int NumberOfTurbos { get; set; }
 
+        /// <summary>
+        /// Move the player in the field
+        /// </summary>
+        /// <param name="direction">Direction of the move</param>
         public void Move(MovingDirection direction)
         {
             switch (direction)
@@ -59,6 +95,9 @@
             }
         }
 
+        /// <summary>
+        /// Activate the speed up
+        /// </summary>
         public void SpeedUp()
         {
             this.NumberOfTurbos--;
