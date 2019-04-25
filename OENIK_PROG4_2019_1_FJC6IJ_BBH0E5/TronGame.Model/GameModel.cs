@@ -21,7 +21,7 @@
             this.Player2 = new Player();
             this.Difficulty = Difficulty.Medium;
             this.HighScore = new HighScore();
-            this.GameField = new GameObject[643, 984];
+            this.GameField = new GameObject[600, 1000];
         }
 
         /// <summary>

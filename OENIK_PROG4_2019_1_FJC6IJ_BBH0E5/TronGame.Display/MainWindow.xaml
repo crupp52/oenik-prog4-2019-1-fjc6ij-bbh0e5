@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TronGame.Display"
         mc:Ignorable="d"
-        Title="MainWindow" Height="683" Width="1024" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="700" Width="1000" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <DockPanel>
-        <Grid Background="Blue" DockPanel.Dock="Top">
+        <Grid Height="100" Background="Blue" DockPanel.Dock="Top">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
@@ -35,7 +35,7 @@
             </StackPanel>
         </Grid>
 
-        <local:GameScreen>
+        <local:GameScreen Width="1000" Height="600">
 
         </local:GameScreen>
     </DockPanel>

@@ -19,6 +19,9 @@
         private Stopwatch sw;
         private MediaPlayer backgroundMediaPlayer;
 
+        private int width;
+        private int heigth;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GameLogic"/> class.
         /// </summary>
@@ -31,6 +34,9 @@
             rnd = new Random();
             this.backgroundMediaPlayer = new MediaPlayer();
             this.backgroundMediaPlayer.Open(new Uri(@"../../../TronGame.Repository/Sounds/background.wav", UriKind.Relative));
+
+            this.width = 1000;
+            this.heigth = 600;
 
             this.TestGame();
         }
@@ -229,8 +235,8 @@
             int i = 0;
             while (i != num)
             {
-                int posX = rnd.Next(0, 944);
-                int posY = rnd.Next(0, 603);
+                int posX = rnd.Next(0, 24) * 40;
+                int posY = rnd.Next(0, 14) * 40;
                 if (this.GameModel.GameField[posY, posX] == null)
                 {
                     ObstacleObject o = new ObstacleObject() { PosX = posX, PosY = posY, Area = new Rect(posX, posY, 40, 40) };
@@ -246,8 +252,8 @@
             int i = 0;
             while (i != num)
             {
-                int posX = rnd.Next(0, 944);
-                int posY = rnd.Next(0, 603);
+                int posX = rnd.Next(0, 24) * 40;
+                int posY = rnd.Next(0, 14) * 40;
                 if (this.GameModel.GameField[posY, posX] == null)
                 {
                     TurboObject o = new TurboObject() { PosX = posX, PosY = posY, Area = new Rect(posX, posY, 40, 40) };
@@ -260,17 +266,17 @@
 
         private void SetPlayerStartPositon(Player player)
         {
-            int posX = rnd.Next(0, 944);
-            int posY = rnd.Next(0, 603);
+            int posX = rnd.Next(0, 50) * 20;
+            int posY = rnd.Next(0, 30) * 20;
             while (this.GameModel.GameField[posY, posX] != null)
             {
-                posX = rnd.Next(0, 944);
-                posY = rnd.Next(0, 603);
+                posX = rnd.Next(0, this.width);
+                posY = rnd.Next(0, this.heigth);
             }
 
             player.PosX = posX;
             player.PosY = posY;
-            player.Area = new Rect(posX, posY, 40, 40);
+            player.Area = new Rect(posX, posY, 20, 20);
             this.GameModel.GameField[posY, posX] = player;
         }
 

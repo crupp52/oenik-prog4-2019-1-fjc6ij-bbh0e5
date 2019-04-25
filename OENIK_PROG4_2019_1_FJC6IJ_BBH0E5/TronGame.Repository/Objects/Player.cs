@@ -40,7 +40,7 @@
     public class Player : GameObject
     {
         private readonly Stopwatch stopwatch;
-        private int speed = 5;
+        private int speed = 20;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Player"/> class.
@@ -77,19 +77,19 @@
             switch (direction)
             {
                 case MovingDirection.Up:
-                    this.Area = new System.Windows.Rect(this.Area.X, this.Area.Y - this.speed, 40, 40);
+                    this.Area = new System.Windows.Rect(this.Area.X, this.Area.Y - this.speed, 20, 20);
                     this.PosY -= this.speed;
                     break;
                 case MovingDirection.Down:
-                    this.Area = new System.Windows.Rect(this.Area.X, this.Area.Y + this.speed, 40, 40);
+                    this.Area = new System.Windows.Rect(this.Area.X, this.Area.Y + this.speed, 20, 20);
                     this.PosY += this.speed;
                     break;
                 case MovingDirection.Left:
-                    this.Area = new System.Windows.Rect(this.Area.X - this.speed, this.Area.Y, 40, 40);
+                    this.Area = new System.Windows.Rect(this.Area.X - this.speed, this.Area.Y, 20, 20);
                     this.PosX -= this.speed;
                     break;
                 case MovingDirection.Rigth:
-                    this.Area = new System.Windows.Rect(this.Area.X + this.speed, this.Area.Y, 40, 40);
+                    this.Area = new System.Windows.Rect(this.Area.X + this.speed, this.Area.Y, 20, 20);
                     this.PosX += this.speed;
                     break;
             }
