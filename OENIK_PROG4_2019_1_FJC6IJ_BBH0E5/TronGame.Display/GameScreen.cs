@@ -18,6 +18,8 @@
         private IGameModel model;
         private IBusinessLogic logic;
 
+        private int tileSize;
+
         private ImageBrush obstacleTexture = new ImageBrush(new BitmapImage(new Uri(@"../../../TronGame.Repository/Images/obstacle.png", UriKind.Relative)));
         private ImageBrush turboTexture = new ImageBrush(new BitmapImage(new Uri(@"../../../TronGame.Repository/Images/speedup.png", UriKind.Relative)));
 
@@ -36,22 +38,23 @@
         /// <param name="drawingContext">DrawingContext parameter</param>
         protected override void OnRender(DrawingContext drawingContext)
         {
-            drawingContext.DrawRectangle(Brushes.Red, new Pen(Brushes.Black, 2), this.model.Player1.Area);
-            drawingContext.DrawRectangle(Brushes.Blue, new Pen(Brushes.Black, 2), this.model.Player2.Area);
+            //drawingContext.DrawRectangle(Brushes.Red, new Pen(Brushes.Black, 2), this.model.Player1.Area);
+            //drawingContext.DrawRectangle(Brushes.Blue, new Pen(Brushes.Black, 2), this.model.Player2.Area);
 
-            foreach (var item in this.model.Obstacles)
-            {
-                drawingContext.DrawRectangle(this.obstacleTexture, null, item.Area);
-            }
+            //foreach (var item in this.model.Obstacles)
+            //{
+            //    drawingContext.DrawRectangle(this.obstacleTexture, null, item.Area);
+            //}
 
-            foreach (var item in this.model.Turbos)
-            {
-                drawingContext.DrawRectangle(this.turboTexture, null, item.Area);
-            }
+            //foreach (var item in this.model.Turbos)
+            //{
+            //    drawingContext.DrawRectangle(this.turboTexture, null, item.Area);
+            //}
         }
 
         private void GameScreen_Loaded(object sender, RoutedEventArgs e)
         {
+            this.tileSize = 20;
             Window window = Window.GetWindow(this);
             if (window != null)
             {

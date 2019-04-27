@@ -35,9 +35,9 @@
             </StackPanel>
         </Grid>
 
-        <local:GameScreen Width="1000" Height="600">
+        <local:GameControl Width="1000" Height="600">
 
-        </local:GameScreen>
+        </local:GameControl>
     </DockPanel>
     
 

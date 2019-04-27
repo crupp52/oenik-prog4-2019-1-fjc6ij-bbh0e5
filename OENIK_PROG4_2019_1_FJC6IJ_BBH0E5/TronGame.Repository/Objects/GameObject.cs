@@ -27,7 +27,7 @@
         /// <param name="y">Position in Y axis</param>
         protected GameObject(double x, double y)
         {
-            this.Area = new Rect(x, y, 40, 40);
+            this.Point = new Point(x, y);
         }
 
         /// <summary>
@@ -41,8 +41,8 @@
         public int PosY { get; set; }
 
         /// <summary>
-        /// Gets or sets area of the object
+        /// Gets or sets position of the object
         /// </summary>
-        public Rect Area { get; set; }
+        public Point Point { get; set; }
     }
 }

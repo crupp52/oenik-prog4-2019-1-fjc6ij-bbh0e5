@@ -35,8 +35,8 @@
             this.backgroundMediaPlayer = new MediaPlayer();
             this.backgroundMediaPlayer.Open(new Uri(@"../../../TronGame.Repository/Sounds/background.wav", UriKind.Relative));
 
-            this.width = 1000;
-            this.heigth = 600;
+            this.width = 50;
+            this.heigth = 30;
 
             this.TestGame();
         }
@@ -102,7 +102,7 @@
         /// <param name="direction">Direction of the movement</param>
         public void MovePlayer(Player player, MovingDirection direction)
         {
-            player.Move(direction);
+            player.MovingDirection = direction;
             this.ScreenRefresh?.Invoke(this, EventArgs.Empty);
         }
 
@@ -235,11 +235,11 @@
             int i = 0;
             while (i != num)
             {
-                int posX = rnd.Next(0, 24) * 40;
-                int posY = rnd.Next(0, 14) * 40;
+                int posX = rnd.Next(0, 24);
+                int posY = rnd.Next(0, 14);
                 if (this.GameModel.GameField[posY, posX] == null)
                 {
-                    ObstacleObject o = new ObstacleObject() { PosX = posX, PosY = posY, Area = new Rect(posX, posY, 40, 40) };
+                    ObstacleObject o = new ObstacleObject() { PosX = posX, PosY = posY, Point = new Point(posX, posY) };
                     this.GameModel.Obstacles.Add(o);
                     this.GameModel.GameField[posY, posX] = o;
                     i++;
@@ -252,11 +252,11 @@
             int i = 0;
             while (i != num)
             {
-                int posX = rnd.Next(0, 24) * 40;
-                int posY = rnd.Next(0, 14) * 40;
+                int posX = rnd.Next(0, 24);
+                int posY = rnd.Next(0, 14);
                 if (this.GameModel.GameField[posY, posX] == null)
                 {
-                    TurboObject o = new TurboObject() { PosX = posX, PosY = posY, Area = new Rect(posX, posY, 40, 40) };
+                    TurboObject o = new TurboObject() { PosX = posX, PosY = posY, Point = new Point(posX, posY) };
                     this.GameModel.Turbos.Add(o);
                     this.GameModel.GameField[posY, posX] = o;
                     i++;
@@ -266,8 +266,8 @@
 
         private void SetPlayerStartPositon(Player player)
         {
-            int posX = rnd.Next(0, 50) * 20;
-            int posY = rnd.Next(0, 30) * 20;
+            int posX = rnd.Next(0, 50);
+            int posY = rnd.Next(0, 30);
             while (this.GameModel.GameField[posY, posX] != null)
             {
                 posX = rnd.Next(0, this.width);
@@ -276,7 +276,7 @@
 
             player.PosX = posX;
             player.PosY = posY;
-            player.Area = new Rect(posX, posY, 20, 20);
+            player.Point = new Point(posX, posY);
             this.GameModel.GameField[posY, posX] = player;
         }
 

@@ -67,6 +67,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="GameControl.cs" />
+    <Compile Include="GameDisplay.cs" />
     <Compile Include="GameScreen.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -122,6 +123,10 @@
   <ItemGroup>
     <Resource Include="Images\obstacle.png" />
     <Resource Include="Images\turbo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\player1.png" />
+    <Resource Include="Images\player2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
