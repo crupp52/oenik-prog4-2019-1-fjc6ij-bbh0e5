@@ -40,8 +40,10 @@
     /// </summary>
     public class Player : GameObject
     {
+        public event EventHandler PlayerStep;
+
         private readonly Stopwatch stopwatch;
-        private int speed = 20;
+        private bool turbo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Player"/> class.
@@ -49,9 +51,11 @@
         public Player()
         {
             this.stopwatch = new Stopwatch();
+            this.turbo = false;
 
             this.NumberOfWins = 0;
             this.NumberOfTurbos = 0;
+
             this.Move();
         }
 
@@ -100,23 +104,39 @@
                         //    this.PosX += this.speed;
                         //    break;
                         case MovingDirection.Up:
-                            this.Point = new Point(this.Point.X, this.Point.Y - 1);
-                            this.PosY -= this.speed;
+                            if (this.Point.Y > 0)
+                            {
+                                this.Point = new Point(this.Point.X, this.Point.Y - 1);
+                            }
                             break;
                         case MovingDirection.Down:
-                            this.Point = new Point(this.Point.X, this.Point.Y + 1);
-                            this.PosY += this.speed;
+                            if (this.Point.Y < 27)
+                            {
+                                this.Point = new Point(this.Point.X, this.Point.Y + 1);
+                            }
                             break;
                         case MovingDirection.Left:
-                            this.Point = new Point(this.Point.X - 1, this.Point.Y);
-                            this.PosX -= this.speed;
+                            if (this.Point.X > 0)
+                            {
+                                this.Point = new Point(this.Point.X - 1, this.Point.Y);
+                            }
                             break;
                         case MovingDirection.Rigth:
-                            this.Point = new Point(this.Point.X + 1, this.Point.Y);
-                            this.PosX += this.speed;
+                            if (this.Point.X < 48)
+                            {
+                                this.Point = new Point(this.Point.X + 1, this.Point.Y);
+                            }
                             break;
                     }
-                    Thread.Sleep(300);
+                    this.PlayerStep?.Invoke(this, EventArgs.Empty);
+                    if (this.turbo)
+                    {
+                        Thread.Sleep(250);
+                    }
+                    else
+                    {
+                        Thread.Sleep(300);
+                    }
                 }
             });
         }
@@ -127,11 +147,11 @@
         public void SpeedUp()
         {
             this.NumberOfTurbos--;
-            new Thread(() =>
+            Task.Run(() =>
             {
-                this.speed = 10;
-                Thread.Sleep(7);
-                this.speed = 5;
+                this.turbo = true;
+                Thread.Sleep(5000);
+                this.turbo = false;
             });
         }
     }

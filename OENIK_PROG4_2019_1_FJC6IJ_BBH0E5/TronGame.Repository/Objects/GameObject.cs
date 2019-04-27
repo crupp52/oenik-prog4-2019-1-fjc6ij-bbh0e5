@@ -31,16 +31,6 @@
         }
 
         /// <summary>
-        /// Gets or sets position in X axis
-        /// </summary>
-        public int PosX { get; set; }
-
-        /// <summary>
-        /// Gets or sets position in Y axis
-        /// </summary>
-        public int PosY { get; set; }
-
-        /// <summary>
         /// Gets or sets position of the object
         /// </summary>
         public Point Point { get; set; }

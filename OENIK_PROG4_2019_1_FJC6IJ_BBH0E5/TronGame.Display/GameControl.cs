@@ -69,15 +69,18 @@
         {
             switch (e.Key)
             {
-                case Key.W: this.logic.MovePlayer(this.model.Player1, Repository.MovingDirection.Up); break;
-                case Key.A: this.logic.MovePlayer(this.model.Player1, Repository.MovingDirection.Left); break;
-                case Key.S: this.logic.MovePlayer(this.model.Player1, Repository.MovingDirection.Down); break;
-                case Key.D: this.logic.MovePlayer(this.model.Player1, Repository.MovingDirection.Rigth); break;
+                case Key.Up: this.logic.MovePlayer(this.model.Player1, Repository.MovingDirection.Up); break;
+                case Key.Down: this.logic.MovePlayer(this.model.Player1, Repository.MovingDirection.Down); break;
+                case Key.Left: this.logic.MovePlayer(this.model.Player1, Repository.MovingDirection.Left); break;
+                case Key.Right: this.logic.MovePlayer(this.model.Player1, Repository.MovingDirection.Rigth); break;
 
-                case Key.Up: this.logic.MovePlayer(this.model.Player2, Repository.MovingDirection.Up); break;
-                case Key.Left: this.logic.MovePlayer(this.model.Player2, Repository.MovingDirection.Left); break;
-                case Key.Down: this.logic.MovePlayer(this.model.Player2, Repository.MovingDirection.Down); break;
-                case Key.Right: this.logic.MovePlayer(this.model.Player2, Repository.MovingDirection.Rigth); break;
+                case Key.W: this.logic.MovePlayer(this.model.Player2, Repository.MovingDirection.Up); break;
+                case Key.S: this.logic.MovePlayer(this.model.Player2, Repository.MovingDirection.Down); break;
+                case Key.A: this.logic.MovePlayer(this.model.Player2, Repository.MovingDirection.Left); break;
+                case Key.D: this.logic.MovePlayer(this.model.Player2, Repository.MovingDirection.Rigth); break;
+
+                case Key.Enter: this.logic.UseTurbo(this.model.Player1); break;
+                case Key.Space: this.logic.UseTurbo(this.model.Player2); break;
             }
         }
     }

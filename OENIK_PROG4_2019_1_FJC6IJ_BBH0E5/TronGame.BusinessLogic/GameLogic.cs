@@ -4,6 +4,8 @@
     using System.Diagnostics;
     using System.IO;
     using System.Text;
+    using System.Threading;
+    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Media;
     using System.Xml.Serialization;
@@ -32,13 +34,26 @@
 
             this.sw = new Stopwatch();
             rnd = new Random();
-            this.backgroundMediaPlayer = new MediaPlayer();
-            this.backgroundMediaPlayer.Open(new Uri(@"../../../TronGame.Repository/Sounds/background.wav", UriKind.Relative));
+            //this.backgroundMediaPlayer = new MediaPlayer();
+            //this.backgroundMediaPlayer.Open(new Uri(@"../../../TronGame.Repository/Sounds/background.wav", UriKind.Relative));
 
             this.width = 50;
             this.heigth = 30;
 
+            model.Player1.PlayerStep += this.Player1_PlayerStep;
+            model.Player2.PlayerStep += this.Player2_PlayerStep;
+
             this.TestGame();
+        }
+
+        private void Player1_PlayerStep(object sender, EventArgs e)
+        {
+            this.GameModel.GameField[(int)this.GameModel.Player1.Point.Y, (int)this.GameModel.Player1.Point.X] = this.GameModel.Player1;
+        }
+
+        private void Player2_PlayerStep(object sender, EventArgs e)
+        {
+            this.GameModel.GameField[(int)this.GameModel.Player2.Point.Y, (int)this.GameModel.Player2.Point.X] = this.GameModel.Player2;
         }
 
         /// <summary>
@@ -176,6 +191,8 @@
             this.NewGame();
             this.NewRound();
             this.StartBackgroundSong();
+
+            this.GameModel.Player1.NumberOfTurbos = 2;
         }
 
         private void DiePlayer(Player player)
@@ -239,7 +256,7 @@
                 int posY = rnd.Next(0, 14);
                 if (this.GameModel.GameField[posY, posX] == null)
                 {
-                    ObstacleObject o = new ObstacleObject() { PosX = posX, PosY = posY, Point = new Point(posX, posY) };
+                    ObstacleObject o = new ObstacleObject() { Point = new Point(posX, posY) };
                     this.GameModel.Obstacles.Add(o);
                     this.GameModel.GameField[posY, posX] = o;
                     i++;
@@ -256,7 +273,7 @@
                 int posY = rnd.Next(0, 14);
                 if (this.GameModel.GameField[posY, posX] == null)
                 {
-                    TurboObject o = new TurboObject() { PosX = posX, PosY = posY, Point = new Point(posX, posY) };
+                    TurboObject o = new TurboObject() { Point = new Point(posX, posY) };
                     this.GameModel.Turbos.Add(o);
                     this.GameModel.GameField[posY, posX] = o;
                     i++;
@@ -270,19 +287,17 @@
             int posY = rnd.Next(0, 30);
             while (this.GameModel.GameField[posY, posX] != null)
             {
-                posX = rnd.Next(0, this.width);
-                posY = rnd.Next(0, this.heigth);
+                posX = rnd.Next(0, 50);
+                posY = rnd.Next(0, 30);
             }
 
-            player.PosX = posX;
-            player.PosY = posY;
             player.Point = new Point(posX, posY);
             this.GameModel.GameField[posY, posX] = player;
         }
 
         private void StartBackgroundSong()
         {
-            this.backgroundMediaPlayer.Play();
+            //this.backgroundMediaPlayer.Play();
         }
     }
 }

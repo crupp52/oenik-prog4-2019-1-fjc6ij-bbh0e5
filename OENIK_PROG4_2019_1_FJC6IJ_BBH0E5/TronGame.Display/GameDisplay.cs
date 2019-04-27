@@ -55,10 +55,12 @@
             DrawingGroup dg = new DrawingGroup();
 
             dg.Children.Add(this.GetBackground());
-            dg.Children.Add(this.GetPlayer(this.model.Player1, this.player1Brush));
-            dg.Children.Add(this.GetPlayer(this.model.Player2, this.player2Brush));
+            dg.Children.Add(this.GetPlayer1Route());
+            dg.Children.Add(this.GetPlayer2Route());
             dg.Children.Add(this.GetTurbos());
             dg.Children.Add(this.GetObstacles());
+            dg.Children.Add(this.GetPlayer(this.model.Player1, this.player1Brush));
+            dg.Children.Add(this.GetPlayer(this.model.Player2, this.player2Brush));
 
             return dg;
         }
@@ -136,5 +138,46 @@
 
             return new GeometryDrawing(this.obstacleBrush, null, g);
         }
+
+        private Drawing GetPlayer1Route()
+        {
+            GeometryGroup g = new GeometryGroup();
+
+            for (int i = 0; i < this.model.GameField.GetLength(0); i++)
+            {
+                for (int j = 0; j < this.model.GameField.GetLength(1); j++)
+                {
+                    if (this.model.GameField[i, j] != null && this.model.GameField[i, j] == this.model.Player1)
+                    {
+                        RectangleGeometry rg = new RectangleGeometry(new Rect(j * this.playerTileSize, i * this.playerTileSize, this.playerTileSize, this.playerTileSize));
+
+                        g.Children.Add(rg);
+                    }
+                }
+            }
+
+            return new GeometryDrawing(Brushes.Green, null, g);
+        }
+
+        private Drawing GetPlayer2Route()
+        {
+            GeometryGroup g = new GeometryGroup();
+
+            for (int i = 0; i < this.model.GameField.GetLength(0); i++)
+            {
+                for (int j = 0; j < this.model.GameField.GetLength(1); j++)
+                {
+                    if (this.model.GameField[i, j] != null && this.model.GameField[i, j] == this.model.Player2)
+                    {
+                        RectangleGeometry rg = new RectangleGeometry(new Rect(j * this.playerTileSize, i * this.playerTileSize, this.playerTileSize, this.playerTileSize));
+
+                        g.Children.Add(rg);
+                    }
+                }
+            }
+
+            return new GeometryDrawing(Brushes.Blue, null, g);
+        }
+
     }
 }
