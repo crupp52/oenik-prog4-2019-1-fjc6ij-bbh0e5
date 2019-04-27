@@ -46,21 +46,11 @@
             this.TestGame();
         }
 
-        private void Player1_PlayerStep(object sender, EventArgs e)
-        {
-            this.GameModel.GameField[(int)this.GameModel.Player1.Point.Y, (int)this.GameModel.Player1.Point.X] = this.GameModel.Player1;
-        }
-
-        private void Player2_PlayerStep(object sender, EventArgs e)
-        {
-            this.GameModel.GameField[(int)this.GameModel.Player2.Point.Y, (int)this.GameModel.Player2.Point.X] = this.GameModel.Player2;
-        }
-
         /// <summary>
         /// ScreenRefresh eventhandler
         /// </summary>
         public event EventHandler ScreenRefresh;
-
+        
         /// <summary>
         /// Gets GameModel
         /// </summary>
@@ -298,6 +288,16 @@
         private void StartBackgroundSong()
         {
             //this.backgroundMediaPlayer.Play();
+        }
+
+        private void Player1_PlayerStep(object sender, EventArgs e)
+        {
+            this.GameModel.GameField[(int)this.GameModel.Player1.Point.Y, (int)this.GameModel.Player1.Point.X] = this.GameModel.Player1;
+        }
+
+        private void Player2_PlayerStep(object sender, EventArgs e)
+        {
+            this.GameModel.GameField[(int)this.GameModel.Player2.Point.Y, (int)this.GameModel.Player2.Point.X] = this.GameModel.Player2;
         }
     }
 }
