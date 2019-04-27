@@ -68,7 +68,6 @@
     </Compile>
     <Compile Include="GameControl.cs" />
     <Compile Include="GameDisplay.cs" />
-    <Compile Include="GameScreen.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
