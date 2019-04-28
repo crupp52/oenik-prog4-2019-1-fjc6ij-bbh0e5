@@ -1,6 +1,7 @@
 ﻿namespace TronGame.Model
 {
     using System.Collections.Generic;
+    using System.Windows.Input;
     using TronGame.Repository;
 
     /// <summary>

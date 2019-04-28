@@ -1,5 +1,6 @@
 ﻿namespace TronGame.Display
 {
+    using GalaSoft.MvvmLight.CommandWpf;
     using System;
     using System.Windows;
     using System.Windows.Input;
@@ -13,7 +14,7 @@
     /// </summary>
     public class GameControl : FrameworkElement
     {
-        private IGameModel model;
+        //private IGameModel model;
         private IBusinessLogic logic;
         private GameDisplay display;
 
@@ -24,6 +25,10 @@
         {
             this.Loaded += this.GameControl_Loaded;
         }
+
+        public ICommand NewGameCommand { get; private set; }
+
+        public IGameModel GameModel { get; set; }
 
         /// <summary>
         /// Render the generated Drawings.
@@ -40,12 +45,14 @@
         private void GameControl_Loaded(object sender, RoutedEventArgs e)
         {
             Window window = Window.GetWindow(this);
-            this.model = new GameModel();
-            this.logic = new GameLogic(this.model);
-            this.display = new GameDisplay(this.model, 1000, 600);
+            this.GameModel = new GameModel();
+            this.logic = new GameLogic(this.GameModel);
+            this.display = new GameDisplay(this.GameModel, 1000, 600);
 
             this.logic.ScreenRefresh += this.Logic_ScreenRefresh;
             this.logic.SaveGameState();
+
+            this.NewGameCommand = new RelayCommand(() => { this.logic.NewGame(); MessageBox.Show("gecc"); });
 
             window.KeyDown += this.Window_KeyDown;
 
@@ -69,18 +76,18 @@
         {
             switch (e.Key)
             {
-                case Key.Up: this.logic.MovePlayer(this.model.Player1, Repository.MovingDirection.Up); break;
-                case Key.Down: this.logic.MovePlayer(this.model.Player1, Repository.MovingDirection.Down); break;
-                case Key.Left: this.logic.MovePlayer(this.model.Player1, Repository.MovingDirection.Left); break;
-                case Key.Right: this.logic.MovePlayer(this.model.Player1, Repository.MovingDirection.Rigth); break;
+                case Key.Up: this.logic.MovePlayer(this.GameModel.Player1, Repository.MovingDirection.Up); break;
+                case Key.Down: this.logic.MovePlayer(this.GameModel.Player1, Repository.MovingDirection.Down); break;
+                case Key.Left: this.logic.MovePlayer(this.GameModel.Player1, Repository.MovingDirection.Left); break;
+                case Key.Right: this.logic.MovePlayer(this.GameModel.Player1, Repository.MovingDirection.Rigth); break;
 
-                case Key.W: this.logic.MovePlayer(this.model.Player2, Repository.MovingDirection.Up); break;
-                case Key.S: this.logic.MovePlayer(this.model.Player2, Repository.MovingDirection.Down); break;
-                case Key.A: this.logic.MovePlayer(this.model.Player2, Repository.MovingDirection.Left); break;
-                case Key.D: this.logic.MovePlayer(this.model.Player2, Repository.MovingDirection.Rigth); break;
+                case Key.W: this.logic.MovePlayer(this.GameModel.Player2, Repository.MovingDirection.Up); break;
+                case Key.S: this.logic.MovePlayer(this.GameModel.Player2, Repository.MovingDirection.Down); break;
+                case Key.A: this.logic.MovePlayer(this.GameModel.Player2, Repository.MovingDirection.Left); break;
+                case Key.D: this.logic.MovePlayer(this.GameModel.Player2, Repository.MovingDirection.Rigth); break;
 
-                case Key.Enter: this.logic.UseTurbo(this.model.Player1); break;
-                case Key.Space: this.logic.UseTurbo(this.model.Player2); break;
+                case Key.Enter: this.logic.UseTurbo(this.GameModel.Player1); break;
+                case Key.Space: this.logic.UseTurbo(this.GameModel.Player2); break;
             }
         }
     }

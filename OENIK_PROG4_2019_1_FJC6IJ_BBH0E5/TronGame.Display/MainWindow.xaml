@@ -6,9 +6,13 @@
         xmlns:local="clr-namespace:TronGame.Display"
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1000" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
-    <DockPanel>
+    <Window.Resources>
+        <local:GameControl x:Key="vm"></local:GameControl>
+    </Window.Resources>
+    <DockPanel DataContext="{StaticResource vm}">
         <Grid Height="100" Background="Blue" DockPanel.Dock="Top">
             <Grid.RowDefinitions>
+                <RowDefinition Height="18"></RowDefinition>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="*"/>
@@ -18,17 +22,34 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" Grid.Column="0" Content="JÁTÉKOS_1"/>
-            <Label Grid.Row="0" Grid.Column="1" Content="JÁTÉKOS_1 POWERUPS_NUM"/>
-            <Label Grid.Row="0" Grid.Column="2" Content="JÁTÉKOS_1 WON GAMES"/>
+            <Menu Grid.ColumnSpan="3">
+                <MenuItem Header="Game">
+                    <MenuItem Header="New game"></MenuItem>
+                    <MenuItem Header="Load game"></MenuItem>
+                    <MenuItem Header="Set players names"></MenuItem>
+                    <MenuItem Header="Exit"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="Settings">
+                    <MenuItem IsCheckable="True" Header="Background music"></MenuItem>
+                    <MenuItem Header="Difficulty">
+                        <MenuItem Header="Easy"></MenuItem>
+                        <MenuItem Header="Medium"></MenuItem>
+                        <MenuItem Header="Hard"></MenuItem>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="High score"></MenuItem>
+            </Menu>
+            <Label Grid.Row="1" Content="{Binding Player1.Name}"/>
+            <Label Grid.Row="1" Grid.Column="2" Content="{Binding Player1.NumberOfTurbos}"/>
+            <Label Grid.Row="1" Grid.Column="1" Content="{Binding Player1.NumberOfWins}"/>
 
-            <Label Grid.Row="1" Grid.Column="0" Content="JÁTÉKOS_2"/>
-            <Label Grid.Row="1" Grid.Column="1" Content="JÁTÉKOS_2 POWERUPS_NUM"/>
-            <Label Grid.Row="1" Grid.Column="2" Content="JÁTÉKOS_2 WON GAMES"/>
+            <Label Grid.Row="2" Content="{Binding Player2.Name}"/>
+            <Label Grid.Row="2" Grid.Column="1" Content="{Binding Player2.NumberOfTurbos}"/>
+            <Label Grid.Row="2" Grid.Column="2" Content="{Binding Player2.NumberOfWins}"/>
 
-            <Label Grid.Row="2" Grid.Column="0" Content="TIME"/>
-            <Label Grid.Row="2" Grid.Column="1" Content="HIGHSCORE"/>
-            <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Horizontal">
+            <Label Grid.Row="3" Grid.Column="0" Content="TIME"/>
+            <Label Grid.Row="3" Grid.Column="1" Content="HIGHSCORE"/>
+            <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal">
                 <Button Content="Pause"/>
                 <Button Content="Menu"/>
                 <Button Content="Help"/>

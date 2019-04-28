@@ -43,7 +43,6 @@
         public event EventHandler PlayerStep;
 
         private readonly Stopwatch stopwatch;
-        private bool turbo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Player"/> class.
@@ -51,13 +50,15 @@
         public Player()
         {
             this.stopwatch = new Stopwatch();
-            this.turbo = false;
+            this.Turbo = false;
 
             this.NumberOfWins = 0;
             this.NumberOfTurbos = 0;
 
-            this.Move();
+            //this.Move();
         }
+
+        public bool Turbo { get; set; }
 
         /// <summary>
         /// Gets or sets name of player
@@ -129,7 +130,7 @@
                             break;
                     }
                     this.PlayerStep?.Invoke(this, EventArgs.Empty);
-                    if (this.turbo)
+                    if (this.Turbo)
                     {
                         Thread.Sleep(250);
                     }
@@ -149,9 +150,9 @@
             this.NumberOfTurbos--;
             Task.Run(() =>
             {
-                this.turbo = true;
+                this.Turbo = true;
                 Thread.Sleep(5000);
-                this.turbo = false;
+                this.Turbo = false;
             });
         }
     }
