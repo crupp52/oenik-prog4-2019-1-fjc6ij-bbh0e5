@@ -6,10 +6,10 @@
     using System.Text;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// Obstacle Object
+    /// </summary>
     public class ObstacleObject : GameObject
     {
-        public ObstacleObject()
-        {
-        }
     }
 }

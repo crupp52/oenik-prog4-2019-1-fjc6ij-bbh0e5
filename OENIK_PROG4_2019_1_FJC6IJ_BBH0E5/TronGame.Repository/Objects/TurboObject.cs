@@ -6,13 +6,10 @@
     using System.Text;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// Turbo object
+    /// </summary>
     public class TurboObject : GameObject
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TurboObject"/> class.
-        /// </summary>
-        public TurboObject()
-        {
-        }
     }
 }

@@ -9,16 +9,51 @@
     using System.Xml.Linq;
     using System.Xml.Serialization;
 
+    /// <summary>
+    /// Type of the Objects
+    /// </summary>
     public enum ObjectType
     {
-        Player, Turbo, Obstacle
+        /// <summary>
+        /// Player object
+        /// </summary>
+        Player,
+
+        /// <summary>
+        /// Speed up object
+        /// </summary>
+        Turbo,
+
+        /// <summary>
+        /// Obstacle object
+        /// </summary>
+        Obstacle
     }
 
+    /// <summary>
+    /// Difficulty of the Game
+    /// </summary>
     public enum Difficulty
     {
-        Easy, Medium, Hard
+        /// <summary>
+        /// Easy mode.
+        /// </summary>
+        Easy,
+
+        /// <summary>
+        /// Medium mode.
+        /// </summary>
+        Medium,
+
+        /// <summary>
+        /// Hard mode.
+        /// </summary>
+        Hard
     }
 
+    /// <summary>
+    /// Contains the save and load gamestate methods.
+    /// </summary>
     public class GameRepository : IRepository
     {
     }

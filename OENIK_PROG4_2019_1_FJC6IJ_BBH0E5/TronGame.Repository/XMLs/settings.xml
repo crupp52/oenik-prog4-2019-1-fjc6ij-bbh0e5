@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<settings>
+  <volume>5</volume>
+  <difficulty>2</difficulty>
+  <player1name>Béla</player1name>
+  <player2name>Józsi</player2name>
+  <highscore>
+    <player1name>Béla</player1name>
+    <player2name>Józsi</player2name>
+    <player1score>5</player1score>
+    <player2score>3</player2score>
+    <time>00:15:33</time>
+  </highscore>
+</settings>
