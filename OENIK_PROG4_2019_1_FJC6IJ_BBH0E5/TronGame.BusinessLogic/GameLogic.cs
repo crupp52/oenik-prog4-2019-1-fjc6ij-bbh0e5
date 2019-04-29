@@ -112,91 +112,65 @@
 
         private void MovePlayers()
         {
-            Task.Run(() =>
-            {
-                while (true)
-                {
-                    switch (this.GameModel.Player1.MovingDirection)
-                    {
-                        case MovingDirection.Up:
-                            if (this.GameModel.Player1.Point.Y > 0)
-                            {
-                                this.GameModel.Player1.Point = new Point(this.GameModel.Player1.Point.X, this.GameModel.Player1.Point.Y - 1);
-                            }
-                            break;
-                        case MovingDirection.Down:
-                            if (this.GameModel.Player1.Point.Y < 27)
-                            {
-                                this.GameModel.Player1.Point = new Point(this.GameModel.Player1.Point.X, this.GameModel.Player1.Point.Y + 1);
-                            }
-                            break;
-                        case MovingDirection.Left:
-                            if (this.GameModel.Player1.Point.X > 0)
-                            {
-                                this.GameModel.Player1.Point = new Point(this.GameModel.Player1.Point.X - 1, this.GameModel.Player1.Point.Y);
-                            }
-                            break;
-                        case MovingDirection.Rigth:
-                            if (this.GameModel.Player1.Point.X < 48)
-                            {
-                                this.GameModel.Player1.Point = new Point(this.GameModel.Player1.Point.X + 1, this.GameModel.Player1.Point.Y);
-                            }
-                            break;
-                    }
-                    this.GameModel.GameField[(int)this.GameModel.Player1.Point.Y, (int)this.GameModel.Player1.Point.X] = this.GameModel.Player1;
-                    if (this.GameModel.Player1.Turbo)
-                    {
-                        Thread.Sleep(150);
-                    }
-                    else
-                    {
-                        Thread.Sleep(300);
-                    }
-                }
-            });
+            Task.Run(() => this.MovePlayersProcess(this.GameModel.Player1));
+            Task.Run(() => this.MovePlayersProcess(this.GameModel.Player2));
+        }
 
-            Task.Run(() =>
+        private void MovePlayersProcess(Player player)
+        {
+            while (true)
             {
-                while (true)
+                switch (player.MovingDirection)
                 {
-                    switch (this.GameModel.Player2.MovingDirection)
-                    {
-                        case MovingDirection.Up:
-                            if (this.GameModel.Player2.Point.Y > 0)
-                            {
-                                this.GameModel.Player2.Point = new Point(this.GameModel.Player2.Point.X, this.GameModel.Player2.Point.Y - 1);
-                            }
-                            break;
-                        case MovingDirection.Down:
-                            if (this.GameModel.Player2.Point.Y < 27)
-                            {
-                                this.GameModel.Player2.Point = new Point(this.GameModel.Player2.Point.X, this.GameModel.Player2.Point.Y + 1);
-                            }
-                            break;
-                        case MovingDirection.Left:
-                            if (this.GameModel.Player2.Point.X > 0)
-                            {
-                                this.GameModel.Player2.Point = new Point(this.GameModel.Player2.Point.X - 1, this.GameModel.Player2.Point.Y);
-                            }
-                            break;
-                        case MovingDirection.Rigth:
-                            if (this.GameModel.Player2.Point.X < 48)
-                            {
-                                this.GameModel.Player2.Point = new Point(this.GameModel.Player2.Point.X + 1, this.GameModel.Player2.Point.Y);
-                            }
-                            break;
-                    }
-                    this.GameModel.GameField[(int)this.GameModel.Player2.Point.Y, (int)this.GameModel.Player2.Point.X] = this.GameModel.Player2;
-                    if (this.GameModel.Player2.Turbo)
-                    {
-                        Thread.Sleep(150);
-                    }
-                    else
-                    {
-                        Thread.Sleep(300);
-                    }
+                    case MovingDirection.Up:
+                        if (player.Point.Y > 0)
+                        {
+                            player.Point = new Point(player.Point.X, player.Point.Y - 1);
+                        }
+
+                        break;
+                    case MovingDirection.Down:
+                        if (player.Point.Y < 27)
+                        {
+                            player.Point = new Point(player.Point.X, player.Point.Y + 1);
+                        }
+
+                        break;
+                    case MovingDirection.Left:
+                        if (player.Point.X > 0)
+                        {
+                            player.Point = new Point(player.Point.X - 1, player.Point.Y);
+                        }
+
+                        break;
+                    case MovingDirection.Rigth:
+                        if (player.Point.X < 48)
+                        {
+                            player.Point = new Point(player.Point.X + 1, player.Point.Y);
+                        }
+
+                        break;
                 }
-            });
+
+                if (this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X] == null)
+                {
+                    this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X] = player;
+                }
+                else if (this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X].GetType() == typeof(TurboObject))
+                {
+                    this.PickUp(player, ObjectType.Turbo);
+                    this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X] = player;
+                }
+
+                if (player.Turbo)
+                {
+                    Thread.Sleep(150);
+                }
+                else
+                {
+                    Thread.Sleep(300);
+                }
+            }
         }
 
         /// <summary>
@@ -218,8 +192,6 @@
                     this.DiePlayer(player);
                     break;
             }
-
-            this.ScreenRefresh?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>

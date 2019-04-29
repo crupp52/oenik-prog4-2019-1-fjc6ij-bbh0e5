@@ -1,11 +1,11 @@
 ﻿namespace TronGame.Display
 {
-    using GalaSoft.MvvmLight.CommandWpf;
     using System;
     using System.Windows;
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Threading;
+    using GalaSoft.MvvmLight.CommandWpf;
     using TronGame.BusinessLogic;
     using TronGame.Model;
 
@@ -17,12 +17,14 @@
         //private IGameModel model;
         private IBusinessLogic logic;
         private GameDisplay display;
+        private object _lock;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GameControl"/> class.
         /// </summary>
         public GameControl()
         {
+            this._lock = new object();
             this.Loaded += this.GameControl_Loaded;
         }
 
@@ -64,7 +66,10 @@
 
         private void Logic_ScreenRefresh(object sender, EventArgs e)
         {
-            this.InvalidateVisual();
+            lock (this._lock)
+            {
+                this.InvalidateVisual();
+            }
         }
 
         private void Timer_Tick(object sender, EventArgs e)
