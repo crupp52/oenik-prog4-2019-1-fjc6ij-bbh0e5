@@ -152,15 +152,16 @@
                         break;
                 }
 
-                if (this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X] == null)
+                if (this.CheckObstacles(player))
                 {
-                    this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X] = player;
+                    this.PickUp(player, ObjectType.Obstacle);
                 }
-                else if (this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X].GetType() == typeof(TurboObject))
+                else if (this.CheckTurbos(player))
                 {
                     this.PickUp(player, ObjectType.Turbo);
-                    this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X] = player;
                 }
+
+                this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X] = player;
 
                 if (player.Turbo)
                 {
@@ -171,6 +172,52 @@
                     Thread.Sleep(300);
                 }
             }
+        }
+
+        private void CheckPosition(Player player)
+        {
+            GameObject o = this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X];
+
+            if (o.GetType() == typeof(ObstacleObject))
+            {
+                this.PickUp(player, ObjectType.Obstacle);
+            }
+            else if (o.GetType() == typeof(TurboObject))
+            {
+                this.PickUp(player, ObjectType.Turbo);
+            }
+            else
+            {
+                this.PickUp(player, ObjectType.Player);
+            }
+        }
+
+        private bool CheckObstacles(Player player)
+        {
+            foreach (var item in this.GameModel.Obstacles)
+            {
+                if (item.Point.X == player.Point.X && item.Point.Y == player.Point.Y)
+                {
+                    this.GameModel.Obstacles.Remove(item);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool CheckTurbos(Player player)
+        {
+            foreach (var item in this.GameModel.Turbos)
+            {
+                if (item.Point.X == player.Point.X && item.Point.Y == player.Point.Y)
+                {
+                    this.GameModel.Turbos.Remove(item);
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -304,15 +351,13 @@
             int i = 0;
             while (i != num)
             {
-                int posX = rnd.Next(0, 24);
-                int posY = rnd.Next(0, 14);
-                if (this.GameModel.GameField[posY, posX] == null)
-                {
-                    ObstacleObject o = new ObstacleObject() { Point = new Point(posX, posY) };
-                    this.GameModel.Obstacles.Add(o);
-                    this.GameModel.GameField[posY, posX] = o;
-                    i++;
-                }
+                int posX = rnd.Next(0, 50);
+                int posY = rnd.Next(0, 30);
+
+                ObstacleObject o = new ObstacleObject() { Point = new Point(posX, posY) };
+                this.GameModel.Obstacles.Add(o);
+                //this.GameModel.GameField[posY, posX] = o;
+                i++;
             }
         }
 
@@ -321,15 +366,13 @@
             int i = 0;
             while (i != num)
             {
-                int posX = rnd.Next(0, 24);
-                int posY = rnd.Next(0, 14);
-                if (this.GameModel.GameField[posY, posX] == null)
-                {
-                    TurboObject o = new TurboObject() { Point = new Point(posX, posY) };
-                    this.GameModel.Turbos.Add(o);
-                    this.GameModel.GameField[posY, posX] = o;
-                    i++;
-                }
+                int posX = rnd.Next(0, 50);
+                int posY = rnd.Next(0, 30);
+
+                TurboObject o = new TurboObject() { Point = new Point(posX, posY) };
+                this.GameModel.Turbos.Add(o);
+                //this.GameModel.GameField[posY, posX] = o;
+                i++;
             }
         }
 

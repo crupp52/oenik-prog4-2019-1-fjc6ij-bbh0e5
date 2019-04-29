@@ -81,7 +81,7 @@
             ImageBrush imageBrush = new ImageBrush(new BitmapImage(new Uri(filename, UriKind.RelativeOrAbsolute)));
 
             imageBrush.TileMode = TileMode.Tile;
-            imageBrush.Viewport = new Rect(0, 0, this.objectTileSize, this.objectTileSize);
+            imageBrush.Viewport = new Rect(0, 0, this.playerTileSize, this.playerTileSize);
             imageBrush.ViewportUnits = BrushMappingMode.Absolute;
 
             return imageBrush;
@@ -105,16 +105,10 @@
         {
             GeometryGroup g = new GeometryGroup();
 
-            for (int i = 0; i < this.model.GameField.GetLength(0); i++)
+            foreach (TurboObject item in this.model.Turbos)
             {
-                for (int j = 0; j < this.model.GameField.GetLength(1); j++)
-                {
-                    if (this.model.GameField[i, j] != null && this.model.GameField[i, j].GetType() == typeof(TurboObject))
-                    {
-                        RectangleGeometry rg = new RectangleGeometry(new Rect(i * this.objectTileSize, j * this.objectTileSize, this.objectTileSize, this.objectTileSize));
-                        g.Children.Add(rg);
-                    }
-                }
+                RectangleGeometry rg = new RectangleGeometry(new Rect(item.Point.X * this.playerTileSize, item.Point.Y * this.playerTileSize, this.playerTileSize, this.playerTileSize));
+                g.Children.Add(rg);
             }
 
             return new GeometryDrawing(this.turboBrush, null, g);
@@ -124,16 +118,10 @@
         {
             GeometryGroup g = new GeometryGroup();
 
-            for (int i = 0; i < this.model.GameField.GetLength(0); i++)
+            foreach (ObstacleObject item in this.model.Obstacles)
             {
-                for (int j = 0; j < this.model.GameField.GetLength(1); j++)
-                {
-                    if (this.model.GameField[i, j] != null && this.model.GameField[i, j].GetType() == typeof(ObstacleObject))
-                    {
-                        RectangleGeometry rg = new RectangleGeometry(new Rect(i * this.objectTileSize, j * this.objectTileSize, this.objectTileSize, this.objectTileSize));
-                        g.Children.Add(rg);
-                    }
-                }
+                RectangleGeometry rg = new RectangleGeometry(new Rect(item.Point.X * this.playerTileSize, item.Point.Y * this.playerTileSize, this.playerTileSize, this.playerTileSize));
+                g.Children.Add(rg);
             }
 
             return new GeometryDrawing(this.obstacleBrush, null, g);

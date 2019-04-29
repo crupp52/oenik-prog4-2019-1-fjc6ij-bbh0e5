@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1000" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Window.Resources>
-        <local:GameControl x:Key="vm"></local:GameControl>
+        <local:GameViewModel x:Key="vm"></local:GameViewModel>
     </Window.Resources>
     <DockPanel DataContext="{StaticResource vm}">
         <Grid Height="100" Background="Blue" DockPanel.Dock="Top">
@@ -57,7 +57,6 @@
         </Grid>
 
         <local:GameControl Width="1000" Height="600">
-
         </local:GameControl>
     </DockPanel>
     
