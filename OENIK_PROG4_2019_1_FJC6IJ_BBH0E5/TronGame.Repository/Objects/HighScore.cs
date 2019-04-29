@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using System.Xml.Linq;
 
     /// <summary>
     /// High score object
@@ -21,6 +22,8 @@
             this.Player1Name = "Béla";
             this.Player2Name = "Józsi";
             this.DateTime = DateTime.Now;
+
+            this.LoadHighScore();
         }
 
         /// <summary>
@@ -47,6 +50,17 @@
         /// Gets or sets DateTime
         /// </summary>
         public DateTime DateTime { get; set; }
+
+        public void LoadHighScore()
+        {
+            var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
+            var highscore = xml.Root.Element("highscore");
+            this.Player1Name = highscore.Element("player1name").Value;
+            this.Player2Name = highscore.Element("player2name").Value;
+            this.Player1Score = int.Parse(highscore.Element("player1score").Value);
+            this.Player2Score = int.Parse(highscore.Element("player2score").Value);
+            this.DateTime = DateTime.Parse(highscore.Element("time").Value);
+        }
 
         public override string ToString()
         {

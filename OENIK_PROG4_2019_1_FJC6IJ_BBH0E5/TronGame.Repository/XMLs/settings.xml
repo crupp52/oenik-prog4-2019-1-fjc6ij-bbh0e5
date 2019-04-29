@@ -2,13 +2,13 @@
 <settings>
   <volume>5</volume>
   <difficulty>2</difficulty>
-  <player1name>Béla</player1name>
-  <player2name>Józsi</player2name>
+  <player1name>Kecske</player1name>
+  <player2name>Asztal</player2name>
   <highscore>
-    <player1name>Béla</player1name>
-    <player2name>Józsi</player2name>
+    <player1name>Kecske</player1name>
+    <player2name>Asztal</player2name>
     <player1score>5</player1score>
-    <player2score>3</player2score>
+    <player2score>2</player2score>
     <time>00:15:33</time>
   </highscore>
 </settings>
