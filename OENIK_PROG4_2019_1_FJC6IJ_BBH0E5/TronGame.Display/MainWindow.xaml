@@ -27,7 +27,7 @@
                     <MenuItem Header="New game"></MenuItem>
                     <MenuItem Header="Load game"></MenuItem>
                     <MenuItem Header="Set players names"></MenuItem>
-                    <MenuItem Header="Exit"></MenuItem>
+                    <MenuItem Header="Exit" Command="{Binding ExitGameCommand}"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Settings">
                     <MenuItem IsCheckable="True" Header="Background music"></MenuItem>

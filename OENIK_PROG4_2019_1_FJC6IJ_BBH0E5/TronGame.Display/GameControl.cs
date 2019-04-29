@@ -29,6 +29,7 @@
         }
 
         public ICommand NewGameCommand { get; private set; }
+        public ICommand ExitGameCommand { get; private set; }
 
         public IGameModel GameModel { get; set; }
 
@@ -55,6 +56,7 @@
             this.logic.SaveGameState();
 
             this.NewGameCommand = new RelayCommand(() => { this.logic.NewGame(); MessageBox.Show("gecc"); });
+            this.ExitGameCommand = new RelayCommand(() => { Application.Current.Shutdown(); });
 
             window.KeyDown += this.Window_KeyDown;
 
@@ -62,6 +64,8 @@
             timer.Interval = TimeSpan.FromMilliseconds(33.3333333);
             timer.Tick += this.Timer_Tick;
             timer.Start();
+
+
         }
 
         private void Logic_ScreenRefresh(object sender, EventArgs e)
