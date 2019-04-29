@@ -26,7 +26,7 @@
 
             // commands
             this.ExitGameCommand = new RelayCommand(() => { Application.Current.Shutdown(); });
-
+            this.ShowHighScoreCommand = new RelayCommand(() => { MessageBox.Show(GameModel.HighScore.GetFullDescription()); });
 
         }
 
@@ -36,5 +36,6 @@
 
 
         public ICommand ExitGameCommand { get; private set; }
+        public ICommand ShowHighScoreCommand { get; private set; }
     }
 }

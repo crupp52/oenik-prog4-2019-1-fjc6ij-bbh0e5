@@ -37,7 +37,7 @@
                         <MenuItem Header="Hard"></MenuItem>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="High score"></MenuItem>
+                <MenuItem Header="High score" Command="{Binding ShowHighScoreCommand}"></MenuItem>
             </Menu>
             <Label Grid.Row="1" Content="{Binding Player1.Name}"/>
             <Label Grid.Row="1" Grid.Column="2" Content="{Binding Player1.NumberOfTurbos}"/>

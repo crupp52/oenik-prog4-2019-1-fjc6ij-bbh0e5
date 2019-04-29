@@ -62,6 +62,11 @@
             this.DateTime = DateTime.Parse(highscore.Element("time").Value);
         }
 
+        public string GetFullDescription()
+        {
+            return $"The actual highscore is: {this.ToString()}, time: {this.DateTime}";
+        }
+
         public override string ToString()
         {
             return $"{Player1Name} - {Player2Name}  {Player1Score}:{Player2Score}";
