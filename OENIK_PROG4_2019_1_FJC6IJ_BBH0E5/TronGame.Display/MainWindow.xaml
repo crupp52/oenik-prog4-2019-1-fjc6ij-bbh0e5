@@ -48,7 +48,7 @@
             <Label Grid.Row="2" Grid.Column="2" Content="{Binding Player2.NumberOfWins}"/>
 
             <Label Grid.Row="3" Grid.Column="0" Content="TIME"/>
-            <Label Grid.Row="3" Grid.Column="1" Content="HIGHSCORE"/>
+            <Label Grid.Row="3" Grid.Column="1" Content="{Binding GameModel.HighScore}"/>
             <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal">
                 <Button Content="Pause"/>
                 <Button Content="Menu"/>

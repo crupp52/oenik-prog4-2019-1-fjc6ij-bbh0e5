@@ -24,12 +24,16 @@
             this.GameControl = new GameControl();
             this.GameModel = new GameModel();
 
+            // commands
             this.ExitGameCommand = new RelayCommand(() => { Application.Current.Shutdown(); });
+
+
         }
 
         public GameControl GameControl { get; set; }
 
         public GameModel GameModel { get; set; }
+
 
         public ICommand ExitGameCommand { get; private set; }
     }

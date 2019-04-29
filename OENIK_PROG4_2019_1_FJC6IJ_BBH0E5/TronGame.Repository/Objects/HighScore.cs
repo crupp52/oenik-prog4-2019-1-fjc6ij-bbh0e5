@@ -47,5 +47,10 @@
         /// Gets or sets DateTime
         /// </summary>
         public DateTime DateTime { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Player1Name} - {Player2Name}  {Player1Score}:{Player2Score}";
+        }
     }
 }
