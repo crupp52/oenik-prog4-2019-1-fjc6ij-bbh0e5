@@ -5,7 +5,10 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using System.Windows;
+    using System.Windows.Input;
     using GalaSoft.MvvmLight;
+    using GalaSoft.MvvmLight.CommandWpf;
     using TronGame.Model;
 
     /// <summary>
@@ -20,10 +23,14 @@
         {
             this.GameControl = new GameControl();
             this.GameModel = new GameModel();
+
+            this.ExitGameCommand = new RelayCommand(() => { Application.Current.Shutdown(); });
         }
 
         public GameControl GameControl { get; set; }
 
         public GameModel GameModel { get; set; }
+
+        public ICommand ExitGameCommand { get; private set; }
     }
 }

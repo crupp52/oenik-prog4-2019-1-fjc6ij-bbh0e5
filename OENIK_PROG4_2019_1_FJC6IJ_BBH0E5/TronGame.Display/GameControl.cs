@@ -29,7 +29,6 @@
         }
 
         public ICommand NewGameCommand { get; private set; }
-        public ICommand ExitGameCommand { get; private set; }
 
         public IGameModel GameModel { get; set; }
 
@@ -56,7 +55,6 @@
             this.logic.SaveGameState();
 
             this.NewGameCommand = new RelayCommand(() => { this.logic.NewGame(); MessageBox.Show("gecc"); });
-            this.ExitGameCommand = new RelayCommand(() => { Application.Current.Shutdown(); });
 
             window.KeyDown += this.Window_KeyDown;
 
