@@ -22,20 +22,16 @@
         public GameViewModel()
         {
             this.GameControl = new GameControl();
-            this.GameModel = new GameModel();
 
             // commands
             this.ExitGameCommand = new RelayCommand(() => { Application.Current.Shutdown(); });
-            this.ShowHighScoreCommand = new RelayCommand(() => { MessageBox.Show(GameModel.HighScore.GetFullDescription()); });
-
+            this.ShowHighScoreCommand = new RelayCommand(() => { MessageBox.Show(this.GameControl.GameModel.HighScore.GetFullDescription()); });
         }
 
         public GameControl GameControl { get; set; }
 
-        public GameModel GameModel { get; set; }
-
-
         public ICommand ExitGameCommand { get; private set; }
+
         public ICommand ShowHighScoreCommand { get; private set; }
     }
 }

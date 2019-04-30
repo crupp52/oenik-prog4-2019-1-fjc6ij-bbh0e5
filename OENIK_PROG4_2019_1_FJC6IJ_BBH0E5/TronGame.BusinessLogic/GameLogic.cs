@@ -284,8 +284,8 @@
 
         private void TestGame()
         {
-            this.AddNameToPlayers("Karcsi", "Kata");
             this.NewGame();
+            this.AddNameToPlayers("Karcsi", "Kata");
             this.NewRound();
             this.StartBackgroundSong();
 

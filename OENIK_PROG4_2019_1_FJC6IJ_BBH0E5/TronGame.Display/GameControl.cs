@@ -54,16 +54,12 @@
             this.logic.ScreenRefresh += this.Logic_ScreenRefresh;
             this.logic.SaveGameState();
 
-            this.NewGameCommand = new RelayCommand(() => { this.logic.NewGame(); MessageBox.Show("gecc"); });
-
             window.KeyDown += this.Window_KeyDown;
 
             DispatcherTimer timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(33.3333333);
             timer.Tick += this.Timer_Tick;
             timer.Start();
-
-
         }
 
         private void Logic_ScreenRefresh(object sender, EventArgs e)

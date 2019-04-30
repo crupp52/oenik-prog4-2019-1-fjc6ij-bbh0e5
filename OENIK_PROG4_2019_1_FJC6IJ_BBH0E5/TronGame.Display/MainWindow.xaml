@@ -39,16 +39,16 @@
                 </MenuItem>
                 <MenuItem Header="High score" Command="{Binding ShowHighScoreCommand}"></MenuItem>
             </Menu>
-            <Label Grid.Row="1" Content="{Binding Player1.Name}"/>
-            <Label Grid.Row="1" Grid.Column="2" Content="{Binding Player1.NumberOfTurbos}"/>
-            <Label Grid.Row="1" Grid.Column="1" Content="{Binding Player1.NumberOfWins}"/>
+            <Label Grid.Row="1" Content="{Binding GameControl.GameModel.Player1.Name}"/>
+            <Label Grid.Row="1" Grid.Column="1" Content="{Binding GameControl.GameModel.Player1.NumberOfTurbos}" ContentStringFormat="Turbó: {0} darab"/>
+            <Label Grid.Row="1" Grid.Column="2" Content="{Binding GameControl.GameModel.Player1.NumberOfWins}" ContentStringFormat="Győzelem: {0} darab"/>
 
-            <Label Grid.Row="2" Content="{Binding Player2.Name}"/>
-            <Label Grid.Row="2" Grid.Column="1" Content="{Binding Player2.NumberOfTurbos}"/>
-            <Label Grid.Row="2" Grid.Column="2" Content="{Binding Player2.NumberOfWins}"/>
+            <Label Grid.Row="2" Content="{Binding GameControl.GameModel.Player2.Name}"/>
+            <Label Grid.Row="2" Grid.Column="1" Content="{Binding GameControl.GameModel.Player2.NumberOfTurbos}" ContentStringFormat="Turbó: {0} darab"/>
+            <Label Grid.Row="2" Grid.Column="2" Content="{Binding GameControl.GameModel.Player2.NumberOfWins}" ContentStringFormat="Győzelem: {0} darab"/>
 
             <Label Grid.Row="3" Grid.Column="0" Content="TIME"/>
-            <Label Grid.Row="3" Grid.Column="1" Content="{Binding GameModel.HighScore}"/>
+            <Label Grid.Row="3" Grid.Column="1" Content="{Binding GameControl.GameModel.HighScore}"/>
             <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal">
                 <Button Content="Pause"/>
                 <Button Content="Menu"/>
@@ -56,8 +56,8 @@
             </StackPanel>
         </Grid>
 
-        <local:GameControl Width="1000" Height="600">
-        </local:GameControl>
+        <UserControl Content="{Binding GameControl}" Width="1000" Height="600">
+        </UserControl>
     </DockPanel>
     
 
