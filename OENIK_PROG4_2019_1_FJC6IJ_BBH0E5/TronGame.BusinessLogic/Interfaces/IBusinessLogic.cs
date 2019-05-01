@@ -37,11 +37,6 @@
         void NewRound();
 
         /// <summary>
-        /// Stops timer, resets GameField, Players, gererates new Obstacles and Turbos.
-        /// </summary>
-        void EndGame();
-
-        /// <summary>
         /// Moves the selected player to selected direction.
         /// </summary>
         /// <param name="player">Selected Player object.</param>

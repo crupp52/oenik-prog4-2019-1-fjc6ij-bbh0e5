@@ -119,14 +119,6 @@
         }
 
         /// <summary>
-        /// End of the game
-        /// </summary>
-        public void EndGame()
-        {
-            this.sw.Stop();
-        }
-
-        /// <summary>
         /// Move the selected player to the selected direction
         /// </summary>
         /// <param name="player">Player instance</param>
@@ -186,6 +178,10 @@
                 {
                     this.PickUp(player, ObjectType.Turbo);
                 }
+                else if (this.CheckPlayerRoute(player))
+                {
+                    this.PickUp(player, ObjectType.Player);
+                }
 
                 this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X] = player;
 
@@ -200,22 +196,22 @@
             }
         }
 
-        private void CheckPosition(Player player)
+        private bool CheckPlayerRoute(Player player)
         {
-            GameObject o = this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X];
+            if ((this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X] as Player) != null)
+            {
+                if (player == this.GameModel.Player1 && (this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X] as Player).Name == this.GameModel.Player2.Name)
+                {
+                    return true;
+                }
 
-            if (o.GetType() == typeof(ObstacleObject))
-            {
-                this.PickUp(player, ObjectType.Obstacle);
+                if (player == this.GameModel.Player2 && (this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X] as Player).Name == this.GameModel.Player1.Name)
+                {
+                    return true;
+                }
             }
-            else if (o.GetType() == typeof(TurboObject))
-            {
-                this.PickUp(player, ObjectType.Turbo);
-            }
-            else
-            {
-                this.PickUp(player, ObjectType.Player);
-            }
+
+            return false;
         }
 
         private bool CheckObstacles(Player player)
@@ -341,6 +337,29 @@
             {
                 this.EndGame();
             }
+        }
+
+        private void EndGame()
+        {
+            this.HighScoreCheck();
+            this.ResetPlayer(this.GameModel.Player1);
+            this.ResetPlayer(this.GameModel.Player2);
+            this.ResetField();
+            this.sw.Stop();
+        }
+
+        private void HighScoreCheck()
+        {
+            if (this.GameModel.HighScore.Player1Score < this.GameModel.Player1.NumberOfWins || this.GameModel.HighScore.Player2Score < this.GameModel.Player1.NumberOfWins)
+            {
+                this.GameModel.HighScore = new HighScore() { DateTime = DateTime.Now, Player1Name = this.GameModel.Player1.Name, Player2Name = this.GameModel.Player2.Name, Player1Score = this.GameModel.Player1.NumberOfWins, Player2Score = this.GameModel.Player2.NumberOfWins };
+            }
+        }
+
+        private void ResetPlayer(Player player)
+        {
+            player.NumberOfTurbos = 0;
+            player.NumberOfWins = 0;
         }
 
         private void SetObstacles()
