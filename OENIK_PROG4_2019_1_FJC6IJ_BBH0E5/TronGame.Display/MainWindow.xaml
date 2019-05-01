@@ -30,7 +30,7 @@
                     <MenuItem Header="Exit" Command="{Binding ExitGameCommand}"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Settings">
-                    <MenuItem IsCheckable="True" Header="Background music"></MenuItem>
+                    <MenuItem IsCheckable="True" Header="Background music" IsChecked="{Binding IsMusicEnabled}" Command="{Binding EnableDisableMusic}"></MenuItem>
                     <MenuItem Header="Difficulty">
                         <MenuItem Header="Easy" Command="{Binding SetDifficultyToEasyCommand}"></MenuItem>
                         <MenuItem Header="Medium" Command="{Binding SetDifficultyToMediumCommand}"></MenuItem>
