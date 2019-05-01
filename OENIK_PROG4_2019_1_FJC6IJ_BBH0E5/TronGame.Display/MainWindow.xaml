@@ -32,9 +32,9 @@
                 <MenuItem Header="Settings">
                     <MenuItem IsCheckable="True" Header="Background music"></MenuItem>
                     <MenuItem Header="Difficulty">
-                        <MenuItem Header="Easy"></MenuItem>
-                        <MenuItem Header="Medium"></MenuItem>
-                        <MenuItem Header="Hard"></MenuItem>
+                        <MenuItem Header="Easy" Command="{Binding SetDifficultyToEasyCommand}"></MenuItem>
+                        <MenuItem Header="Medium" Command="{Binding SetDifficultyToMediumCommand}"></MenuItem>
+                        <MenuItem Header="Hard" Command="{Binding SetDifficultyToHardCommand}"></MenuItem>
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="High score" Command="{Binding ShowHighScoreCommand}"></MenuItem>
