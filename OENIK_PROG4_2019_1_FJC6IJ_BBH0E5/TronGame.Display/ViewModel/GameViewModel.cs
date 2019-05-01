@@ -32,7 +32,8 @@
             this.SetDifficultyToEasyCommand = new RelayCommand(() => { this.SetDifficulty(1); });
             this.SetDifficultyToMediumCommand = new RelayCommand(() => { this.SetDifficulty(2); });
             this.SetDifficultyToHardCommand = new RelayCommand(() => { this.SetDifficulty(3); });
-            this.EnableDisableMusic = new RelayCommand(() => { this.ChangeMusicState(); });
+            this.EnableDisableMusicCommand = new RelayCommand(() => { this.ChangeMusicState(); });
+            this.ChangePlayersNameCommand = new RelayCommand(() => { new ChangePlayersNameWindow(GameControl).Show(); });
         }
 
         public GameControl GameControl { get; set; }
@@ -49,7 +50,9 @@
 
         public ICommand SetDifficultyToHardCommand { get; private set; }
 
-        public ICommand EnableDisableMusic { get; private set; }
+        public ICommand EnableDisableMusicCommand { get; private set; }
+
+        public ICommand ChangePlayersNameCommand { get; private set; }
 
         private void SetDifficulty(int diff)
         {
@@ -66,6 +69,5 @@
             if (this.IsMusicEnabled) { this.GameControl.DisableMusic(); }
             else { this.GameControl.EnableMusic(); }
         }
-
     }
 }
