@@ -24,6 +24,7 @@
         {
             this.GameControl = new GameControl();
 
+            IsMusicEnabled = false;
             // commands
             this.ExitGameCommand = new RelayCommand(() => { Application.Current.Shutdown(); });
             this.ShowHighScoreCommand = new RelayCommand(() => { MessageBox.Show(this.GameControl.GameModel.HighScore.GetFullDescription()); });
@@ -31,6 +32,7 @@
             this.SetDifficultyToEasyCommand = new RelayCommand(() => { this.SetDifficulty(1); });
             this.SetDifficultyToMediumCommand = new RelayCommand(() => { this.SetDifficulty(2); });
             this.SetDifficultyToHardCommand = new RelayCommand(() => { this.SetDifficulty(3); });
+            this.EnableDisableMusic = new RelayCommand(() => { this.ChangeMusicState(); });
         }
 
         public GameControl GameControl { get; set; }
@@ -47,6 +49,8 @@
 
         public ICommand SetDifficultyToHardCommand { get; private set; }
 
+        public ICommand EnableDisableMusic { get; private set; }
+
         private void SetDifficulty(int diff)
         {
             var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
@@ -54,5 +58,14 @@
             xml.Save(@"../../../TronGame.Repository/XMLs/settings.xml");
             MessageBox.Show("Difficulty was modified!");
         }
+
+        public bool IsMusicEnabled { get; set; }
+
+        private void ChangeMusicState()
+        {
+            if (this.IsMusicEnabled) { this.GameControl.DisableMusic(); }
+            else { this.GameControl.EnableMusic(); }
+        }
+
     }
 }
