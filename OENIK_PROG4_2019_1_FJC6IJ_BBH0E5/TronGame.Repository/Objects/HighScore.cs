@@ -51,6 +51,9 @@
         /// </summary>
         public DateTime DateTime { get; set; }
 
+        /// <summary>
+        /// Load highscore from settings.xml file
+        /// </summary>
         public void LoadHighScore()
         {
             var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
@@ -62,14 +65,22 @@
             this.DateTime = DateTime.Parse(highscore.Element("time").Value);
         }
 
+        /// <summary>
+        /// Format the highscore
+        /// </summary>
+        /// <returns>Formatted highscore as string</returns>
         public string GetFullDescription()
         {
             return $"The actual highscore is: {this.ToString()}, time: {this.DateTime}";
         }
 
+        /// <summary>
+        /// Overrided ToString method
+        /// </summary>
+        /// <returns>String representation of the class</returns>
         public override string ToString()
         {
-            return $"{Player1Name} - {Player2Name}  {Player1Score}:{Player2Score}";
+            return $"{this.Player1Name} - {this.Player2Name}  {this.Player1Score}:{this.Player2Score}";
         }
     }
 }
