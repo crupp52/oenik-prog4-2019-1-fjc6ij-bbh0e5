@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Windows.Input;
+    using System.Xml.Linq;
     using System.Xml.Serialization;
     using TronGame.Repository;
 
@@ -20,7 +21,7 @@
             this.Turbos = new List<TurboObject>();
             this.Player1 = new Player();
             this.Player2 = new Player();
-            this.Difficulty = Difficulty.Medium;
+            this.Difficulty = this.GetDifficulty();
             this.HighScore = new HighScore();
             this.GameField = new GameObject[30, 50];
         }
@@ -60,5 +61,26 @@
         /// </summary>
         [XmlIgnore]
         public GameObject[,] GameField { get; set; }
+
+        /// <summary>
+        /// Get difficulty from settings.xml
+        /// </summary>
+        /// <returns>Difficulty</returns>
+        private Difficulty GetDifficulty()
+        {
+            var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
+            var difficulty = xml.Root.Element("difficulty").Value;
+            switch (difficulty)
+            {
+                case "1":
+                    return Difficulty.Easy;
+                case "2":
+                    return Difficulty.Medium;
+                case "3":
+                    return Difficulty.Hard;
+                default:
+                    return Difficulty.Medium;
+            }
+        }
     }
 }
