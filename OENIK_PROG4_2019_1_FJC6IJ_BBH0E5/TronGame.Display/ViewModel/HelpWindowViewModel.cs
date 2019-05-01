@@ -45,7 +45,7 @@ namespace TronGame.Display
 
         private string GetDuringGameDescription()
         {
-            return "You can move either by WASD or the arrow keys.\nBe careful! Speedups and obstacles can appear anywhere on the map!\nSpeedups ive you speed bootst while obstacles will kil you!";
+            return "You can move either by WASD or the arrow keys.\nBe careful! Speedups and obstacles can appear anywhere on the map!\nSpeedups will give you speed boost while obstacles will kill you!";
         }
 
         private string GetEndGameDescription()
