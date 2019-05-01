@@ -25,6 +25,8 @@
         private int width;
         private int heigth;
 
+        public event EventHandler ScreenRefresh;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GameLogic"/> class.
         /// </summary>
@@ -41,16 +43,10 @@
             this.width = 50;
             this.heigth = 30;
 
-            model.Player1.PlayerStep += this.Player1_PlayerStep;
-            model.Player2.PlayerStep += this.Player2_PlayerStep;
+            this.ResetField();
 
-            this.TestGame();
+            this.MovePlayers();
         }
-
-        /// <summary>
-        /// ScreenRefresh eventhandler
-        /// </summary>
-        public event EventHandler ScreenRefresh;
 
         /// <summary>
         /// Gets GameModel
@@ -105,7 +101,21 @@
             this.SetTurbos();
 
             this.sw.Restart();
-            this.ScreenRefresh?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void ResetField()
+        {
+            this.GameModel.GameField = new GameObject[30, 50];
+
+            this.GameModel.Obstacles.Clear();
+            this.GameModel.Turbos.Clear();
+            this.SetObstacles();
+            this.SetTurbos();
+
+            this.SetPlayerStartPositon(this.GameModel.Player1);
+            this.SetPlayerStartPositon(this.GameModel.Player2);
+
+            this.sw.Start();
         }
 
         /// <summary>
@@ -247,12 +257,14 @@
             {
                 case ObjectType.Player:
                     this.DiePlayer(player);
+                    this.ResetField();
                     break;
                 case ObjectType.Turbo:
                     player.NumberOfTurbos++;
                     break;
                 case ObjectType.Obstacle:
                     this.DiePlayer(player);
+                    this.ResetField();
                     break;
             }
         }
@@ -431,16 +443,6 @@
             var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
             xml.Root.SetElementValue("music", 0);
             xml.Save(@"../../../TronGame.Repository/XMLs/settings.xml");
-        }
-
-        private void Player1_PlayerStep(object sender, EventArgs e)
-        {
-            this.GameModel.GameField[(int)this.GameModel.Player1.Point.Y, (int)this.GameModel.Player1.Point.X] = this.GameModel.Player1;
-        }
-
-        private void Player2_PlayerStep(object sender, EventArgs e)
-        {
-            this.GameModel.GameField[(int)this.GameModel.Player2.Point.Y, (int)this.GameModel.Player2.Point.X] = this.GameModel.Player2;
         }
     }
 }

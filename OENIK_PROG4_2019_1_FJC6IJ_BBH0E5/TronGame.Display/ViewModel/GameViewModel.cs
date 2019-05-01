@@ -24,7 +24,7 @@
         {
             this.GameControl = new GameControl();
 
-            IsMusicEnabled = false;
+            IsMusicEnabled = true;
             // commands
             this.ExitGameCommand = new RelayCommand(() => { Application.Current.Shutdown(); });
             this.ShowHighScoreCommand = new RelayCommand(() => { MessageBox.Show(this.GameControl.GameModel.HighScore.GetFullDescription()); });
@@ -66,7 +66,7 @@
 
         private void ChangeMusicState()
         {
-            if (this.IsMusicEnabled) { this.GameControl.DisableMusic(); }
+            if (!this.IsMusicEnabled) { this.GameControl.DisableMusic(); }
             else { this.GameControl.EnableMusic(); }
         }
     }
