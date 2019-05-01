@@ -8,6 +8,7 @@
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Media;
+    using System.Xml.Linq;
     using System.Xml.Serialization;
     using TronGame.Model;
     using TronGame.Repository;
@@ -34,8 +35,8 @@
 
             this.sw = new Stopwatch();
             rnd = new Random();
-            //this.backgroundMediaPlayer = new MediaPlayer();
-            //this.backgroundMediaPlayer.Open(new Uri(@"../../../TronGame.Repository/Sounds/background.wav", UriKind.Relative));
+            this.backgroundMediaPlayer = new MediaPlayer();
+            this.backgroundMediaPlayer.Open(new Uri(@"../../../TronGame.Repository/Sounds/background.wav", UriKind.Relative));
 
             this.width = 50;
             this.heigth = 30;
@@ -390,9 +391,30 @@
             this.GameModel.GameField[posY, posX] = player;
         }
 
-        private void StartBackgroundSong()
+        public void StartBackgroundSong()
         {
-            //this.backgroundMediaPlayer.Play();
+            var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
+            var music = xml.Root.Element("music").Value;
+            if (music == "1")
+            {
+                this.backgroundMediaPlayer.Play();
+            }
+        }
+
+        public void EnableBackgroundMusic()
+        {
+            this.backgroundMediaPlayer.Play();
+            var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
+            xml.Root.SetElementValue("music", 1);
+            xml.Save(@"../../../TronGame.Repository/XMLs/settings.xml");
+        }
+
+        public void DisableBackgroundMusic()
+        {
+            this.backgroundMediaPlayer.Stop();
+            var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
+            xml.Root.SetElementValue("music", 0);
+            xml.Save(@"../../../TronGame.Repository/XMLs/settings.xml");
         }
 
         private void Player1_PlayerStep(object sender, EventArgs e)
