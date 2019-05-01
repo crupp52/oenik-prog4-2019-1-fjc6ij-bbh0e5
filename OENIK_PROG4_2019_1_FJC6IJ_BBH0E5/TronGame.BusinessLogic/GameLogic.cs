@@ -66,6 +66,21 @@
         {
             this.GameModel.Player1.Name = player1Name;
             this.GameModel.Player2.Name = player2Name;
+
+            var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
+            xml.Root.SetElementValue("player1name", player1Name);
+            xml.Root.SetElementValue("player2name", player2Name);
+            xml.Save(@"../../../TronGame.Repository/XMLs/settings.xml");
+        }
+
+        public void GetPlayersNames()
+        {
+            var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
+            string player1Name = xml.Root.Element("player1name").Value;
+            string player2Name = xml.Root.Element("player2name").Value;
+
+            this.GameModel.Player1.Name = player1Name;
+            this.GameModel.Player2.Name = player2Name;
         }
 
         /// <summary>
@@ -286,7 +301,8 @@
         private void TestGame()
         {
             this.NewGame();
-            this.AddNameToPlayers("Karcsi", "Kata");
+            this.GetPlayersNames();
+            //this.AddNameToPlayers("Karcsi", "Kata");
             this.NewRound();
             this.StartBackgroundSong();
 
