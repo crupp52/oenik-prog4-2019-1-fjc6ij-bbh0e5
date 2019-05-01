@@ -23,8 +23,7 @@
         private ImageBrush turboBrush;
         private double width;
         private double height;
-        private double playerTileSize;
-        private double objectTileSize;
+        private double tileSize;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GameDisplay"/> class.
@@ -37,8 +36,7 @@
             this.model = model;
             this.width = width;
             this.height = height;
-            this.playerTileSize = 20;
-            this.objectTileSize = 40;
+            this.tileSize = 20;
 
             this.player1Brush = this.GetPlayerBrush(@"..\..\Images\player1.png");
             this.player2Brush = this.GetPlayerBrush(@"..\..\Images\player2.png");
@@ -70,7 +68,7 @@
             ImageBrush imageBrush = new ImageBrush(new BitmapImage(new Uri(filename, UriKind.RelativeOrAbsolute)));
 
             imageBrush.TileMode = TileMode.Tile;
-            imageBrush.Viewport = new Rect(0, 0, this.playerTileSize, this.playerTileSize);
+            imageBrush.Viewport = new Rect(0, 0, this.tileSize, this.tileSize);
             imageBrush.ViewportUnits = BrushMappingMode.Absolute;
 
             return imageBrush;
@@ -81,7 +79,7 @@
             ImageBrush imageBrush = new ImageBrush(new BitmapImage(new Uri(filename, UriKind.RelativeOrAbsolute)));
 
             imageBrush.TileMode = TileMode.Tile;
-            imageBrush.Viewport = new Rect(0, 0, this.playerTileSize, this.playerTileSize);
+            imageBrush.Viewport = new Rect(0, 0, this.tileSize, this.tileSize);
             imageBrush.ViewportUnits = BrushMappingMode.Absolute;
 
             return imageBrush;
@@ -96,7 +94,7 @@
 
         private Drawing GetPlayer(Player player, ImageBrush brush)
         {
-            Geometry g = new RectangleGeometry(new Rect(player.Point.X * this.playerTileSize, player.Point.Y * this.playerTileSize, this.playerTileSize, this.playerTileSize));
+            Geometry g = new RectangleGeometry(new Rect(player.Point.X * this.tileSize, player.Point.Y * this.tileSize, this.tileSize, this.tileSize));
 
             return new GeometryDrawing(brush, null, g);
         }
@@ -107,7 +105,7 @@
 
             foreach (TurboObject item in this.model.Turbos)
             {
-                RectangleGeometry rg = new RectangleGeometry(new Rect(item.Point.X * this.playerTileSize, item.Point.Y * this.playerTileSize, this.playerTileSize, this.playerTileSize));
+                RectangleGeometry rg = new RectangleGeometry(new Rect(item.Point.X * this.tileSize, item.Point.Y * this.tileSize, this.tileSize, this.tileSize));
                 g.Children.Add(rg);
             }
 
@@ -120,7 +118,7 @@
 
             foreach (ObstacleObject item in this.model.Obstacles)
             {
-                RectangleGeometry rg = new RectangleGeometry(new Rect(item.Point.X * this.playerTileSize, item.Point.Y * this.playerTileSize, this.playerTileSize, this.playerTileSize));
+                RectangleGeometry rg = new RectangleGeometry(new Rect(item.Point.X * this.tileSize, item.Point.Y * this.tileSize, this.tileSize, this.tileSize));
                 g.Children.Add(rg);
             }
 
@@ -137,7 +135,7 @@
                 {
                     if (this.model.GameField[i, j] != null && this.model.GameField[i, j] == this.model.Player1)
                     {
-                        RectangleGeometry rg = new RectangleGeometry(new Rect(j * this.playerTileSize, i * this.playerTileSize, this.playerTileSize, this.playerTileSize));
+                        RectangleGeometry rg = new RectangleGeometry(new Rect(j * this.tileSize, i * this.tileSize, this.tileSize, this.tileSize));
 
                         g.Children.Add(rg);
                     }
@@ -157,7 +155,7 @@
                 {
                     if (this.model.GameField[i, j] != null && this.model.GameField[i, j] == this.model.Player2)
                     {
-                        RectangleGeometry rg = new RectangleGeometry(new Rect(j * this.playerTileSize, i * this.playerTileSize, this.playerTileSize, this.playerTileSize));
+                        RectangleGeometry rg = new RectangleGeometry(new Rect(j * this.tileSize, i * this.tileSize, this.tileSize, this.tileSize));
 
                         g.Children.Add(rg);
                     }
