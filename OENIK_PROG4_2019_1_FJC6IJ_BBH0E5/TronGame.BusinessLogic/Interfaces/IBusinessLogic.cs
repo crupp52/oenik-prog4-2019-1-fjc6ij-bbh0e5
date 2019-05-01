@@ -71,5 +71,20 @@
         /// </summary>
         /// <param name="filename">Selected file name.</param>
         void LoadGameState(string filename);
+
+        /// <summary>
+        /// Start teh background song at the start of the game.
+        /// </summary>
+        void StartBackgroundSong();
+
+        /// <summary>
+        /// Enables the background music.
+        /// </summary>
+        void EnableBackgroundMusic();
+
+        /// <summary>
+        /// Disables the background music.
+        /// </summary>
+        void DisableBackgroundMusic();
     }
 }
