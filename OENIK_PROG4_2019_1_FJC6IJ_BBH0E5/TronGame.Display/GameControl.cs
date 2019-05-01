@@ -93,5 +93,21 @@
                 case Key.Space: this.logic.UseTurbo(this.GameModel.Player2); break;
             }
         }
+
+        /// <summary>
+        /// Enables the music.
+        /// </summary>
+        public void EnableMusic()
+        {
+            this.logic.EnableBackgroundMusic();
+        }
+
+        /// <summary>
+        /// Disables the music.
+        /// </summary>
+        public void DisableMusic()
+        {
+            this.logic.DisableBackgroundMusic();
+        }
     }
 }
