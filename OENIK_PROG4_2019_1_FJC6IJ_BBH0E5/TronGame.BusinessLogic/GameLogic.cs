@@ -131,7 +131,7 @@
 
                         break;
                     case MovingDirection.Down:
-                        if (player.Point.Y < 27)
+                        if (player.Point.Y < 29)
                         {
                             player.Point = new Point(player.Point.X, player.Point.Y + 1);
                         }
@@ -145,7 +145,7 @@
 
                         break;
                     case MovingDirection.Rigth:
-                        if (player.Point.X < 48)
+                        if (player.Point.X < 49)
                         {
                             player.Point = new Point(player.Point.X + 1, player.Point.Y);
                         }
