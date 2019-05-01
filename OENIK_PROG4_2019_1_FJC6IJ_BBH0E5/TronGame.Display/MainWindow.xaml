@@ -26,11 +26,11 @@
                 <MenuItem Header="Game">
                     <MenuItem Header="New game"></MenuItem>
                     <MenuItem Header="Load game"></MenuItem>
-                    <MenuItem Header="Set players names"></MenuItem>
+                    <MenuItem Header="Set players names" Command="{Binding ChangePlayersNameCommand}"></MenuItem>
                     <MenuItem Header="Exit" Command="{Binding ExitGameCommand}"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Settings">
-                    <MenuItem IsCheckable="True" Header="Background music" IsChecked="{Binding IsMusicEnabled}" Command="{Binding EnableDisableMusic}"></MenuItem>
+                    <MenuItem IsCheckable="True" Header="Background music" IsChecked="{Binding IsMusicEnabled}" Command="{Binding EnableDisableMusicCommand}"></MenuItem>
                     <MenuItem Header="Difficulty">
                         <MenuItem Header="Easy" Command="{Binding SetDifficultyToEasyCommand}"></MenuItem>
                         <MenuItem Header="Medium" Command="{Binding SetDifficultyToMediumCommand}"></MenuItem>
