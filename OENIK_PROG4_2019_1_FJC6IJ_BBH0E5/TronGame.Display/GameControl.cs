@@ -109,5 +109,10 @@
         {
             this.logic.DisableBackgroundMusic();
         }
+
+        public void ChangePlayersName(string name1, string name2)
+        {
+            this.logic.AddNameToPlayers(name1, name2);
+        }
     }
 }
