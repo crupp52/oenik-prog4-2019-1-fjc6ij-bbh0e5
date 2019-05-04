@@ -165,5 +165,11 @@
             return new GeometryDrawing(Brushes.Blue, null, g);
         }
 
+        //private Drawing GetResultScreen()
+        //{
+        //    System.Windows.Controls.TextBox text = new System.Windows.Controls.TextBox();
+        //    text.Text = "Hello World!";
+
+        //}
     }
 }

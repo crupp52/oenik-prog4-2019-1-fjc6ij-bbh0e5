@@ -118,6 +118,16 @@
             this.sw.Start();
         }
 
+        public void ChangeDifficulty(Difficulty difficulty)
+        {
+            var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
+            xml.Root.SetElementValue("difficulty", (int)difficulty);
+            xml.Save(@"../../../TronGame.Repository/XMLs/settings.xml");
+            this.GameModel.Difficulty = difficulty;
+
+            this.ResetField();
+        }
+
         /// <summary>
         /// Move the selected player to the selected direction
         /// </summary>

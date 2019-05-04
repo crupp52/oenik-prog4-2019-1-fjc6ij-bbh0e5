@@ -8,6 +8,7 @@
     using GalaSoft.MvvmLight.CommandWpf;
     using TronGame.BusinessLogic;
     using TronGame.Model;
+    using TronGame.Repository;
 
     /// <summary>
     /// Game controlling methods
@@ -113,6 +114,11 @@
         public void ChangePlayersName(string name1, string name2)
         {
             this.logic.AddNameToPlayers(name1, name2);
+        }
+
+        public void ChangeDifficulty(Difficulty difficulty)
+        {
+            this.logic.ChangeDifficulty(difficulty);
         }
     }
 }

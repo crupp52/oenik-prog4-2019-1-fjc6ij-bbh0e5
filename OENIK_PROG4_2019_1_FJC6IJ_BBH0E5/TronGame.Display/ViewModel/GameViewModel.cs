@@ -29,9 +29,9 @@
             this.ExitGameCommand = new RelayCommand(() => { Application.Current.Shutdown(); });
             this.ShowHighScoreCommand = new RelayCommand(() => { MessageBox.Show(this.GameControl.GameModel.HighScore.GetFullDescription()); });
             this.ShowHelpWindowCommand = new RelayCommand(() => { new HelpWindow().Show(); });
-            this.SetDifficultyToEasyCommand = new RelayCommand(() => { this.SetDifficulty(1); });
-            this.SetDifficultyToMediumCommand = new RelayCommand(() => { this.SetDifficulty(2); });
-            this.SetDifficultyToHardCommand = new RelayCommand(() => { this.SetDifficulty(3); });
+            this.SetDifficultyToEasyCommand = new RelayCommand(() => { this.SetDifficulty(0); });
+            this.SetDifficultyToMediumCommand = new RelayCommand(() => { this.SetDifficulty(1); });
+            this.SetDifficultyToHardCommand = new RelayCommand(() => { this.SetDifficulty(2); });
             this.EnableDisableMusicCommand = new RelayCommand(() => { this.ChangeMusicState(); });
             this.ChangePlayersNameCommand = new RelayCommand(() => { new ChangePlayersNameWindow(GameControl).Show(); });
         }
@@ -56,10 +56,7 @@
 
         private void SetDifficulty(int diff)
         {
-            var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
-            xml.Root.SetElementValue("difficulty", diff);
-            xml.Save(@"../../../TronGame.Repository/XMLs/settings.xml");
-            MessageBox.Show("Difficulty was modified!");
+            this.GameControl.ChangeDifficulty((Repository.Difficulty)diff);
         }
 
         public bool IsMusicEnabled { get; set; }

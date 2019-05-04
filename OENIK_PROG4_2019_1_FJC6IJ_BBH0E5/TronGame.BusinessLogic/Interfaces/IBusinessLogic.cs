@@ -43,6 +43,8 @@
         /// <param name="direction">Selected MovingDirection enum.</param>
         void MovePlayer(Player player, MovingDirection direction);
 
+        void ChangeDifficulty(Difficulty difficulty);
+
         /// <summary>
         /// Pick up the selected object with selected Player.
         /// </summary>
