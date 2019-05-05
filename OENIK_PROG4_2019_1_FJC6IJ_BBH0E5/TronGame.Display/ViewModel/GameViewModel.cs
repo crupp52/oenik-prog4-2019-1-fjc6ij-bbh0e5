@@ -34,6 +34,7 @@
             this.SetDifficultyToHardCommand = new RelayCommand(() => { this.SetDifficulty(2); });
             this.EnableDisableMusicCommand = new RelayCommand(() => { this.ChangeMusicState(); });
             this.ChangePlayersNameCommand = new RelayCommand(() => { new ChangePlayersNameWindow(GameControl).Show(); });
+            this.PauseGameCommand = new RelayCommand(() => { MessageBox.Show("NOT IMPLEMENTEDD"); });
         }
 
         public GameControl GameControl { get; set; }
@@ -53,6 +54,8 @@
         public ICommand EnableDisableMusicCommand { get; private set; }
 
         public ICommand ChangePlayersNameCommand { get; private set; }
+
+        public ICommand PauseGameCommand { get; private set; }
 
         private void SetDifficulty(int diff)
         {
