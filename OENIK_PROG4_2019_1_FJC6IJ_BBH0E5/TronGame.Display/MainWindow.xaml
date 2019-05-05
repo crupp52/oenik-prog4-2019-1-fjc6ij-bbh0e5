@@ -51,7 +51,6 @@
             <Label Grid.Row="3" Grid.Column="1" Content="{Binding GameControl.GameModel.HighScore}"/>
             <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal">
                 <Button Content="Pause"/>
-                <Button Content="Menu"/>
                 <Button Content="Help" Command="{Binding ShowHelpWindowCommand}"/>
             </StackPanel>
         </Grid>
