@@ -34,7 +34,23 @@
             this.SetDifficultyToHardCommand = new RelayCommand(() => { this.SetDifficulty(2); });
             this.EnableDisableMusicCommand = new RelayCommand(() => { this.ChangeMusicState(); });
             this.ChangePlayersNameCommand = new RelayCommand(() => { new ChangePlayersNameWindow(GameControl).Show(); });
-            this.PauseGameCommand = new RelayCommand(() => { MessageBox.Show("NOT IMPLEMENTEDD"); });
+            this.PauseGameCommand = new RelayCommand(() =>
+            {
+                this.PauseGame();
+                var pauseWindow = new PauseWindow();
+                pauseWindow.Closing += this.ContinueGame;
+                pauseWindow.Show();
+            });
+        }
+
+        private void ContinueGame(object sender, EventArgs e)
+        {
+            this.GameControl.ContinueGame();
+        }
+
+        private void PauseGame()
+        {
+            this.GameControl.PauseGame();
         }
 
         public GameControl GameControl { get; set; }
