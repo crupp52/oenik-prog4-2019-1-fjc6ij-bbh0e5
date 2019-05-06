@@ -144,65 +144,81 @@
             Task.Run(() => this.MovePlayersProcess(this.GameModel.Player2));
         }
 
+        public bool IsGamePaused { get; set; }
+
+        public void PauseGame()
+        {
+            this.IsGamePaused = true;
+        }
+
+        public void ContinueGame()
+        {
+            this.IsGamePaused = false;
+        }
+
         private void MovePlayersProcess(Player player)
         {
             while (true)
             {
-                switch (player.MovingDirection)
+                if (!IsGamePaused)
                 {
-                    case MovingDirection.Up:
-                        if (player.Point.Y > 0)
-                        {
-                            player.Point = new Point(player.Point.X, player.Point.Y - 1);
-                        }
+                    switch (player.MovingDirection)
+                    {
+                        case MovingDirection.Up:
+                            if (player.Point.Y > 0)
+                            {
+                                player.Point = new Point(player.Point.X, player.Point.Y - 1);
+                            }
 
-                        break;
-                    case MovingDirection.Down:
-                        if (player.Point.Y < 29)
-                        {
-                            player.Point = new Point(player.Point.X, player.Point.Y + 1);
-                        }
+                            break;
+                        case MovingDirection.Down:
+                            if (player.Point.Y < 29)
+                            {
+                                player.Point = new Point(player.Point.X, player.Point.Y + 1);
+                            }
 
-                        break;
-                    case MovingDirection.Left:
-                        if (player.Point.X > 0)
-                        {
-                            player.Point = new Point(player.Point.X - 1, player.Point.Y);
-                        }
+                            break;
+                        case MovingDirection.Left:
+                            if (player.Point.X > 0)
+                            {
+                                player.Point = new Point(player.Point.X - 1, player.Point.Y);
+                            }
 
-                        break;
-                    case MovingDirection.Rigth:
-                        if (player.Point.X < 49)
-                        {
-                            player.Point = new Point(player.Point.X + 1, player.Point.Y);
-                        }
+                            break;
+                        case MovingDirection.Rigth:
+                            if (player.Point.X < 49)
+                            {
+                                player.Point = new Point(player.Point.X + 1, player.Point.Y);
+                            }
 
-                        break;
+                            break;
+                    }
+
+                    if (this.CheckObstacles(player))
+                    {
+                        this.PickUp(player, ObjectType.Obstacle);
+                    }
+                    else if (this.CheckTurbos(player))
+                    {
+                        this.PickUp(player, ObjectType.Turbo);
+                    }
+                    else if (this.CheckPlayerRoute(player))
+                    {
+                        this.PickUp(player, ObjectType.Player);
+                    }
+
+                    this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X] = player;
+
+                    if (player.Turbo)
+                    {
+                        Thread.Sleep(150);
+                    }
+                    else
+                    {
+                        Thread.Sleep(300);
+                    }
                 }
 
-                if (this.CheckObstacles(player))
-                {
-                    this.PickUp(player, ObjectType.Obstacle);
-                }
-                else if (this.CheckTurbos(player))
-                {
-                    this.PickUp(player, ObjectType.Turbo);
-                }
-                else if (this.CheckPlayerRoute(player))
-                {
-                    this.PickUp(player, ObjectType.Player);
-                }
-
-                this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X] = player;
-
-                if (player.Turbo)
-                {
-                    Thread.Sleep(150);
-                }
-                else
-                {
-                    Thread.Sleep(300);
-                }
             }
         }
 
