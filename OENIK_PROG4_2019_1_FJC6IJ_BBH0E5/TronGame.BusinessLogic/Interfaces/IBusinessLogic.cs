@@ -83,5 +83,15 @@
         /// Disables the background music.
         /// </summary>
         void DisableBackgroundMusic();
+
+        /// <summary>
+        /// Pauses the game.
+        /// </summary>
+        void PauseGame();
+
+        /// <summary>
+        /// Continues the game (stops the pause effect).
+        /// </summary>
+        void ContinueGame();
     }
 }
