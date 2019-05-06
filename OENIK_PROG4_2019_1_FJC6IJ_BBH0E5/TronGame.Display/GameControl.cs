@@ -120,5 +120,15 @@
         {
             this.logic.ChangeDifficulty(difficulty);
         }
+
+        public void PauseGame()
+        {
+            this.logic.PauseGame();
+        }
+
+        public void ContinueGame()
+        {
+            this.logic.ContinueGame();
+        }
     }
 }
