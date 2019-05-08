@@ -40,15 +40,15 @@
                 <MenuItem Header="High score" Command="{Binding ShowHighScoreCommand}"></MenuItem>
             </Menu>
             <Label Grid.Row="1" Content="{Binding GameControl.GameModel.Player1.Name}"/>
-            <Label Grid.Row="1" Grid.Column="1" Content="{Binding GameControl.GameModel.Player1.NumberOfTurbos}" ContentStringFormat="Turbó: {0} darab"/>
-            <Label Grid.Row="1" Grid.Column="2" Content="{Binding GameControl.GameModel.Player1.NumberOfWins}" ContentStringFormat="Győzelem: {0} darab"/>
+            <Label Grid.Row="1" Grid.Column="1" Content="{Binding GameControl.GameModel.Player1.NumberOfTurbos}" ContentStringFormat="P1 Turbos: {0} darab"/>
+            <Label Grid.Row="1" Grid.Column="2" Content="{Binding GameControl.GameModel.Player1.NumberOfWins}" ContentStringFormat="P1 Wins: {0} darab"/>
 
             <Label Grid.Row="2" Content="{Binding GameControl.GameModel.Player2.Name}"/>
-            <Label Grid.Row="2" Grid.Column="1" Content="{Binding GameControl.GameModel.Player2.NumberOfTurbos}" ContentStringFormat="Turbó: {0} darab"/>
-            <Label Grid.Row="2" Grid.Column="2" Content="{Binding GameControl.GameModel.Player2.NumberOfWins}" ContentStringFormat="Győzelem: {0} darab"/>
+            <Label Grid.Row="2" Grid.Column="1" Content="{Binding GameControl.GameModel.Player2.NumberOfTurbos}" ContentStringFormat="P2 Turbos: {0} darab"/>
+            <Label Grid.Row="2" Grid.Column="2" Content="{Binding GameControl.GameModel.Player2.NumberOfWins}" ContentStringFormat="P2 Wins: {0} darab"/>
 
             <Label Grid.Row="3" Grid.Column="0" Content="TIME"/>
-            <Label Grid.Row="3" Grid.Column="1" Content="{Binding GameControl.GameModel.HighScore}"/>
+            <Label Grid.Row="3" Grid.Column="1" Content="{Binding GameControl.GameModel.HighScore}" ContentStringFormat="Highscore: {0}"/>
             <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal">
                 <Button Content="Pause" Command="{Binding PauseGameCommand}"/>
                 <Button Content="Help" Command="{Binding ShowHelpWindowCommand}"/>
