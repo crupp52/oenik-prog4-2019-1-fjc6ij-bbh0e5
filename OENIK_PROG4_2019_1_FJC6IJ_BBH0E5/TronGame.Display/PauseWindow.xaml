@@ -7,6 +7,6 @@
         mc:Ignorable="d"
         Title="The game is paused" Height="200" Width="200" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Image Source="../TronGame.Repository/Images/pause.png"/>
+        <Image Source="Images/pause.png"/>
     </Grid>
 </Window>
