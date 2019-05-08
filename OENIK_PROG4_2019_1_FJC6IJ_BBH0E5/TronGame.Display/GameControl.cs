@@ -27,6 +27,8 @@
         {
             this._lock = new object();
             this.Loaded += this.GameControl_Loaded;
+
+            this.GameModel = new GameModel();
         }
 
         public ICommand NewGameCommand { get; private set; }
@@ -48,7 +50,7 @@
         private void GameControl_Loaded(object sender, RoutedEventArgs e)
         {
             Window window = Window.GetWindow(this);
-            this.GameModel = new GameModel();
+            //this.GameModel = new GameModel();
             this.logic = new GameLogic(this.GameModel);
             this.display = new GameDisplay(this.GameModel, 1000, 600);
 

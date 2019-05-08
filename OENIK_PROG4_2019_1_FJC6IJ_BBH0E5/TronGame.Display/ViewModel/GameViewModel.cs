@@ -85,5 +85,13 @@
             if (!this.IsMusicEnabled) { this.GameControl.DisableMusic(); }
             else { this.GameControl.EnableMusic(); }
         }
+
+        //public string HighScore
+        //{
+        //    get
+        //    {
+        //        return GameControl.GameModel.HighScore.GetFullDescription();
+        //    }
+        //}
     }
 }
