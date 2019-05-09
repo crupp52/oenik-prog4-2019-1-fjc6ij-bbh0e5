@@ -224,17 +224,9 @@
 
         private bool CheckPlayerRoute(Player player)
         {
-            if ((this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X] as Player) != null)
+            if ((this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X] as Player) != null && this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X].GetType() == typeof(Player))
             {
-                if (player == this.GameModel.Player1 && (this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X] as Player).Name == this.GameModel.Player2.Name)
-                {
-                    return true;
-                }
-
-                if (player == this.GameModel.Player2 && (this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X] as Player).Name == this.GameModel.Player1.Name)
-                {
-                    return true;
-                }
+                return true;
             }
 
             return false;
