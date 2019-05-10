@@ -47,9 +47,10 @@
             {
                 if (this.logic.IsGamePaused)
                 {
-                    FormattedText f = new FormattedText($"{this.GameModel.Player1.NumberOfWins} - {this.GameModel.Player2.NumberOfWins}", CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 32, Brushes.Yellow);
+                    FormattedText f = new FormattedText($"{this.GameModel.Player1.NumberOfWins} - {this.GameModel.Player2.NumberOfWins}", CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 120, Brushes.White);
+
                     drawingContext.DrawRectangle(Brushes.Black, null, new Rect(0, 0, this.ActualWidth, this.ActualHeight));
-                    drawingContext.DrawText(f, new Point(this.ActualWidth / 2, this.ActualHeight / 2));
+                    drawingContext.DrawText(f, new Point((this.ActualWidth - f.Width) / 2, (this.ActualHeight - f.Height) / 2));
                 }
                 else
                 {

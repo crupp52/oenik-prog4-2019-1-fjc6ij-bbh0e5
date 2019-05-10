@@ -354,7 +354,7 @@
             player.NumberOfWins++;
 
             this.IsGamePaused = true;
-            Thread.Sleep(750);
+            Thread.Sleep(900);
             this.IsGamePaused = false;
 
             if (player.NumberOfWins == 5)
