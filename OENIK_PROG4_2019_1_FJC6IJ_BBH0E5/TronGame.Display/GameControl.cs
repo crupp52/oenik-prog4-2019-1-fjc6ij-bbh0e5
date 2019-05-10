@@ -60,10 +60,21 @@
                 {
                     FormattedText endText = new FormattedText($"Játék vége.", CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 100, Brushes.White);
                     FormattedText resText = new FormattedText($"{this.GameModel.Player1.NumberOfWins} - {this.GameModel.Player2.NumberOfWins}", CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 72, Brushes.White);
+                    FormattedText winText;
+
+                    if (this.GameModel.Player1.NumberOfWins == 5)
+                    {
+                        winText = new FormattedText($"Gőztes: {this.GameModel.Player1.Name}", CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 50, Brushes.White);
+                    }
+                    else
+                    {
+                         winText = new FormattedText($"Gőztes: {this.GameModel.Player2.Name}", CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 50, Brushes.White);
+                    }
 
                     drawingContext.DrawRectangle(Brushes.Black, null, new Rect(0, 0, this.ActualWidth, this.ActualHeight));
-                    drawingContext.DrawText(endText, new Point((this.ActualWidth - endText.Width) / 2, (this.ActualHeight - endText.Height) / 2));
-                    drawingContext.DrawText(resText, new Point((this.ActualWidth - resText.Width) / 2, ((this.ActualHeight - resText.Height) / 2) + 100));
+                    drawingContext.DrawText(endText, new Point((this.ActualWidth - endText.Width) / 2, ((this.ActualHeight - endText.Height) / 2) - 100));
+                    drawingContext.DrawText(resText, new Point((this.ActualWidth - resText.Width) / 2, (this.ActualHeight - resText.Height) / 2));
+                    drawingContext.DrawText(winText, new Point((this.ActualWidth - winText.Width) / 2, ((this.ActualHeight - winText.Height) / 2) + 100));
                 }
             }
         }
