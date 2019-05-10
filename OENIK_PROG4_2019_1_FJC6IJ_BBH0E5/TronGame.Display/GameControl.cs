@@ -17,17 +17,14 @@
     /// </summary>
     public class GameControl : FrameworkElement
     {
-        //private IGameModel model;
         private IBusinessLogic logic;
         private GameDisplay display;
-        private object _lock;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GameControl"/> class.
         /// </summary>
         public GameControl()
         {
-            this._lock = new object();
             this.Loaded += this.GameControl_Loaded;
 
             this.GameModel = new GameModel();
@@ -74,7 +71,6 @@
         private void GameControl_Loaded(object sender, RoutedEventArgs e)
         {
             Window window = Window.GetWindow(this);
-            //this.GameModel = new GameModel();
             this.logic = new GameLogic(this.GameModel);
             this.display = new GameDisplay(this.GameModel, 1000, 600);
 
