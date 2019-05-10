@@ -43,7 +43,7 @@
             this.width = 50;
             this.heigth = 30;
 
-            this.ResetField();
+            this.NewRound();
 
             this.MovePlayers();
         }
@@ -84,8 +84,11 @@
         /// </summary>
         public void NewGame()
         {
-            this.GameModel.Player1 = new Player();
-            this.GameModel.Player2 = new Player();
+            this.ResetPlayer(this.GameModel.Player1);
+            this.ResetPlayer(this.GameModel.Player2);
+            this.IsGameEnded = false;
+            this.IsGamePaused = false;
+            this.NewRound();
         }
 
         /// <summary>
@@ -93,7 +96,7 @@
         /// </summary>
         public void NewRound()
         {
-            this.IsGameEnded = false;
+            this.GameModel.GameField = new int[30, 50];
             this.SetPlayerStartPositon(this.GameModel.Player1);
             this.SetPlayerStartPositon(this.GameModel.Player2);
             this.GameModel.Obstacles.Clear();
@@ -123,7 +126,7 @@
             xml.Save(@"../../../TronGame.Repository/XMLs/settings.xml");
             this.GameModel.Difficulty = difficulty;
 
-            this.ResetField();
+            this.NewRound();
         }
 
         /// <summary>
@@ -281,14 +284,14 @@
             {
                 case ObjectType.Player:
                     this.DiePlayer(player);
-                    this.ResetField();
+                    this.NewRound();
                     break;
                 case ObjectType.Turbo:
                     player.NumberOfTurbos++;
                     break;
                 case ObjectType.Obstacle:
                     this.DiePlayer(player);
-                    this.ResetField();
+                    this.NewRound();
                     break;
             }
         }
@@ -338,7 +341,6 @@
         {
             this.NewGame();
             this.GetPlayersNames();
-            //this.AddNameToPlayers("Karcsi", "Kata");
             this.NewRound();
             this.StartBackgroundSong();
 

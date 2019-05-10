@@ -24,8 +24,8 @@
             </Grid.ColumnDefinitions>
             <Menu Grid.ColumnSpan="3">
                 <MenuItem Header="Game">
-                    <MenuItem Header="New game"></MenuItem>
-                    <MenuItem Header="Load game"></MenuItem>
+                    <MenuItem Header="New game" Command="{Binding NewGameCommand}"></MenuItem>
+                    <MenuItem Header="Load game" Command="{Binding LoadGameCommand}"></MenuItem>
                     <MenuItem Header="Set players names" Command="{Binding ChangePlayersNameCommand}"></MenuItem>
                     <MenuItem Header="Exit" Command="{Binding ExitGameCommand}"></MenuItem>
                 </MenuItem>

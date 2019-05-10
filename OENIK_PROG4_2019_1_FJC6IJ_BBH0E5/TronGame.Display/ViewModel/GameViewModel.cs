@@ -24,8 +24,7 @@
         {
             this.GameControl = new GameControl();
 
-            IsMusicEnabled = true;
-            // commands
+            this.IsMusicEnabled = true;
             this.ExitGameCommand = new RelayCommand(() => { Application.Current.Shutdown(); });
             this.ShowHighScoreCommand = new RelayCommand(() => { MessageBox.Show(this.GameControl.GameModel.HighScore.GetFullDescription()); });
             this.ShowHelpWindowCommand = new RelayCommand(() => { new HelpWindow().Show(); });
@@ -41,6 +40,9 @@
                 pauseWindow.Closing += this.ContinueGame;
                 pauseWindow.Show();
             });
+
+            this.NewGameCommand = new RelayCommand(() => this.GameControl.NewGame());
+            this.LoadGameCommand = new RelayCommand(() => this.GameControl.LoadGame());
         }
 
         private void ContinueGame(object sender, EventArgs e)
@@ -54,6 +56,10 @@
         }
 
         public GameControl GameControl { get; set; }
+
+        public ICommand NewGameCommand { get; private set; }
+
+        public ICommand LoadGameCommand { get; private set; }
 
         public ICommand ExitGameCommand { get; private set; }
 

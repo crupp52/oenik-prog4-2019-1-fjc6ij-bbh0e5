@@ -160,5 +160,15 @@
         {
             this.logic.ContinueGame();
         }
+
+        public void NewGame()
+        {
+            this.logic.NewGame();
+        }
+
+        public void LoadGame()
+        {
+            this.logic.LoadGameState("");
+        }
     }
 }
