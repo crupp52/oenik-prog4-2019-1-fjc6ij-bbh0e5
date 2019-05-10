@@ -1,5 +1,6 @@
 ﻿namespace TronGame.Repository
 {
+    using GalaSoft.MvvmLight;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
@@ -60,20 +61,36 @@
 
         public bool Turbo { get; set; }
 
+        private int numberOfWins;
+        private int numberOfTurbos;
+        private string name;
+
         /// <summary>
         /// Gets or sets name of player
         /// </summary>
-        public string Name { get; set; }
+        public string Name
+        {
+            get { return this.name; }
+            set { this.Set(ref this.name, value); }
+        }
 
         /// <summary>
         /// Gets or sets number of wins
         /// </summary>
-        public int NumberOfWins { get; set; }
+        public int NumberOfWins
+        {
+            get { return this.numberOfWins; }
+            set { this.Set(ref this.numberOfWins, value); }
+        }
 
         /// <summary>
         /// Gets or sets number of speed ups
         /// </summary>
-        public int NumberOfTurbos { get; set; }
+        public int NumberOfTurbos
+        {
+            get { return this.numberOfTurbos; }
+            set { this.Set(ref this.numberOfTurbos, value); }
+        }
 
         public MovingDirection MovingDirection { get; set; }
 
