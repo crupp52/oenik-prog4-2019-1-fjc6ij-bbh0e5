@@ -428,7 +428,6 @@
 
                 ObstacleObject o = new ObstacleObject() { Point = new Point(posX, posY) };
                 this.GameModel.Obstacles.Add(o);
-                //this.GameModel.GameField[posY, posX] = o;
                 i++;
             }
         }
@@ -443,19 +442,18 @@
 
                 TurboObject o = new TurboObject() { Point = new Point(posX, posY) };
                 this.GameModel.Turbos.Add(o);
-                //this.GameModel.GameField[posY, posX] = o;
                 i++;
             }
         }
 
         private void SetPlayerStartPositon(Player player)
         {
-            int posX = rnd.Next(0, 50);
-            int posY = rnd.Next(0, 30);
+            int posX = rnd.Next(10, 40);
+            int posY = rnd.Next(7, 23);
             while (this.GameModel.GameField[posY, posX] != null)
             {
-                posX = rnd.Next(0, 50);
-                posY = rnd.Next(0, 30);
+                posX = rnd.Next(10, 40);
+                posY = rnd.Next(7, 23);
             }
 
             player.Point = new Point(posX, posY);

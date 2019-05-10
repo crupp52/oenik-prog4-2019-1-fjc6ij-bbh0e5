@@ -26,7 +26,6 @@ namespace TronGame.Model
             this.GameField = new GameObject[30, 50];
 
             this.GetPlayersNames();
-
         }
 
         /// <summary>
