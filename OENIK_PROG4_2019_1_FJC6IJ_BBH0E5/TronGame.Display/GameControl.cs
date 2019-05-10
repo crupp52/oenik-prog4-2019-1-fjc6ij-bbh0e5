@@ -166,9 +166,9 @@
             this.logic.NewGame();
         }
 
-        public void LoadGame()
+        public void LoadGame(string filename)
         {
-            this.logic.LoadGameState("");
+            this.logic.LoadGameState(filename);
         }
     }
 }

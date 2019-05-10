@@ -10,6 +10,7 @@
     using System.Xml.Linq;
     using GalaSoft.MvvmLight;
     using GalaSoft.MvvmLight.CommandWpf;
+    using Microsoft.Win32;
     using TronGame.Model;
 
     /// <summary>
@@ -32,7 +33,7 @@
             this.SetDifficultyToMediumCommand = new RelayCommand(() => { this.SetDifficulty(1); });
             this.SetDifficultyToHardCommand = new RelayCommand(() => { this.SetDifficulty(2); });
             this.EnableDisableMusicCommand = new RelayCommand(() => { this.ChangeMusicState(); });
-            this.ChangePlayersNameCommand = new RelayCommand(() => { new ChangePlayersNameWindow(GameControl).Show(); });
+            this.ChangePlayersNameCommand = new RelayCommand(() => { new ChangePlayersNameWindow(this.GameControl).Show(); });
             this.PauseGameCommand = new RelayCommand(() =>
             {
                 this.PauseGame();
@@ -42,7 +43,17 @@
             });
 
             this.NewGameCommand = new RelayCommand(() => this.GameControl.NewGame());
-            this.LoadGameCommand = new RelayCommand(() => this.GameControl.LoadGame());
+            this.LoadGameCommand = new RelayCommand(() => 
+            {
+                this.GameControl.PauseGame();
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "XML files (*.xml)|*.xml";
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    this.GameControl.LoadGame(openFileDialog.FileName);
+                }
+                this.GameControl.ContinueGame();
+            });
         }
 
         private void ContinueGame(object sender, EventArgs e)
