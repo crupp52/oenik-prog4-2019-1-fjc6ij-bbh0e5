@@ -133,7 +133,7 @@
             {
                 for (int j = 0; j < this.model.GameField.GetLength(1); j++)
                 {
-                    if (this.model.GameField[i, j] != null && this.model.GameField[i, j] == this.model.Player1)
+                    if (this.model.GameField[i, j] == 1)
                     {
                         RectangleGeometry rg = new RectangleGeometry(new Rect(j * this.tileSize, i * this.tileSize, this.tileSize, this.tileSize));
 
@@ -153,7 +153,7 @@
             {
                 for (int j = 0; j < this.model.GameField.GetLength(1); j++)
                 {
-                    if (this.model.GameField[i, j] != null && this.model.GameField[i, j] == this.model.Player2)
+                    if (this.model.GameField[i, j] == 2)
                     {
                         RectangleGeometry rg = new RectangleGeometry(new Rect(j * this.tileSize, i * this.tileSize, this.tileSize, this.tileSize));
 

@@ -45,16 +45,28 @@
         {
             if (this.logic != null && this.ActualWidth != 0)
             {
-                if (this.logic.IsGamePaused)
+                if (!this.logic.IsGameEnded)
                 {
-                    FormattedText f = new FormattedText($"{this.GameModel.Player1.NumberOfWins} - {this.GameModel.Player2.NumberOfWins}", CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 120, Brushes.White);
+                    if (this.logic.IsGamePaused)
+                    {
+                        FormattedText f = new FormattedText($"{this.GameModel.Player1.NumberOfWins} - {this.GameModel.Player2.NumberOfWins}", CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 120, Brushes.White);
 
-                    drawingContext.DrawRectangle(Brushes.Black, null, new Rect(0, 0, this.ActualWidth, this.ActualHeight));
-                    drawingContext.DrawText(f, new Point((this.ActualWidth - f.Width) / 2, (this.ActualHeight - f.Height) / 2));
+                        drawingContext.DrawRectangle(Brushes.Black, null, new Rect(0, 0, this.ActualWidth, this.ActualHeight));
+                        drawingContext.DrawText(f, new Point((this.ActualWidth - f.Width) / 2, (this.ActualHeight - f.Height) / 2));
+                    }
+                    else
+                    {
+                        drawingContext.DrawDrawing(this.display.GetDrawings());
+                    }
                 }
                 else
                 {
-                    drawingContext.DrawDrawing(this.display.GetDrawings());
+                    FormattedText endText = new FormattedText($"Játék vége.", CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 100, Brushes.White);
+                    FormattedText resText = new FormattedText($"{this.GameModel.Player1.NumberOfWins} - {this.GameModel.Player2.NumberOfWins}", CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 72, Brushes.White);
+
+                    drawingContext.DrawRectangle(Brushes.Black, null, new Rect(0, 0, this.ActualWidth, this.ActualHeight));
+                    drawingContext.DrawText(endText, new Point((this.ActualWidth - endText.Width) / 2, (this.ActualHeight - endText.Height) / 2));
+                    drawingContext.DrawText(resText, new Point((this.ActualWidth - resText.Width) / 2, ((this.ActualHeight - resText.Height) / 2) + 100));
                 }
             }
         }
@@ -79,10 +91,7 @@
 
         private void Logic_ScreenRefresh(object sender, EventArgs e)
         {
-            lock (this._lock)
-            {
-                this.InvalidateVisual();
-            }
+            this.InvalidateVisual();
         }
 
         private void Timer_Tick(object sender, EventArgs e)

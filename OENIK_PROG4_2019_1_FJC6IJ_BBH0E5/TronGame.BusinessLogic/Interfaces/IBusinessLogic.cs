@@ -14,7 +14,9 @@
         /// </summary>
         event EventHandler ScreenRefresh;
 
-        bool IsGamePaused { get; set; }
+        bool IsGamePaused { get; }
+
+        bool IsGameEnded { get; }
 
         /// <summary>
         /// Gets GameModel

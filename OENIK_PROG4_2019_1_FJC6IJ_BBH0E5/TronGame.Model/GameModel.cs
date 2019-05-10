@@ -23,7 +23,7 @@ namespace TronGame.Model
             this.Player2 = new Player();
             this.Difficulty = this.GetDifficulty();
             this.HighScore = new HighScore();
-            this.GameField = new GameObject[30, 50];
+            this.GameField = new int[30, 50];
 
             this.GetPlayersNames();
         }
@@ -62,7 +62,7 @@ namespace TronGame.Model
         /// Gets or sets GameField
         /// </summary>
         [XmlIgnore]
-        public GameObject[,] GameField { get; set; }
+        public int[,] GameField { get; set; }
 
         /// <summary>
         /// Get difficulty from settings.xml

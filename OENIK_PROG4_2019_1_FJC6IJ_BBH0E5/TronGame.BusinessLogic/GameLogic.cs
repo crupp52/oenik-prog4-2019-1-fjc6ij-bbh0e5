@@ -93,6 +93,7 @@
         /// </summary>
         public void NewRound()
         {
+            this.IsGameEnded = false;
             this.SetPlayerStartPositon(this.GameModel.Player1);
             this.SetPlayerStartPositon(this.GameModel.Player2);
             this.GameModel.Obstacles.Clear();
@@ -105,16 +106,13 @@
 
         public void ResetField()
         {
-            this.GameModel.GameField = new GameObject[30, 50];
-
+            this.GameModel.GameField = new int[30, 50];
+            this.SetPlayerStartPositon(this.GameModel.Player1);
+            this.SetPlayerStartPositon(this.GameModel.Player2);
             this.GameModel.Obstacles.Clear();
             this.GameModel.Turbos.Clear();
             this.SetObstacles();
             this.SetTurbos();
-
-            this.SetPlayerStartPositon(this.GameModel.Player1);
-            this.SetPlayerStartPositon(this.GameModel.Player2);
-
             this.sw.Start();
         }
 
@@ -144,7 +142,9 @@
             Task.Run(() => this.MovePlayersProcess(this.GameModel.Player2));
         }
 
-        public bool IsGamePaused { get; set; }
+        public bool IsGamePaused { get; private set; }
+
+        public bool IsGameEnded { get; private set; }
 
         public void PauseGame()
         {
@@ -160,7 +160,7 @@
         {
             while (true)
             {
-                if (!IsGamePaused)
+                if (!this.IsGamePaused && !this.IsGameEnded)
                 {
                     switch (player.MovingDirection)
                     {
@@ -207,7 +207,14 @@
                         this.PickUp(player, ObjectType.Player);
                     }
 
-                    this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X] = player;
+                    if (player == this.GameModel.Player1)
+                    {
+                        this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X] = 1;
+                    }
+                    else
+                    {
+                        this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X] = 2;
+                    }
 
                     if (player.Turbo)
                     {
@@ -218,13 +225,16 @@
                         Thread.Sleep(300);
                     }
                 }
-
+                else
+                {
+                    Thread.Sleep(500);
+                }
             }
         }
 
         private bool CheckPlayerRoute(Player player)
         {
-            if ((this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X] as Player) != null && this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X].GetType() == typeof(Player))
+            if (this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X] != 0)
             {
                 return true;
             }
@@ -365,10 +375,9 @@
 
         private void EndGame()
         {
+            this.IsGamePaused = true;
+            this.IsGameEnded = true;
             this.HighScoreCheck();
-            this.ResetPlayer(this.GameModel.Player1);
-            this.ResetPlayer(this.GameModel.Player2);
-            this.ResetField();
             this.sw.Stop();
         }
 
@@ -450,14 +459,22 @@
         {
             int posX = rnd.Next(10, 40);
             int posY = rnd.Next(7, 23);
-            while (this.GameModel.GameField[posY, posX] != null)
+            while (this.GameModel.GameField[posY, posX] != 0)
             {
                 posX = rnd.Next(10, 40);
                 posY = rnd.Next(7, 23);
             }
 
             player.Point = new Point(posX, posY);
-            this.GameModel.GameField[posY, posX] = player;
+
+            if (player == this.GameModel.Player1)
+            {
+                this.GameModel.GameField[posY, posX] = 1;
+            }
+            else
+            {
+                this.GameModel.GameField[posY, posX] = 2;
+            }
         }
 
         public void StartBackgroundSong()
