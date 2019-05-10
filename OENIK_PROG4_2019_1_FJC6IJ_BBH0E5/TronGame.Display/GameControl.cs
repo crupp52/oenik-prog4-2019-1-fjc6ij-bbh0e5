@@ -1,6 +1,8 @@
 ﻿namespace TronGame.Display
 {
     using System;
+    using System.Globalization;
+    using System.Threading;
     using System.Windows;
     using System.Windows.Input;
     using System.Windows.Media;
@@ -43,7 +45,16 @@
         {
             if (this.logic != null && this.ActualWidth != 0)
             {
-                drawingContext.DrawDrawing(this.display.GetDrawings());
+                if (this.logic.IsGamePaused)
+                {
+                    FormattedText f = new FormattedText($"{this.GameModel.Player1.NumberOfWins} - {this.GameModel.Player2.NumberOfWins}", CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 32, Brushes.Yellow);
+                    drawingContext.DrawRectangle(Brushes.Black, null, new Rect(0, 0, this.ActualWidth, this.ActualHeight));
+                    drawingContext.DrawText(f, new Point(this.ActualWidth / 2, this.ActualHeight / 2));
+                }
+                else
+                {
+                    drawingContext.DrawDrawing(this.display.GetDrawings());
+                }
             }
         }
 

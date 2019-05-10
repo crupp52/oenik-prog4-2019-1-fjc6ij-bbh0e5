@@ -351,7 +351,13 @@
 
         private void WinRound(Player player)
         {
-            if (++player.NumberOfWins == 5)
+            player.NumberOfWins++;
+
+            this.IsGamePaused = true;
+            Thread.Sleep(750);
+            this.IsGamePaused = false;
+
+            if (player.NumberOfWins == 5)
             {
                 this.EndGame();
             }
