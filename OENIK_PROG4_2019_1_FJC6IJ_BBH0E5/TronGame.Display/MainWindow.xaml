@@ -23,13 +23,13 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Menu Grid.ColumnSpan="3">
-                <MenuItem Header="Game">
+                <MenuItem Header="Game" Focusable="False">
                     <MenuItem Header="New game" Command="{Binding NewGameCommand}"></MenuItem>
                     <MenuItem Header="Load game" Command="{Binding LoadGameCommand}"></MenuItem>
                     <MenuItem Header="Set players names" Command="{Binding ChangePlayersNameCommand}"></MenuItem>
                     <MenuItem Header="Exit" Command="{Binding ExitGameCommand}"></MenuItem>
                 </MenuItem>
-                <MenuItem Header="Settings">
+                <MenuItem Header="Settings" Focusable="False">
                     <MenuItem IsCheckable="True" Header="Background music" IsChecked="{Binding IsMusicEnabled}" Command="{Binding EnableDisableMusicCommand}"></MenuItem>
                     <MenuItem Header="Difficulty">
                         <MenuItem Header="Easy" Command="{Binding SetDifficultyToEasyCommand}"></MenuItem>
@@ -37,7 +37,7 @@
                         <MenuItem Header="Hard" Command="{Binding SetDifficultyToHardCommand}"></MenuItem>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="High score" Command="{Binding ShowHighScoreCommand}"></MenuItem>
+                <MenuItem Header="High score" Command="{Binding ShowHighScoreCommand}" Focusable="False"></MenuItem>
             </Menu>
             <Label Grid.Row="1" Content="{Binding GameControl.GameModel.Player1.Name}" HorizontalContentAlignment="Center" FontWeight="Bold" Foreground="Yellow" ContentStringFormat="Player1's name: {0}"/>
             <Label Grid.Row="1" Grid.Column="1" Content="{Binding GameControl.GameModel.Player1.NumberOfTurbos}" ContentStringFormat="P1 Turbos: {0} left" FontWeight="Bold" Foreground="Yellow"/>
@@ -50,8 +50,8 @@
             <Label Grid.Row="3" Grid.Column="0" Content="0" ContentStringFormat="TIME: {0}" HorizontalContentAlignment="Center" FontWeight="Bold" Foreground="LightGreen"/>
             <Label Grid.Row="3" Grid.Column="1" Content="{Binding GameControl.GameModel.HighScore}" ContentStringFormat="Highscore: {0}" FontWeight="Bold" Foreground="Orange"/>
             <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal">
-                <Button Content="Pause" Command="{Binding PauseGameCommand}" Background="Orange" Width="70"/>
-                <Button Content="Help" Command="{Binding ShowHelpWindowCommand}" Background="Yellow" Width="50"/>
+                <Button Content="Pause" Command="{Binding PauseGameCommand}" Background="Orange" Width="70" Focusable="False"/>
+                <Button Content="Help" Command="{Binding ShowHelpWindowCommand}" Background="Yellow" Width="50" Focusable="False"/>
             </StackPanel>
         </Grid>
 
