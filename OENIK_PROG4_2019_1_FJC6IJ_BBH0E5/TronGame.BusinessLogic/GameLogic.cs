@@ -3,6 +3,7 @@
     using System;
     using System.Diagnostics;
     using System.IO;
+    using System.Linq;
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
@@ -329,10 +330,36 @@
         {
             if (File.Exists(filename))
             {
-                XmlSerializer x = new XmlSerializer(this.GameModel.GetType());
-                using (StreamReader sr = new StreamReader(filename, Encoding.UTF8))
+                this.GameModel.GameField = new int[30, 50];
+
+                XDocument xdoc = XDocument.Load(filename);
+                this.GameModel.Player1.Name = xdoc.Element("GameModel").Element("Player1").Element("Name").Value;
+                this.GameModel.Player1.Point = new Point(double.Parse(xdoc.Element("GameModel").Element("Player1").Element("Point").Element("X").Value), double.Parse(xdoc.Element("GameModel").Element("Player1").Element("Point").Element("Y").Value));
+                this.GameModel.Player1.NumberOfWins = int.Parse(xdoc.Element("GameModel").Element("Player1").Element("NumberOfWins").Value);
+                this.GameModel.Player1.NumberOfTurbos = int.Parse(xdoc.Element("GameModel").Element("Player1").Element("NumberOfTurbos").Value);
+
+                this.GameModel.Player2.Name = xdoc.Element("GameModel").Element("Player2").Element("Name").Value;
+                this.GameModel.Player2.Point = new Point(double.Parse(xdoc.Element("GameModel").Element("Player2").Element("Point").Element("X").Value), double.Parse(xdoc.Element("GameModel").Element("Player2").Element("Point").Element("Y").Value));
+                this.GameModel.Player2.NumberOfWins = int.Parse(xdoc.Element("GameModel").Element("Player2").Element("NumberOfWins").Value);
+                this.GameModel.Player2.NumberOfTurbos = int.Parse(xdoc.Element("GameModel").Element("Player2").Element("NumberOfTurbos").Value);
+
+                var obstacles = from e in xdoc.Descendants("Obstacles").Elements("ObstacleObject").Elements("Point")
+                        select new { X = e.Element("X").Value, Y = e.Element("Y").Value };
+
+                var turbos = from e in xdoc.Descendants("Turbos").Elements("TurboObject").Elements("Point")
+                                select new { X = e.Element("X").Value, Y = e.Element("Y").Value };
+
+                this.GameModel.Obstacles.Clear();
+                this.GameModel.Turbos.Clear();
+
+                foreach (var item in obstacles)
                 {
-                    this.GameModel = (GameModel)x.Deserialize(sr);
+                    this.GameModel.Obstacles.Add(new ObstacleObject() { Point = new Point(double.Parse(item.X), double.Parse(item.Y)) });
+                }
+
+                foreach (var item in turbos)
+                {
+                    this.GameModel.Turbos.Add(new TurboObject() { Point = new Point(double.Parse(item.X), double.Parse(item.Y)) });
                 }
             }
         }
