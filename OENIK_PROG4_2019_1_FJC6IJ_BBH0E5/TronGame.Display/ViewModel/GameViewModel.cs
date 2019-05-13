@@ -43,7 +43,7 @@
             });
 
             this.NewGameCommand = new RelayCommand(() => this.GameControl.NewGame());
-            this.LoadGameCommand = new RelayCommand(() => 
+            this.LoadGameCommand = new RelayCommand(() =>
             {
                 this.GameControl.PauseGame();
                 OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -59,8 +59,8 @@
         /// <summary>
         /// Contibue game
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">sender</param>
+        /// <param name="e">event</param>
         private void ContinueGame(object sender, EventArgs e)
         {
             this.GameControl.ContinueGame();
@@ -123,5 +123,8 @@
             if (!this.IsMusicEnabled) { this.GameControl.DisableMusic(); }
             else { this.GameControl.EnableMusic(); }
         }
+
+
+        public string GameTime { get { return DateTime.Now.ToString("yyyy-MM-dd"); } }
     }
 }

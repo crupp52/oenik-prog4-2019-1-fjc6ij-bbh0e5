@@ -41,13 +41,13 @@
             </Menu>
             <Label Grid.Row="1" Content="{Binding GameControl.GameModel.Player1.Name}" HorizontalContentAlignment="Center" FontWeight="Bold" Foreground="Yellow" ContentStringFormat="Player1's name: {0}"/>
             <Label Grid.Row="1" Grid.Column="1" Content="{Binding GameControl.GameModel.Player1.NumberOfTurbos}" ContentStringFormat="P1 Turbos: {0} left" FontWeight="Bold" Foreground="Yellow"/>
-            <Label Grid.Row="1" Grid.Column="2" Content="{Binding GameControl.GameModel.Player1.NumberOfWins}" ContentStringFormat="P1 Wins: {0} left" FontWeight="Bold" Foreground="Yellow"/>
+            <Label Grid.Row="1" Grid.Column="2" Content="{Binding GameControl.GameModel.Player1.NumberOfWins}" ContentStringFormat="P1 Wins: {0}" FontWeight="Bold" Foreground="Yellow"/>
 
             <Label Grid.Row="2" Content="{Binding GameControl.GameModel.Player2.Name}" HorizontalContentAlignment="Center" FontWeight="Bold" Foreground="Yellow" ContentStringFormat="Player2's name: {0}"/>
             <Label Grid.Row="2" Grid.Column="1" Content="{Binding GameControl.GameModel.Player2.NumberOfTurbos}" ContentStringFormat="P2 Turbos: {0} left" FontWeight="Bold" Foreground="Yellow"/>
-            <Label Grid.Row="2" Grid.Column="2" Content="{Binding GameControl.GameModel.Player2.NumberOfWins}" ContentStringFormat="P2 Wins: {0} left" FontWeight="Bold" Foreground="Yellow"/>
+            <Label Grid.Row="2" Grid.Column="2" Content="{Binding GameControl.GameModel.Player2.NumberOfWins}" ContentStringFormat="P2 Wins: {0}" FontWeight="Bold" Foreground="Yellow"/>
 
-            <Label Grid.Row="3" Grid.Column="0" Content="0" ContentStringFormat="TIME: {0}" HorizontalContentAlignment="Center" FontWeight="Bold" Foreground="LightGreen"/>
+            <Label Grid.Row="3" Grid.Column="0" Content="{Binding GameTime}" ContentStringFormat="TIME: {0}" HorizontalContentAlignment="Center" FontWeight="Bold" Foreground="LightGreen"/>
             <Label Grid.Row="3" Grid.Column="1" Content="{Binding GameControl.GameModel.HighScore}" ContentStringFormat="Highscore: {0}" FontWeight="Bold" Foreground="Orange"/>
             <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal">
                 <Button Content="Pause" Command="{Binding PauseGameCommand}" Background="Orange" Width="70" Focusable="False"/>
