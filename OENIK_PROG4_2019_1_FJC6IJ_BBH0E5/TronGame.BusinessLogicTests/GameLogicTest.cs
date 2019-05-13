@@ -65,7 +65,7 @@
 
             HighScore highScore = new HighScore() { Player1Score = 3, Player2Score = 2, Player1Name = "Teszt Elek", Player2Name = "Bem József", DateTime = DateTime.Now };
 
-            GameObject[,] gameField = new GameObject[500, 1000];
+            int[,] gameField = new int[500, 1000];
 
             this.mock.Setup(x => x.Player1).Returns(player1);
             this.mock.Setup(x => x.Player2).Returns(player2);
