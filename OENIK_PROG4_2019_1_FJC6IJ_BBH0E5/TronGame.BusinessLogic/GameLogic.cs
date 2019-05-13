@@ -70,6 +70,9 @@
             xml.Save(@"../../../TronGame.Repository/XMLs/settings.xml");
         }
 
+        /// <summary>
+        /// Get players names (set gamemodel properties)
+        /// </summary>
         public void GetPlayersNames()
         {
             var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
@@ -108,6 +111,9 @@
             this.sw.Restart();
         }
 
+        /// <summary>
+        /// Reset gamefield
+        /// </summary>
         public void ResetField()
         {
             this.GameModel.GameField = new int[30, 50];
@@ -120,6 +126,10 @@
             this.sw.Start();
         }
 
+        /// <summary>
+        /// Change the game difficulty
+        /// </summary>
+        /// <param name="difficulty"></param>
         public void ChangeDifficulty(Difficulty difficulty)
         {
             var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
@@ -140,26 +150,45 @@
             player.MovingDirection = direction;
         }
 
+        /// <summary>
+        /// Move the players to a specific direction
+        /// </summary>
         private void MovePlayers()
         {
             Task.Run(() => this.MovePlayersProcess(this.GameModel.Player1));
             Task.Run(() => this.MovePlayersProcess(this.GameModel.Player2));
         }
 
+        /// <summary>
+        /// Is the game paused
+        /// </summary>
         public bool IsGamePaused { get; private set; }
 
+        /// <summary>
+        /// Is the game ended
+        /// </summary>
         public bool IsGameEnded { get; private set; }
 
+        /// <summary>
+        /// Pause the game
+        /// </summary>
         public void PauseGame()
         {
             this.IsGamePaused = true;
         }
 
+        /// <summary>
+        /// Continue the game
+        /// </summary>
         public void ContinueGame()
         {
             this.IsGamePaused = false;
         }
 
+        /// <summary>
+        /// Move player sidefunction
+        /// </summary>
+        /// <param name="player">Player object</param>
         private void MovePlayersProcess(Player player)
         {
             while (true)
@@ -236,6 +265,11 @@
             }
         }
 
+        /// <summary>
+        /// Check player route
+        /// </summary>
+        /// <param name="player">Player object</param>
+        /// <returns></returns>
         private bool CheckPlayerRoute(Player player)
         {
             if (this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X] != 0)
@@ -246,6 +280,11 @@
             return false;
         }
 
+        /// <summary>
+        /// Check obstackles
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
         private bool CheckObstacles(Player player)
         {
             foreach (var item in this.GameModel.Obstacles)
@@ -260,6 +299,11 @@
             return false;
         }
 
+        /// <summary>
+        /// Check if pickup object is turbo
+        /// </summary>
+        /// <param name="player">Player object</param>
+        /// <returns>Is turbo object</returns>
         private bool CheckTurbos(Player player)
         {
             foreach (var item in this.GameModel.Turbos)
@@ -376,6 +420,10 @@
             this.MovePlayers();
         }
 
+        /// <summary>
+        /// Kill the player
+        /// </summary>
+        /// <param name="player">Playerobject</param>
         private void DiePlayer(Player player)
         {
             if (player == this.GameModel.Player1)
@@ -388,6 +436,10 @@
             }
         }
 
+        /// <summary>
+        /// Player wins the round
+        /// </summary>
+        /// <param name="player">Player object</param>
         private void WinRound(Player player)
         {
             player.NumberOfWins++;
@@ -402,6 +454,9 @@
             }
         }
 
+        /// <summary>
+        /// End the game
+        /// </summary>
         private void EndGame()
         {
             this.IsGamePaused = true;
@@ -410,6 +465,9 @@
             this.sw.Stop();
         }
 
+        /// <summary>
+        /// Check the highscore
+        /// </summary>
         private void HighScoreCheck()
         {
             if (this.GameModel.HighScore.Player1Score < this.GameModel.Player1.NumberOfWins || this.GameModel.HighScore.Player2Score < this.GameModel.Player1.NumberOfWins)
@@ -418,12 +476,19 @@
             }
         }
 
+        /// <summary>
+        /// Reset players win and turbos number
+        /// </summary>
+        /// <param name="player">Player object</param>
         private void ResetPlayer(Player player)
         {
             player.NumberOfTurbos = 0;
             player.NumberOfWins = 0;
         }
 
+        /// <summary>
+        /// Generate obstacles
+        /// </summary>
         private void SetObstacles()
         {
             switch (this.GameModel.Difficulty)
@@ -440,6 +505,9 @@
             }
         }
 
+        /// <summary>
+        /// Genereate turbos
+        /// </summary>
         private void SetTurbos()
         {
             switch (this.GameModel.Difficulty)
@@ -456,6 +524,10 @@
             }
         }
 
+        /// <summary>
+        /// Generate obstacles by number
+        /// </summary>
+        /// <param name="num">Number of genarated obstacles</param>
         private void GenerateObstacles(int num)
         {
             int i = 0;
@@ -470,6 +542,10 @@
             }
         }
 
+        /// <summary>
+        /// Generate turbos
+        /// </summary>
+        /// <param name="num">Number of turbos generated</param>
         private void GenerateTurbos(int num)
         {
             int i = 0;
@@ -484,6 +560,10 @@
             }
         }
 
+        /// <summary>
+        /// Set players start position
+        /// </summary>
+        /// <param name="player">Player object</param>
         private void SetPlayerStartPositon(Player player)
         {
             int posX = rnd.Next(10, 40);
@@ -506,6 +586,9 @@
             }
         }
 
+        /// <summary>
+        /// Start background music
+        /// </summary>
         public void StartBackgroundSong()
         {
             var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
@@ -516,6 +599,9 @@
             }
         }
 
+        /// <summary>
+        /// Enale background music
+        /// </summary>
         public void EnableBackgroundMusic()
         {
             this.backgroundMediaPlayer.Play();
@@ -524,6 +610,9 @@
             xml.Save(@"../../../TronGame.Repository/XMLs/settings.xml");
         }
 
+        /// <summary>
+        /// Disable background music
+        /// </summary>
         public void DisableBackgroundMusic()
         {
             this.backgroundMediaPlayer.Stop();

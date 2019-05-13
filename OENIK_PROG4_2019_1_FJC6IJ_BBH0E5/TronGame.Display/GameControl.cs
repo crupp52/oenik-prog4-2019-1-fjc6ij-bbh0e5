@@ -79,6 +79,11 @@
             }
         }
 
+        /// <summary>
+        /// Runs when gamecontrol is loaded
+        /// </summary>
+        /// <param name="sender">param</param>
+        /// <param name="e">event</param>
         private void GameControl_Loaded(object sender, RoutedEventArgs e)
         {
             Window window = Window.GetWindow(this);
@@ -96,16 +101,31 @@
             timer.Start();
         }
 
+        /// <summary>
+        /// Screenrefresh
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">event</param>
         private void Logic_ScreenRefresh(object sender, EventArgs e)
         {
             this.InvalidateVisual();
         }
 
+        /// <summary>
+        /// Timer tick
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">event</param>
         private void Timer_Tick(object sender, EventArgs e)
         {
             this.Logic_ScreenRefresh(sender, e);
         }
 
+        /// <summary>
+        /// Keydown event
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">event</param>
         private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             switch (e.Key)
@@ -141,31 +161,53 @@
             this.logic.DisableBackgroundMusic();
         }
 
+        /// <summary>
+        /// Change players name
+        /// </summary>
+        /// <param name="name1">player1 name</param>
+        /// <param name="name2">player2 name</param>
         public void ChangePlayersName(string name1, string name2)
         {
             this.logic.AddNameToPlayers(name1, name2);
         }
 
+        /// <summary>
+        /// Change difficulty
+        /// </summary>
+        /// <param name="difficulty">difficulty level</param>
         public void ChangeDifficulty(Difficulty difficulty)
         {
             this.logic.ChangeDifficulty(difficulty);
         }
 
+        /// <summary>
+        /// Pause game
+        /// </summary>
         public void PauseGame()
         {
             this.logic.PauseGame();
         }
 
+        /// <summary>
+        /// Continue game
+        /// </summary>
         public void ContinueGame()
         {
             this.logic.ContinueGame();
         }
 
+        /// <summary>
+        /// New game
+        /// </summary>
         public void NewGame()
         {
             this.logic.NewGame();
         }
 
+        /// <summary>
+        /// Load game
+        /// </summary>
+        /// <param name="filename"></param>
         public void LoadGame(string filename)
         {
             this.logic.LoadGameState(filename);

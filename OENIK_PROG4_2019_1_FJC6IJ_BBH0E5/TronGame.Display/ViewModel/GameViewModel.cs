@@ -56,16 +56,27 @@
             });
         }
 
+        /// <summary>
+        /// Contibue game
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ContinueGame(object sender, EventArgs e)
         {
             this.GameControl.ContinueGame();
         }
 
+        /// <summary>
+        /// Pause game
+        /// </summary>
         private void PauseGame()
         {
             this.GameControl.PauseGame();
         }
 
+        /// <summary>
+        /// Gamecontrol
+        /// </summary>
         public GameControl GameControl { get; set; }
 
         public ICommand NewGameCommand { get; private set; }
@@ -90,25 +101,27 @@
 
         public ICommand PauseGameCommand { get; private set; }
 
+        /// <summary>
+        /// Set difficulty
+        /// </summary>
+        /// <param name="diff">difficulty level</param>
         private void SetDifficulty(int diff)
         {
             this.GameControl.ChangeDifficulty((Repository.Difficulty)diff);
         }
 
+        /// <summary>
+        /// Is the music enabled property
+        /// </summary>
         public bool IsMusicEnabled { get; set; }
 
+        /// <summary>
+        /// Change the music state (enable/disable)
+        /// </summary>
         private void ChangeMusicState()
         {
             if (!this.IsMusicEnabled) { this.GameControl.DisableMusic(); }
             else { this.GameControl.EnableMusic(); }
         }
-
-        //public string HighScore
-        //{
-        //    get
-        //    {
-        //        return GameControl.GameModel.HighScore.GetFullDescription();
-        //    }
-        //}
     }
 }

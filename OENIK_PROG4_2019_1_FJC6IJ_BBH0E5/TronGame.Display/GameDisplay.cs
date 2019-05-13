@@ -63,6 +63,11 @@
             return dg;
         }
 
+        /// <summary>
+        /// Gets the players ImageBrush
+        /// </summary>
+        /// <param name="filename">ImageBrushes filename</param>
+        /// <returns>Players imagebursh</returns>
         private ImageBrush GetPlayerBrush(string filename)
         {
             ImageBrush imageBrush = new ImageBrush(new BitmapImage(new Uri(filename, UriKind.RelativeOrAbsolute)));
@@ -74,6 +79,11 @@
             return imageBrush;
         }
 
+        /// <summary>
+        /// Get object ImageBrush
+        /// </summary>
+        /// <param name="filename">Imagebrush filename</param>
+        /// <returns>Objects imagebrush</returns>
         private ImageBrush GetObjectBrush(string filename)
         {
             ImageBrush imageBrush = new ImageBrush(new BitmapImage(new Uri(filename, UriKind.RelativeOrAbsolute)));
@@ -85,6 +95,10 @@
             return imageBrush;
         }
 
+        /// <summary>
+        /// Getbackground drawing
+        /// </summary>
+        /// <returns>Drawing of background</returns>
         private Drawing GetBackground()
         {
             Geometry g = new RectangleGeometry(new Rect(0, 0, this.width, this.height));
@@ -92,6 +106,12 @@
             return new GeometryDrawing(Brushes.Black, null, g);
         }
 
+        /// <summary>
+        /// Get Ppayer drawing
+        /// </summary>
+        /// <param name="player">Selected player</param>
+        /// <param name="brush">Imagebrush</param>
+        /// <returns>Drawing of Player</returns>
         private Drawing GetPlayer(Player player, ImageBrush brush)
         {
             Geometry g = new RectangleGeometry(new Rect(player.Point.X * this.tileSize, player.Point.Y * this.tileSize, this.tileSize, this.tileSize));
@@ -99,6 +119,10 @@
             return new GeometryDrawing(brush, null, g);
         }
 
+        /// <summary>
+        /// Get turbos drawing
+        /// </summary>
+        /// <returns>Turbos drawing</returns>
         private Drawing GetTurbos()
         {
             GeometryGroup g = new GeometryGroup();
@@ -112,6 +136,10 @@
             return new GeometryDrawing(this.turboBrush, null, g);
         }
 
+        /// <summary>
+        /// Get obstacles drawing
+        /// </summary>
+        /// <returns>Drawing of obstacles</returns>
         private Drawing GetObstacles()
         {
             GeometryGroup g = new GeometryGroup();
@@ -125,6 +153,10 @@
             return new GeometryDrawing(this.obstacleBrush, null, g);
         }
 
+        /// <summary>
+        /// Drawing of player1 route
+        /// </summary>
+        /// <returns>Drawing of players1 route</returns>
         private Drawing GetPlayer1Route()
         {
             GeometryGroup g = new GeometryGroup();
@@ -145,6 +177,10 @@
             return new GeometryDrawing(Brushes.Green, null, g);
         }
 
+        /// <summary>
+        /// Drawing of player2 route
+        /// </summary>
+        /// <returns>Drawing of players2 route</returns>
         private Drawing GetPlayer2Route()
         {
             GeometryGroup g = new GeometryGroup();
