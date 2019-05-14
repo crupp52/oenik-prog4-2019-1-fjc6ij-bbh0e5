@@ -37,7 +37,7 @@
         /// <summary>
         /// Gets or sets GameField
         /// </summary>
-        GameObject[,] GameField { get; set; }
+        int[,] GameField { get; set; }
 
         /// <summary>
         /// Gets or sets HighScore

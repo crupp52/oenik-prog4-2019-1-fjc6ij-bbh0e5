@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\obstacle.png" />
+    <Resource Include="Images\pause.png" />
     <Content Include="Images\speedup.png" />
     <Content Include="Sounds\background.wav" />
     <Content Include="Sounds\turbo.wav" />

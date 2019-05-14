@@ -1,8 +1,9 @@
-﻿namespace TronGame.Model
+namespace TronGame.Model
 {
     using System;
     using System.Collections.Generic;
     using System.Windows.Input;
+    using System.Xml.Linq;
     using System.Xml.Serialization;
     using TronGame.Repository;
 
@@ -20,9 +21,11 @@
             this.Turbos = new List<TurboObject>();
             this.Player1 = new Player();
             this.Player2 = new Player();
-            this.Difficulty = Difficulty.Medium;
+            this.Difficulty = this.GetDifficulty();
             this.HighScore = new HighScore();
-            this.GameField = new GameObject[30, 50];
+            this.GameField = new int[30, 50];
+
+            this.GetPlayersNames();
         }
 
         /// <summary>
@@ -59,6 +62,37 @@
         /// Gets or sets GameField
         /// </summary>
         [XmlIgnore]
-        public GameObject[,] GameField { get; set; }
+        public int[,] GameField { get; set; }
+
+        /// <summary>
+        /// Get difficulty from settings.xml
+        /// </summary>
+        /// <returns>Difficulty</returns>
+        private Difficulty GetDifficulty()
+        {
+            var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
+            var difficulty = xml.Root.Element("difficulty").Value;
+            switch (difficulty)
+            {
+                case "1":
+                    return Difficulty.Easy;
+                case "2":
+                    return Difficulty.Medium;
+                case "3":
+                    return Difficulty.Hard;
+                default:
+                    return Difficulty.Medium;
+            }
+        }
+
+        public void GetPlayersNames()
+        {
+            var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
+            string player1Name = xml.Root.Element("player1name").Value;
+            string player2Name = xml.Root.Element("player2name").Value;
+
+            this.Player1.Name = player1Name;
+            this.Player2.Name = player2Name;
+        }
     }
 }

@@ -1,0 +1,48 @@
+﻿<Window x:Class="TronGame.Display.HelpWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TronGame.Display"
+        mc:Ignorable="d"
+        Title="Help" Height="350" Width="550" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <local:HelpWindowViewModel x:Key="VM"></local:HelpWindowViewModel>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource VM}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+        <Label Content="TRON GAME HELP" FontSize="24" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <ScrollViewer Grid.Row="1">
+            <StackPanel>
+                <Label Content="General description of the game" FontWeight="Bold" FontSize="18"/>
+                <StackPanel>
+                    <TextBlock TextWrapping="Wrap"
+                             Text="{Binding HelpDescription}"/>
+                </StackPanel>
+                <Label Content="Goal of the game" FontWeight="Bold" FontSize="18"/>
+                <StackPanel>
+                    <TextBlock TextWrapping="Wrap"
+                             Text="{Binding GameGoalDescription}"/>
+                </StackPanel>
+                <Label Content="Start of the game" FontWeight="Bold" FontSize="18"/>
+                <StackPanel>
+                    <TextBlock TextWrapping="Wrap"
+                             Text="{Binding StartGameDescription}"/>
+                </StackPanel>
+                <Label Content="During the game" FontWeight="Bold" FontSize="18"/>
+                <StackPanel>
+                    <TextBlock TextWrapping="Wrap"
+                             Text="{Binding DuringGameDescription}"/>
+                </StackPanel>
+                <Label Content="End of the game" FontWeight="Bold" FontSize="18"/>
+                <StackPanel>
+                    <TextBlock TextWrapping="Wrap"
+                             Text="{Binding EndGameDescription}"/>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>

@@ -1,5 +1,6 @@
 ﻿namespace TronGame.Repository
 {
+    using GalaSoft.MvvmLight;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -10,7 +11,7 @@
     /// <summary>
     /// Base object for Player, Turbos and Obstacles
     /// </summary>
-    public abstract class GameObject
+    public abstract class GameObject : ObservableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GameObject"/> class.

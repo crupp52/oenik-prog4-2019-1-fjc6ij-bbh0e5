@@ -3,11 +3,13 @@
     using System;
     using System.Diagnostics;
     using System.IO;
+    using System.Linq;
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Media;
+    using System.Xml.Linq;
     using System.Xml.Serialization;
     using TronGame.Model;
     using TronGame.Repository;
@@ -24,6 +26,8 @@
         private int width;
         private int heigth;
 
+        public event EventHandler ScreenRefresh;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GameLogic"/> class.
         /// </summary>
@@ -34,22 +38,16 @@
 
             this.sw = new Stopwatch();
             rnd = new Random();
-            //this.backgroundMediaPlayer = new MediaPlayer();
-            //this.backgroundMediaPlayer.Open(new Uri(@"../../../TronGame.Repository/Sounds/background.wav", UriKind.Relative));
+            this.backgroundMediaPlayer = new MediaPlayer();
+            this.backgroundMediaPlayer.Open(new Uri(@"../../../TronGame.Repository/Sounds/background.wav", UriKind.Relative));
 
             this.width = 50;
             this.heigth = 30;
 
-            model.Player1.PlayerStep += this.Player1_PlayerStep;
-            model.Player2.PlayerStep += this.Player2_PlayerStep;
+            this.NewRound();
 
-            this.TestGame();
+            this.MovePlayers();
         }
-
-        /// <summary>
-        /// ScreenRefresh eventhandler
-        /// </summary>
-        public event EventHandler ScreenRefresh;
 
         /// <summary>
         /// Gets GameModel
@@ -65,6 +63,24 @@
         {
             this.GameModel.Player1.Name = player1Name;
             this.GameModel.Player2.Name = player2Name;
+
+            //var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
+            //xml.Root.SetElementValue("player1name", player1Name);
+            //xml.Root.SetElementValue("player2name", player2Name);
+            //xml.Save(@"../../../TronGame.Repository/XMLs/settings.xml");
+        }
+
+        /// <summary>
+        /// Get players names (set gamemodel properties)
+        /// </summary>
+        public void GetPlayersNames()
+        {
+            var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
+            string player1Name = xml.Root.Element("player1name").Value;
+            string player2Name = xml.Root.Element("player2name").Value;
+
+            this.GameModel.Player1.Name = player1Name;
+            this.GameModel.Player2.Name = player2Name;
         }
 
         /// <summary>
@@ -72,15 +88,16 @@
         /// </summary>
         public void NewGame()
         {
-            this.GameModel.Player1 = new Player();
-            this.GameModel.Player2 = new Player();
+            this.ResetPlayer(this.GameModel.Player1);
+            this.ResetPlayer(this.GameModel.Player2);
+            this.IsGameEnded = false;
+            this.IsGamePaused = false;
+            this.NewRound();
         }
 
-        /// <summary>
-        /// New round.
-        /// </summary>
-        public void NewRound()
+        private void NewRound()
         {
+            this.GameModel.GameField = new int[30, 50];
             this.SetPlayerStartPositon(this.GameModel.Player1);
             this.SetPlayerStartPositon(this.GameModel.Player2);
             this.GameModel.Obstacles.Clear();
@@ -89,15 +106,35 @@
             this.SetTurbos();
 
             this.sw.Restart();
-            this.ScreenRefresh?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
-        /// End of the game
+        /// Reset gamefield
         /// </summary>
-        public void EndGame()
+        public void ResetField()
         {
-            this.sw.Stop();
+            this.GameModel.GameField = new int[30, 50];
+            this.SetPlayerStartPositon(this.GameModel.Player1);
+            this.SetPlayerStartPositon(this.GameModel.Player2);
+            this.GameModel.Obstacles.Clear();
+            this.GameModel.Turbos.Clear();
+            this.SetObstacles();
+            this.SetTurbos();
+            this.sw.Start();
+        }
+
+        /// <summary>
+        /// Change the game difficulty
+        /// </summary>
+        /// <param name="difficulty"></param>
+        public void ChangeDifficulty(Difficulty difficulty)
+        {
+            //var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
+            //xml.Root.SetElementValue("difficulty", (int)difficulty);
+            //xml.Save(@"../../../TronGame.Repository/XMLs/settings.xml");
+            this.GameModel.Difficulty = difficulty;
+
+            this.NewRound();
         }
 
         /// <summary>
@@ -110,94 +147,194 @@
             player.MovingDirection = direction;
         }
 
+        /// <summary>
+        /// Move the players to a specific direction
+        /// </summary>
         private void MovePlayers()
         {
             Task.Run(() => this.MovePlayersProcess(this.GameModel.Player1));
             Task.Run(() => this.MovePlayersProcess(this.GameModel.Player2));
         }
 
+        /// <summary>
+        /// Is the game paused
+        /// </summary>
+        public bool IsGamePaused { get; private set; }
+
+        /// <summary>
+        /// Is the game ended
+        /// </summary>
+        public bool IsGameEnded { get; private set; }
+
+        public bool IsMusicEnabled { get; private set; }
+
+        /// <summary>
+        /// Pause the game
+        /// </summary>
+        public void PauseGame()
+        {
+            this.IsGamePaused = true;
+        }
+
+        /// <summary>
+        /// Continue the game
+        /// </summary>
+        public void ContinueGame()
+        {
+            this.IsGamePaused = false;
+        }
+
+        /// <summary>
+        /// Move player sidefunction
+        /// </summary>
+        /// <param name="player">Player object</param>
         private void MovePlayersProcess(Player player)
         {
             while (true)
             {
-                switch (player.MovingDirection)
+                if (!this.IsGamePaused && !this.IsGameEnded)
                 {
-                    case MovingDirection.Up:
-                        if (player.Point.Y > 0)
-                        {
-                            player.Point = new Point(player.Point.X, player.Point.Y - 1);
-                        }
+                    switch (player.MovingDirection)
+                    {
+                        case MovingDirection.Up:
+                            if (player.Point.Y > 0)
+                            {
+                                player.Point = new Point(player.Point.X, player.Point.Y - 1);
+                            }
 
-                        break;
-                    case MovingDirection.Down:
-                        if (player.Point.Y < 27)
-                        {
-                            player.Point = new Point(player.Point.X, player.Point.Y + 1);
-                        }
+                            break;
+                        case MovingDirection.Down:
+                            if (player.Point.Y < 29)
+                            {
+                                player.Point = new Point(player.Point.X, player.Point.Y + 1);
+                            }
 
-                        break;
-                    case MovingDirection.Left:
-                        if (player.Point.X > 0)
-                        {
-                            player.Point = new Point(player.Point.X - 1, player.Point.Y);
-                        }
+                            break;
+                        case MovingDirection.Left:
+                            if (player.Point.X > 0)
+                            {
+                                player.Point = new Point(player.Point.X - 1, player.Point.Y);
+                            }
 
-                        break;
-                    case MovingDirection.Rigth:
-                        if (player.Point.X < 48)
-                        {
-                            player.Point = new Point(player.Point.X + 1, player.Point.Y);
-                        }
+                            break;
+                        case MovingDirection.Rigth:
+                            if (player.Point.X < 49)
+                            {
+                                player.Point = new Point(player.Point.X + 1, player.Point.Y);
+                            }
 
-                        break;
-                }
+                            break;
+                    }
 
-                if (this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X] == null)
-                {
-                    this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X] = player;
-                }
-                else if (this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X].GetType() == typeof(TurboObject))
-                {
-                    this.PickUp(player, ObjectType.Turbo);
-                    this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X] = player;
-                }
+                    if (this.CheckObstacles(player))
+                    {
+                        this.PickUp(player, ObjectType.Obstacle);
+                    }
+                    else if (this.CheckTurbos(player))
+                    {
+                        this.PickUp(player, ObjectType.Turbo);
+                    }
+                    else if (this.CheckPlayerRoute(player))
+                    {
+                        this.PickUp(player, ObjectType.Player);
+                    }
 
-                if (player.Turbo)
-                {
-                    Thread.Sleep(150);
+                    if (player == this.GameModel.Player1)
+                    {
+                        this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X] = 1;
+                    }
+                    else
+                    {
+                        this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X] = 2;
+                    }
+
+                    if (player.Turbo)
+                    {
+                        Thread.Sleep(150);
+                    }
+                    else
+                    {
+                        Thread.Sleep(300);
+                    }
                 }
                 else
                 {
-                    Thread.Sleep(300);
+                    Thread.Sleep(500);
                 }
             }
         }
 
         /// <summary>
-        /// Pick up an object
+        /// Check player route
         /// </summary>
-        /// <param name="player">Who picked up the object</param>
-        /// <param name="objectType">Type of object</param>
-        public void PickUp(Player player, ObjectType objectType)
+        /// <param name="player">Player object</param>
+        /// <returns></returns>
+        private bool CheckPlayerRoute(Player player)
+        {
+            if (this.GameModel.GameField[(int)player.Point.Y, (int)player.Point.X] != 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Check obstackles
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
+        private bool CheckObstacles(Player player)
+        {
+            foreach (var item in this.GameModel.Obstacles)
+            {
+                if (item.Point.X == player.Point.X && item.Point.Y == player.Point.Y)
+                {
+                    this.GameModel.Obstacles.Remove(item);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Check if pickup object is turbo
+        /// </summary>
+        /// <param name="player">Player object</param>
+        /// <returns>Is turbo object</returns>
+        private bool CheckTurbos(Player player)
+        {
+            foreach (var item in this.GameModel.Turbos)
+            {
+                if (item.Point.X == player.Point.X && item.Point.Y == player.Point.Y)
+                {
+                    this.GameModel.Turbos.Remove(item);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private void PickUp(Player player, ObjectType objectType)
         {
             switch (objectType)
             {
                 case ObjectType.Player:
                     this.DiePlayer(player);
+                    this.NewRound();
                     break;
                 case ObjectType.Turbo:
                     player.NumberOfTurbos++;
                     break;
                 case ObjectType.Obstacle:
                     this.DiePlayer(player);
+                    this.NewRound();
                     break;
             }
         }
 
-        /// <summary>
-        /// Speed up the selected player if it is posible
-        /// </summary>
-        /// <param name="player">Player instance</param>
         public void UseTurbo(Player player)
         {
             if (player.NumberOfTurbos > 0)
@@ -227,18 +364,44 @@
         {
             if (File.Exists(filename))
             {
-                XmlSerializer x = new XmlSerializer(this.GameModel.GetType());
-                using (StreamReader sr = new StreamReader(filename, Encoding.UTF8))
+                this.GameModel.GameField = new int[30, 50];
+
+                XDocument xdoc = XDocument.Load(filename);
+                this.GameModel.Player1.Name = xdoc.Element("GameModel").Element("Player1").Element("Name").Value;
+                this.GameModel.Player1.Point = new Point(double.Parse(xdoc.Element("GameModel").Element("Player1").Element("Point").Element("X").Value), double.Parse(xdoc.Element("GameModel").Element("Player1").Element("Point").Element("Y").Value));
+                this.GameModel.Player1.NumberOfWins = int.Parse(xdoc.Element("GameModel").Element("Player1").Element("NumberOfWins").Value);
+                this.GameModel.Player1.NumberOfTurbos = int.Parse(xdoc.Element("GameModel").Element("Player1").Element("NumberOfTurbos").Value);
+
+                this.GameModel.Player2.Name = xdoc.Element("GameModel").Element("Player2").Element("Name").Value;
+                this.GameModel.Player2.Point = new Point(double.Parse(xdoc.Element("GameModel").Element("Player2").Element("Point").Element("X").Value), double.Parse(xdoc.Element("GameModel").Element("Player2").Element("Point").Element("Y").Value));
+                this.GameModel.Player2.NumberOfWins = int.Parse(xdoc.Element("GameModel").Element("Player2").Element("NumberOfWins").Value);
+                this.GameModel.Player2.NumberOfTurbos = int.Parse(xdoc.Element("GameModel").Element("Player2").Element("NumberOfTurbos").Value);
+
+                var obstacles = from e in xdoc.Descendants("Obstacles").Elements("ObstacleObject").Elements("Point")
+                        select new { X = e.Element("X").Value, Y = e.Element("Y").Value };
+
+                var turbos = from e in xdoc.Descendants("Turbos").Elements("TurboObject").Elements("Point")
+                                select new { X = e.Element("X").Value, Y = e.Element("Y").Value };
+
+                this.GameModel.Obstacles.Clear();
+                this.GameModel.Turbos.Clear();
+
+                foreach (var item in obstacles)
                 {
-                    this.GameModel = (GameModel)x.Deserialize(sr);
+                    this.GameModel.Obstacles.Add(new ObstacleObject() { Point = new Point(double.Parse(item.X), double.Parse(item.Y)) });
+                }
+
+                foreach (var item in turbos)
+                {
+                    this.GameModel.Turbos.Add(new TurboObject() { Point = new Point(double.Parse(item.X), double.Parse(item.Y)) });
                 }
             }
         }
 
         private void TestGame()
         {
-            this.AddNameToPlayers("Karcsi", "Kata");
             this.NewGame();
+            this.GetPlayersNames();
             this.NewRound();
             this.StartBackgroundSong();
 
@@ -247,6 +410,10 @@
             this.MovePlayers();
         }
 
+        /// <summary>
+        /// Kill the player
+        /// </summary>
+        /// <param name="player">Playerobject</param>
         private void DiePlayer(Player player)
         {
             if (player == this.GameModel.Player1)
@@ -259,14 +426,59 @@
             }
         }
 
+        /// <summary>
+        /// Player wins the round
+        /// </summary>
+        /// <param name="player">Player object</param>
         private void WinRound(Player player)
         {
-            if (++player.NumberOfWins == 5)
+            player.NumberOfWins++;
+
+            this.IsGamePaused = true;
+            Thread.Sleep(900);
+            this.IsGamePaused = false;
+
+            if (player.NumberOfWins == 5)
             {
                 this.EndGame();
             }
         }
 
+        /// <summary>
+        /// End the game
+        /// </summary>
+        private void EndGame()
+        {
+            this.IsGamePaused = true;
+            this.IsGameEnded = true;
+            this.HighScoreCheck();
+            this.sw.Stop();
+        }
+
+        /// <summary>
+        /// Check the highscore
+        /// </summary>
+        private void HighScoreCheck()
+        {
+            if (this.GameModel.HighScore.Player1Score < this.GameModel.Player1.NumberOfWins || this.GameModel.HighScore.Player2Score < this.GameModel.Player1.NumberOfWins)
+            {
+                this.GameModel.HighScore = new HighScore() { DateTime = DateTime.Now, Player1Name = this.GameModel.Player1.Name, Player2Name = this.GameModel.Player2.Name, Player1Score = this.GameModel.Player1.NumberOfWins, Player2Score = this.GameModel.Player2.NumberOfWins };
+            }
+        }
+
+        /// <summary>
+        /// Reset players win and turbos number
+        /// </summary>
+        /// <param name="player">Player object</param>
+        private void ResetPlayer(Player player)
+        {
+            player.NumberOfTurbos = 0;
+            player.NumberOfWins = 0;
+        }
+
+        /// <summary>
+        /// Generate obstacles
+        /// </summary>
         private void SetObstacles()
         {
             switch (this.GameModel.Difficulty)
@@ -283,6 +495,9 @@
             }
         }
 
+        /// <summary>
+        /// Genereate turbos
+        /// </summary>
         private void SetTurbos()
         {
             switch (this.GameModel.Difficulty)
@@ -299,67 +514,104 @@
             }
         }
 
+        /// <summary>
+        /// Generate obstacles by number
+        /// </summary>
+        /// <param name="num">Number of genarated obstacles</param>
         private void GenerateObstacles(int num)
         {
             int i = 0;
             while (i != num)
             {
-                int posX = rnd.Next(0, 24);
-                int posY = rnd.Next(0, 14);
-                if (this.GameModel.GameField[posY, posX] == null)
-                {
-                    ObstacleObject o = new ObstacleObject() { Point = new Point(posX, posY) };
-                    this.GameModel.Obstacles.Add(o);
-                    this.GameModel.GameField[posY, posX] = o;
-                    i++;
-                }
+                int posX = rnd.Next(0, 50);
+                int posY = rnd.Next(0, 30);
+
+                ObstacleObject o = new ObstacleObject() { Point = new Point(posX, posY) };
+                this.GameModel.Obstacles.Add(o);
+                i++;
             }
         }
 
+        /// <summary>
+        /// Generate turbos
+        /// </summary>
+        /// <param name="num">Number of turbos generated</param>
         private void GenerateTurbos(int num)
         {
             int i = 0;
             while (i != num)
             {
-                int posX = rnd.Next(0, 24);
-                int posY = rnd.Next(0, 14);
-                if (this.GameModel.GameField[posY, posX] == null)
-                {
-                    TurboObject o = new TurboObject() { Point = new Point(posX, posY) };
-                    this.GameModel.Turbos.Add(o);
-                    this.GameModel.GameField[posY, posX] = o;
-                    i++;
-                }
+                int posX = rnd.Next(0, 50);
+                int posY = rnd.Next(0, 30);
+
+                TurboObject o = new TurboObject() { Point = new Point(posX, posY) };
+                this.GameModel.Turbos.Add(o);
+                i++;
             }
         }
 
+        /// <summary>
+        /// Set players start position
+        /// </summary>
+        /// <param name="player">Player object</param>
         private void SetPlayerStartPositon(Player player)
         {
-            int posX = rnd.Next(0, 50);
-            int posY = rnd.Next(0, 30);
-            while (this.GameModel.GameField[posY, posX] != null)
+            int posX = rnd.Next(10, 40);
+            int posY = rnd.Next(7, 23);
+            while (this.GameModel.GameField[posY, posX] != 0)
             {
-                posX = rnd.Next(0, 50);
-                posY = rnd.Next(0, 30);
+                posX = rnd.Next(10, 40);
+                posY = rnd.Next(7, 23);
             }
 
             player.Point = new Point(posX, posY);
-            this.GameModel.GameField[posY, posX] = player;
+
+            if (player == this.GameModel.Player1)
+            {
+                this.GameModel.GameField[posY, posX] = 1;
+            }
+            else
+            {
+                this.GameModel.GameField[posY, posX] = 2;
+            }
         }
 
-        private void StartBackgroundSong()
+        /// <summary>
+        /// Start background music
+        /// </summary>
+        public void StartBackgroundSong()
         {
-            //this.backgroundMediaPlayer.Play();
+            this.IsMusicEnabled = true;
+            //var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
+            //var music = xml.Root.Element("music").Value;
+            //if (music == "1")
+            //{
+            //    this.backgroundMediaPlayer.Play();
+            //}
         }
 
-        private void Player1_PlayerStep(object sender, EventArgs e)
+        /// <summary>
+        /// Enale background music
+        /// </summary>
+        public void EnableBackgroundMusic()
         {
-            this.GameModel.GameField[(int)this.GameModel.Player1.Point.Y, (int)this.GameModel.Player1.Point.X] = this.GameModel.Player1;
+            this.IsMusicEnabled = true;
+            this.backgroundMediaPlayer.Play();
+            //var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
+            //xml.Root.SetElementValue("music", 1);
+            //xml.Save(@"../../../TronGame.Repository/XMLs/settings.xml");
         }
 
-        private void Player2_PlayerStep(object sender, EventArgs e)
+        /// <summary>
+        /// Disable background music
+        /// </summary>
+        public void DisableBackgroundMusic()
         {
-            this.GameModel.GameField[(int)this.GameModel.Player2.Point.Y, (int)this.GameModel.Player2.Point.X] = this.GameModel.Player2;
+            this.IsMusicEnabled = false;
+            this.backgroundMediaPlayer.Stop();
+            //var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
+            //xml.Root.SetElementValue("music", 0);
+            //xml.Save(@"../../../TronGame.Repository/XMLs/settings.xml");
         }
     }
 }

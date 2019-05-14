@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TronGame.Display"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="1000" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="760" Width="1040" WindowStartupLocation="CenterScreen">
     <Window.Resources>
-        <local:GameControl x:Key="vm"></local:GameControl>
+        <local:GameViewModel x:Key="vm"></local:GameViewModel>
     </Window.Resources>
     <DockPanel DataContext="{StaticResource vm}">
         <Grid Height="100" Background="Blue" DockPanel.Dock="Top">
             <Grid.RowDefinitions>
-                <RowDefinition Height="18"></RowDefinition>
+                <RowDefinition Height="18"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="*"/>
@@ -23,42 +23,40 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Menu Grid.ColumnSpan="3">
-                <MenuItem Header="Game">
-                    <MenuItem Header="New game"></MenuItem>
-                    <MenuItem Header="Load game"></MenuItem>
-                    <MenuItem Header="Set players names"></MenuItem>
-                    <MenuItem Header="Exit"></MenuItem>
+                <MenuItem Header="Game" Focusable="False">
+                    <MenuItem Header="New game" Command="{Binding NewGameCommand}"></MenuItem>
+                    <MenuItem Header="Load game" Command="{Binding LoadGameCommand}"></MenuItem>
+                    <MenuItem Header="Set players names" Command="{Binding ChangePlayersNameCommand}"></MenuItem>
+                    <MenuItem Header="Exit" Command="{Binding ExitGameCommand}"></MenuItem>
                 </MenuItem>
-                <MenuItem Header="Settings">
-                    <MenuItem IsCheckable="True" Header="Background music"></MenuItem>
+                <MenuItem Header="Settings" Focusable="False">
+                    <MenuItem IsCheckable="True" Header="Background music" IsChecked="{Binding IsMusicEnabled}" Command="{Binding EnableDisableMusicCommand}"></MenuItem>
                     <MenuItem Header="Difficulty">
-                        <MenuItem Header="Easy"></MenuItem>
-                        <MenuItem Header="Medium"></MenuItem>
-                        <MenuItem Header="Hard"></MenuItem>
+                        <MenuItem Header="Easy" Command="{Binding SetDifficultyToEasyCommand}"></MenuItem>
+                        <MenuItem Header="Medium" Command="{Binding SetDifficultyToMediumCommand}"></MenuItem>
+                        <MenuItem Header="Hard" Command="{Binding SetDifficultyToHardCommand}"></MenuItem>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="High score"></MenuItem>
+                <MenuItem Header="High score" Command="{Binding ShowHighScoreCommand}" Focusable="False"></MenuItem>
             </Menu>
-            <Label Grid.Row="1" Content="{Binding Player1.Name}"/>
-            <Label Grid.Row="1" Grid.Column="2" Content="{Binding Player1.NumberOfTurbos}"/>
-            <Label Grid.Row="1" Grid.Column="1" Content="{Binding Player1.NumberOfWins}"/>
+            <Label Grid.Row="1" Content="{Binding GameControl.GameModel.Player1.Name}" HorizontalContentAlignment="Center" FontWeight="Bold" Foreground="Yellow" ContentStringFormat="Player1's name: {0}"/>
+            <Label Grid.Row="1" Grid.Column="1" Content="{Binding GameControl.GameModel.Player1.NumberOfTurbos}" ContentStringFormat="P1 Turbos: {0} left" FontWeight="Bold" Foreground="Yellow"/>
+            <Label Grid.Row="1" Grid.Column="2" Content="{Binding GameControl.GameModel.Player1.NumberOfWins}" ContentStringFormat="P1 Wins: {0}" FontWeight="Bold" Foreground="Yellow"/>
 
-            <Label Grid.Row="2" Content="{Binding Player2.Name}"/>
-            <Label Grid.Row="2" Grid.Column="1" Content="{Binding Player2.NumberOfTurbos}"/>
-            <Label Grid.Row="2" Grid.Column="2" Content="{Binding Player2.NumberOfWins}"/>
+            <Label Grid.Row="2" Content="{Binding GameControl.GameModel.Player2.Name}" HorizontalContentAlignment="Center" FontWeight="Bold" Foreground="Yellow" ContentStringFormat="Player2's name: {0}"/>
+            <Label Grid.Row="2" Grid.Column="1" Content="{Binding GameControl.GameModel.Player2.NumberOfTurbos}" ContentStringFormat="P2 Turbos: {0} left" FontWeight="Bold" Foreground="Yellow"/>
+            <Label Grid.Row="2" Grid.Column="2" Content="{Binding GameControl.GameModel.Player2.NumberOfWins}" ContentStringFormat="P2 Wins: {0}" FontWeight="Bold" Foreground="Yellow"/>
 
-            <Label Grid.Row="3" Grid.Column="0" Content="TIME"/>
-            <Label Grid.Row="3" Grid.Column="1" Content="HIGHSCORE"/>
+            <Label Grid.Row="3" Grid.Column="0" Content="{Binding GameTime}" ContentStringFormat="TIME: {0}" HorizontalContentAlignment="Center" FontWeight="Bold" Foreground="LightGreen"/>
+            <Label Grid.Row="3" Grid.Column="1" Content="{Binding GameControl.GameModel.HighScore}" ContentStringFormat="Highscore: {0}" FontWeight="Bold" Foreground="Orange"/>
             <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal">
-                <Button Content="Pause"/>
-                <Button Content="Menu"/>
-                <Button Content="Help"/>
+                <Button Content="Pause" Command="{Binding PauseGameCommand}" Background="Orange" Width="70" Focusable="False"/>
+                <Button Content="Help" Command="{Binding ShowHelpWindowCommand}" Background="Yellow" Width="50" Focusable="False"/>
             </StackPanel>
         </Grid>
 
-        <local:GameControl Width="1000" Height="600">
-
-        </local:GameControl>
+        <UserControl Content="{Binding GameControl}" Width="1000" Height="600">
+        </UserControl>
     </DockPanel>
     
 
