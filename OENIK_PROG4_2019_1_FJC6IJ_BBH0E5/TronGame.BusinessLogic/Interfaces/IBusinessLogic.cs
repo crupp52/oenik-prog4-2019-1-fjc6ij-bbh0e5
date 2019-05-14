@@ -18,6 +18,8 @@
 
         bool IsGameEnded { get; }
 
+        bool IsMusicEnabled { get; }
+
         /// <summary>
         /// Gets GameModel
         /// </summary>
@@ -36,11 +38,6 @@
         void NewGame();
 
         /// <summary>
-        /// Resets GameField, Players positons and genetrates new Obstacles and Turbos.
-        /// </summary>
-        void NewRound();
-
-        /// <summary>
         /// Moves the selected player to selected direction.
         /// </summary>
         /// <param name="player">Selected Player object.</param>
@@ -48,13 +45,6 @@
         void MovePlayer(Player player, MovingDirection direction);
 
         void ChangeDifficulty(Difficulty difficulty);
-
-        /// <summary>
-        /// Pick up the selected object with selected Player.
-        /// </summary>
-        /// <param name="player">Selected Player object.</param>
-        /// <param name="objectType">Selected object type.</param>
-        void PickUp(Player player, ObjectType objectType);
 
         /// <summary>
         /// Player speed is double until 10 sec.

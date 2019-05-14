@@ -2,6 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading;
+    using System.Windows;
     using Moq;
     using NUnit.Framework;
     using TronGame.BusinessLogic;
@@ -46,31 +48,32 @@
             Player player1 = new Player() { Name = "Teszt Béla", NumberOfTurbos = 2, NumberOfWins = 4 };
             Player player2 = new Player() { Name = "Teszt Elek", NumberOfTurbos = 3, NumberOfWins = 1 };
 
-            //List<ObstacleObject> obstacles = new List<ObstacleObject>()
-            //{
-            //    new ObstacleObject() { PosX = 61, PosY = 48 },
-            //    new ObstacleObject() { PosX = 60, PosY = 63 },
-            //    new ObstacleObject() { PosX = 55, PosY = 48 },
-            //    new ObstacleObject() { PosX = 41, PosY = 3 },
-            //    new ObstacleObject() { PosX = 49, PosY = 95 },
-            //};
+            List<ObstacleObject> obstacles = new List<ObstacleObject>()
+            {
+                new ObstacleObject() { Point = new Point(5, 15) },
+                new ObstacleObject() { Point = new Point(27, 30) },
+                new ObstacleObject() { Point = new Point(30, 27) },
+                new ObstacleObject() { Point = new Point(35, 2) },
+                new ObstacleObject() { Point = new Point(43, 21) }
+            };
 
-            //List<TurboObject> turbos = new List<TurboObject>()
-            //{
-            //    new TurboObject() { PosX = 14, PosY = 53 },
-            //    new TurboObject() { PosX = 1, PosY = 7 },
-            //    new TurboObject() { PosX = 19, PosY = 65 },
-            //    new TurboObject() { PosX = 71, PosY = 21 },
-            //};
+            List<TurboObject> turbos = new List<TurboObject>()
+            {
+                new TurboObject() { Point = new Point(5, 45) },
+                new TurboObject() { Point = new Point(12, 36) },
+                new TurboObject() { Point = new Point(27, 15) },
+                new TurboObject() { Point = new Point(30, 5) },
+                new TurboObject() { Point = new Point(45, 9) },
+            };
 
             HighScore highScore = new HighScore() { Player1Score = 3, Player2Score = 2, Player1Name = "Teszt Elek", Player2Name = "Bem József", DateTime = DateTime.Now };
 
-            int[,] gameField = new int[500, 1000];
+            int[,] gameField = new int[30, 50];
 
             this.mock.Setup(x => x.Player1).Returns(player1);
             this.mock.Setup(x => x.Player2).Returns(player2);
-            //this.mock.Setup(x => x.Obstacles).Returns(obstacles);
-            //this.mock.Setup(x => x.Turbos).Returns(turbos);
+            this.mock.Setup(x => x.Obstacles).Returns(obstacles);
+            this.mock.Setup(x => x.Turbos).Returns(turbos);
             this.mock.Setup(x => x.HighScore).Returns(highScore);
             this.mock.Setup(x => x.GameField).Returns(gameField);
 
@@ -108,27 +111,14 @@
         /// <param name="difficulty">Difficulty of game</param>
         [Test]
         [TestCase(Difficulty.Easy)]
-        [TestCase(Difficulty.Medium)]
-        [TestCase(Difficulty.Hard)]
         public void StartNewGameWithDifficultyChange(Difficulty difficulty)
         {
-            this.logic.GameModel.Difficulty = difficulty;
+            this.logic.ChangeDifficulty(difficulty);
 
-            if (difficulty == Difficulty.Easy)
-            {
-                Assert.That(this.logic.GameModel.Obstacles.Count, Is.EqualTo(3));
-                Assert.That(this.logic.GameModel.Turbos.Count, Is.EqualTo(7));
-            }
-            else if (difficulty == Difficulty.Medium)
-            {
-                Assert.That(this.logic.GameModel.Obstacles.Count, Is.EqualTo(5));
-                Assert.That(this.logic.GameModel.Turbos.Count, Is.EqualTo(5));
-            }
-            else
-            {
-                Assert.That(this.logic.GameModel.Obstacles.Count, Is.EqualTo(7));
-                Assert.That(this.logic.GameModel.Turbos.Count, Is.EqualTo(3));
-            }
+            this.logic.NewGame();
+
+            Assert.That(this.logic.GameModel.Obstacles.Count, Is.EqualTo(3));
+            Assert.That(this.logic.GameModel.Turbos.Count, Is.EqualTo(7));
         }
 
         /// <summary>
@@ -178,6 +168,8 @@
 
                 this.logic.MovePlayer(this.logic.GameModel.Player1, direction);
 
+                Thread.Sleep(1000);
+
                 Assert.That(pos, Is.Not.EqualTo(this.logic.GameModel.Player1.Point.Y));
             }
             else
@@ -186,8 +178,48 @@
 
                 this.logic.MovePlayer(this.logic.GameModel.Player1, direction);
 
+                Thread.Sleep(1000);
+
                 Assert.That(pos, Is.Not.EqualTo(this.logic.GameModel.Player1.Point.X));
             }
+        }
+
+        /// <summary>
+        /// Check the IsGamePaused variable state.
+        /// </summary>
+        [Test]
+        public void PauseGameTest()
+        {
+            this.logic.PauseGame();
+
+            Assert.That(this.logic.IsGamePaused, Is.True);
+        }
+
+        /// <summary>
+        /// Check the IsGamePaused variable state.
+        /// </summary>
+        [Test]
+        public void ContinueGameTest()
+        {
+            this.logic.ContinueGame();
+
+            Assert.That(this.logic.IsGamePaused, Is.False);
+        }
+
+        [Test]
+        public void MusicEnabledTest()
+        {
+            this.logic.EnableBackgroundMusic();
+
+            Assert.That(this.logic.IsMusicEnabled, Is.True);
+        }
+
+        [Test]
+        public void MusicDisabledTest()
+        {
+            this.logic.DisableBackgroundMusic();
+
+            Assert.That(this.logic.IsMusicEnabled, Is.False);
         }
     }
 }

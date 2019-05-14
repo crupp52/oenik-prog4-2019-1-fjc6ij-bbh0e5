@@ -82,8 +82,6 @@
   <ItemGroup>
     <Compile Include="GameLogicTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelLocator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="oenik.ruleset" />

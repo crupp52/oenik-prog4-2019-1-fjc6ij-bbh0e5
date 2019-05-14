@@ -64,10 +64,10 @@
             this.GameModel.Player1.Name = player1Name;
             this.GameModel.Player2.Name = player2Name;
 
-            var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
-            xml.Root.SetElementValue("player1name", player1Name);
-            xml.Root.SetElementValue("player2name", player2Name);
-            xml.Save(@"../../../TronGame.Repository/XMLs/settings.xml");
+            //var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
+            //xml.Root.SetElementValue("player1name", player1Name);
+            //xml.Root.SetElementValue("player2name", player2Name);
+            //xml.Save(@"../../../TronGame.Repository/XMLs/settings.xml");
         }
 
         /// <summary>
@@ -95,10 +95,7 @@
             this.NewRound();
         }
 
-        /// <summary>
-        /// New round.
-        /// </summary>
-        public void NewRound()
+        private void NewRound()
         {
             this.GameModel.GameField = new int[30, 50];
             this.SetPlayerStartPositon(this.GameModel.Player1);
@@ -132,9 +129,9 @@
         /// <param name="difficulty"></param>
         public void ChangeDifficulty(Difficulty difficulty)
         {
-            var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
-            xml.Root.SetElementValue("difficulty", (int)difficulty);
-            xml.Save(@"../../../TronGame.Repository/XMLs/settings.xml");
+            //var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
+            //xml.Root.SetElementValue("difficulty", (int)difficulty);
+            //xml.Save(@"../../../TronGame.Repository/XMLs/settings.xml");
             this.GameModel.Difficulty = difficulty;
 
             this.NewRound();
@@ -168,6 +165,8 @@
         /// Is the game ended
         /// </summary>
         public bool IsGameEnded { get; private set; }
+
+        public bool IsMusicEnabled { get; private set; }
 
         /// <summary>
         /// Pause the game
@@ -318,12 +317,7 @@
             return false;
         }
 
-        /// <summary>
-        /// Pick up an object
-        /// </summary>
-        /// <param name="player">Who picked up the object</param>
-        /// <param name="objectType">Type of object</param>
-        public void PickUp(Player player, ObjectType objectType)
+        private void PickUp(Player player, ObjectType objectType)
         {
             switch (objectType)
             {
@@ -341,10 +335,6 @@
             }
         }
 
-        /// <summary>
-        /// Speed up the selected player if it is posible
-        /// </summary>
-        /// <param name="player">Player instance</param>
         public void UseTurbo(Player player)
         {
             if (player.NumberOfTurbos > 0)
@@ -591,12 +581,13 @@
         /// </summary>
         public void StartBackgroundSong()
         {
-            var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
-            var music = xml.Root.Element("music").Value;
-            if (music == "1")
-            {
-                this.backgroundMediaPlayer.Play();
-            }
+            this.IsMusicEnabled = true;
+            //var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
+            //var music = xml.Root.Element("music").Value;
+            //if (music == "1")
+            //{
+            //    this.backgroundMediaPlayer.Play();
+            //}
         }
 
         /// <summary>
@@ -604,10 +595,11 @@
         /// </summary>
         public void EnableBackgroundMusic()
         {
+            this.IsMusicEnabled = true;
             this.backgroundMediaPlayer.Play();
-            var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
-            xml.Root.SetElementValue("music", 1);
-            xml.Save(@"../../../TronGame.Repository/XMLs/settings.xml");
+            //var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
+            //xml.Root.SetElementValue("music", 1);
+            //xml.Save(@"../../../TronGame.Repository/XMLs/settings.xml");
         }
 
         /// <summary>
@@ -615,10 +607,11 @@
         /// </summary>
         public void DisableBackgroundMusic()
         {
+            this.IsMusicEnabled = false;
             this.backgroundMediaPlayer.Stop();
-            var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
-            xml.Root.SetElementValue("music", 0);
-            xml.Save(@"../../../TronGame.Repository/XMLs/settings.xml");
+            //var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
+            //xml.Root.SetElementValue("music", 0);
+            //xml.Save(@"../../../TronGame.Repository/XMLs/settings.xml");
         }
     }
 }

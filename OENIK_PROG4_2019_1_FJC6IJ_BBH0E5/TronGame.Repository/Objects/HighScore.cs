@@ -56,13 +56,13 @@
         /// </summary>
         public void LoadHighScore()
         {
-            var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
-            var highscore = xml.Root.Element("highscore");
-            this.Player1Name = highscore.Element("player1name").Value;
-            this.Player2Name = highscore.Element("player2name").Value;
-            this.Player1Score = int.Parse(highscore.Element("player1score").Value);
-            this.Player2Score = int.Parse(highscore.Element("player2score").Value);
-            this.DateTime = DateTime.Parse(highscore.Element("time").Value);
+            //var xml = XDocument.Load(@"../../../TronGame.Repository/XMLs/settings.xml");
+            //var highscore = xml.Root.Element("highscore");
+            //this.Player1Name = highscore.Element("player1name").Value;
+            //this.Player2Name = highscore.Element("player2name").Value;
+            //this.Player1Score = int.Parse(highscore.Element("player1score").Value);
+            //this.Player2Score = int.Parse(highscore.Element("player2score").Value);
+            //this.DateTime = DateTime.Parse(highscore.Element("time").Value);
         }
 
         /// <summary>
